@@ -8,6 +8,7 @@
 <style>
 :root {
   --red: #CC0000;
+  --red-dark: #A30000;
   --black: #111111;
   --dark: #0D0D0D;
   --white: #FFFFFF;
@@ -17,8 +18,10 @@
   --text-dim: #555555;
   --text-muted: #999999;
   --gold: #B8860B;
-  --green: #1A7A3C;
-  --blue: #1A5FA8;
+  --gold-bg: #FFFDF4;
+  --green: #1A5C38;
+  --green-bg: #F0FAF4;
+  --blue: #1A4E8A;
   --FD: 'Bebas Neue', sans-serif;
   --FB: 'DM Sans', sans-serif;
   --FM: 'Space Mono', monospace;
@@ -44,7 +47,6 @@ body {
   letter-spacing: 0.22em;
   color: rgba(255,255,255,0.35);
   text-transform: uppercase;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .topbar span { color: rgba(255,255,255,0.6); }
 
@@ -142,9 +144,7 @@ body {
   text-decoration: none;
   transition: color 0.2s, border-color 0.2s;
   background: none;
-  border-left: none;
-  border-right: none;
-  border-top: none;
+  border-left: none; border-right: none; border-top: none;
 }
 .nav-tab:hover { color: rgba(255,255,255,0.7); }
 .nav-tab.active { color: var(--white); border-bottom-color: var(--red); }
@@ -162,15 +162,8 @@ body {
 .tdot.gold { color: #C9A227; }
 
 /* ── SECTION ─────────────────────── */
-.section {
-  padding: 80px 0;
-  border-bottom: 1px solid var(--gray);
-}
-.section-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 48px;
-}
+.section { padding: 80px 0; border-bottom: 1px solid var(--gray); }
+.section-inner { max-width: 960px; margin: 0 auto; padding: 0 48px; }
 .sec-eyebrow {
   font-family: var(--FM);
   font-size: 10px;
@@ -211,7 +204,6 @@ body {
   font-family: var(--FD);
   font-size: 30px;
   letter-spacing: 0.03em;
-  margin-bottom: 4px;
   border-bottom: 2px solid var(--black);
   padding-bottom: 8px;
   margin-bottom: 20px;
@@ -224,16 +216,23 @@ body {
   font-style: italic;
 }
 
-/* ── HIGHLIGHT CARD ──────────────── */
+/* ── HIGHLIGHT CARDS ─────────────── */
 .hcard {
   background: var(--off);
   border-left: 4px solid var(--black);
   padding: 24px 28px;
   margin-bottom: 16px;
 }
-.hcard.red { border-left-color: var(--red); }
-.hcard.gold { border-left-color: var(--gold); background: #FFFDF4; }
-.hcard.green { border-left-color: var(--green); }
+.hcard.red { border-left-color: var(--red); background: #FFF5F5; }
+.hcard.gold { border-left-color: var(--gold); background: var(--gold-bg); }
+.hcard.green { border-left-color: var(--green); background: var(--green-bg); }
+.hcard.dark {
+  background: var(--black);
+  border-left: 4px solid var(--red);
+  color: var(--white);
+}
+.hcard.dark p { color: rgba(255,255,255,0.75); }
+.hcard.dark strong { color: var(--white); }
 .hcard p { color: var(--text-dim); font-size: 14px; line-height: 1.75; }
 .hcard p + p { margin-top: 10px; }
 .hcard strong { color: var(--black); font-weight: 700; }
@@ -248,10 +247,75 @@ body {
 .hcard-label.red { color: var(--red); }
 .hcard-label.gold { color: var(--gold); }
 .hcard-label.green { color: var(--green); }
-.hcard-title {
+.hcard-title { font-family: var(--FD); font-size: 22px; margin-bottom: 8px; }
+
+/* ── SOLID COLOR CARDS ───────────── */
+.solid-red {
+  background: var(--red);
+  color: var(--white);
+  padding: 28px 28px;
+}
+.solid-red .card-label-sm { font-family:var(--FM);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px; }
+.solid-red .card-title-lg { font-family:var(--FD);font-size:22px;margin-bottom:10px; }
+.solid-red p { font-size:13px;color:rgba(255,255,255,.8);line-height:1.65; }
+.solid-black {
+  background: var(--black);
+  color: var(--white);
+  padding: 28px 28px;
+}
+.solid-black .card-label-sm { font-family:var(--FM);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px; }
+.solid-black .card-title-lg { font-family:var(--FD);font-size:22px;margin-bottom:10px;color:var(--white); }
+.solid-black p { font-size:13px;color:rgba(255,255,255,.65);line-height:1.65; }
+
+/* ── NUMBERED BOX CARDS ──────────── */
+.num-grid { display:grid; gap:2px; background:var(--gray); border:2px solid var(--gray); }
+.num-grid.col2 { grid-template-columns:repeat(2,1fr); }
+.num-grid.col3 { grid-template-columns:repeat(3,1fr); }
+.num-card { background:var(--white); padding:28px 24px; }
+.num-card.dark-bg { background:var(--black); }
+.num-card.red-bg { background:var(--red); }
+.num-card.green-bg { background:var(--green); }
+.num-box {
   font-family: var(--FD);
-  font-size: 22px;
-  margin-bottom: 8px;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+.num-card.dark-bg .num-box { color: var(--red); }
+.num-card.red-bg .num-box { color: rgba(255,255,255,.4); }
+.num-card.green-bg .num-box { color: rgba(255,255,255,.4); }
+.num-card-label {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.num-card.dark-bg .num-card-label,
+.num-card.red-bg .num-card-label,
+.num-card.green-bg .num-card-label { color: rgba(255,255,255,.5); }
+.num-card-title { font-family:var(--FD);font-size:22px;margin-bottom:8px;color:var(--black); }
+.num-card.dark-bg .num-card-title,
+.num-card.red-bg .num-card-title,
+.num-card.green-bg .num-card-title { color:var(--white); }
+.num-card-text { font-size:13px;color:var(--text-dim);line-height:1.6; }
+.num-card.dark-bg .num-card-text { color:rgba(255,255,255,.6); }
+.num-card.red-bg .num-card-text,
+.num-card.green-bg .num-card-text { color:rgba(255,255,255,.8); }
+.num-card-quote {
+  margin-top:12px;
+  background:rgba(255,255,255,.08);
+  padding:10px 14px;
+  font-style:italic;
+  font-size:12px;
+  color:rgba(255,255,255,.7);
+  line-height:1.6;
+}
+.num-card-quote.light {
+  background: var(--off);
+  color: var(--text-dim);
 }
 
 /* ── QUOTE ──────────────────────── */
@@ -261,33 +325,14 @@ body {
   background: var(--off);
   margin-top: 16px;
 }
-.quote-mark {
-  font-family: var(--FD);
-  font-size: 56px;
-  line-height: 0.6;
-  color: var(--red);
-  margin-bottom: 12px;
-  opacity: 0.5;
-}
-.quote-text {
-  font-style: italic;
-  font-size: 15px;
-  line-height: 1.75;
-  color: var(--text-dim);
-  margin-bottom: 14px;
-}
-.quote-author {
-  font-family: var(--FM);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
+.quote-mark { font-family:var(--FD);font-size:56px;line-height:.6;color:var(--red);margin-bottom:12px;opacity:.5; }
+.quote-text { font-style:italic;font-size:15px;line-height:1.75;color:var(--text-dim);margin-bottom:14px; }
+.quote-author { font-family:var(--FM);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted); }
 
 /* ── ALERT ──────────────────────── */
 .alert {
   background: #FFF5F5;
-  border: 1px solid rgba(204,0,0,0.15);
+  border: 1px solid rgba(204,0,0,.15);
   border-left: 4px solid var(--red);
   padding: 18px 22px;
   display: flex;
@@ -298,454 +343,189 @@ body {
   line-height: 1.65;
 }
 .alert strong { color: #AA0000; }
-.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.alert-icon { font-size:16px;flex-shrink:0;margin-top:2px; }
 
 /* ── STORY GRID ─────────────────── */
 .story-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2,1fr);
   gap: 2px;
   background: var(--gray);
   border: 2px solid var(--gray);
   margin-top: 20px;
 }
-.story-card {
-  background: var(--white);
-  padding: 24px;
-  transition: background 0.15s;
+.story-card { background:var(--white);padding:24px;transition:background .15s; }
+.story-card:hover { background:var(--off); }
+.s-icon { font-size:22px;margin-bottom:6px; }
+.s-num { font-family:var(--FM);font-size:24px;font-weight:700;color:var(--red);opacity:.2;line-height:1;margin-bottom:6px; }
+.s-text { font-size:13px;color:var(--text-dim);line-height:1.6; }
+.s-text strong { color:var(--black); }
+
+/* ── 2-COL SPLIT (black + white) ── */
+.split-grid {
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:2px;
+  background:var(--gray);
+  border:2px solid var(--gray);
 }
-.story-card:hover { background: var(--off); }
-.s-icon { font-size: 22px; margin-bottom: 6px; }
-.s-num {
-  font-family: var(--FM);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--red);
-  opacity: 0.25;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-.s-text { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
-.s-text strong { color: var(--black); }
+.split-card { background:var(--white);padding:28px 24px; }
+.split-card.dark { background:var(--black); }
+.split-card.red { background:var(--red); }
+.split-label { font-family:var(--FM);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px; }
+.split-card.dark .split-label { color:rgba(255,255,255,.4); }
+.split-card.red .split-label { color:rgba(255,255,255,.6); }
+.split-title { font-family:var(--FD);font-size:22px;margin-bottom:12px;color:var(--black); }
+.split-card.dark .split-title { color:var(--white); }
+.split-card.red .split-title { color:var(--white); }
+.split-card p { font-size:13px;color:var(--text-dim);line-height:1.65; }
+.split-card p + p { margin-top:8px; }
+.split-card strong { color:var(--black); }
+.split-card.dark p { color:rgba(255,255,255,.65); }
+.split-card.dark strong { color:var(--white); }
+.split-card.red p { color:rgba(255,255,255,.85); }
+.split-card.red strong { color:var(--white); }
 
 /* ── METRIC CARDS ────────────────── */
 .metric-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--gray);
-  border: 2px solid var(--gray);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  background:var(--gray);
+  border:2px solid var(--gray);
 }
-.metric-card {
-  background: var(--white);
-  padding: 28px 24px;
-  border-top: 3px solid var(--gray2);
-}
-.metric-card.accent { border-top-color: var(--black); }
-.metric-card.gold-top { border-top-color: var(--gold); background: #FFFDF7; }
-.metric-card.red-top { border-top-color: var(--red); }
-.m-label {
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-}
-.m-label.gold { color: var(--gold); }
-.m-label.red { color: var(--red); }
-.m-big {
-  font-family: var(--FM);
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--black);
-  line-height: 1;
-  margin-bottom: 16px;
-}
-.m-big.gold { color: var(--gold); }
-.m-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--gray);
-  font-size: 12px;
-}
-.m-row:last-child { border-bottom: none; }
-.m-row label {
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.m-row span { color: var(--text-dim); font-weight: 500; }
-
-/* ── GRID 2 ─────────────────────── */
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
-  background: var(--gray);
-  border: 2px solid var(--gray);
-}
-.g2-card { background: var(--white); padding: 28px 24px; }
-.g2-label {
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-.g2-label.red { color: var(--red); }
-.g2-label.gold { color: var(--gold); }
-.g2-title {
-  font-family: var(--FD);
-  font-size: 22px;
-  margin-bottom: 12px;
-}
-.g2-card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
-.g2-card p + p { margin-top: 8px; }
-.g2-card strong { color: var(--black); }
+.metric-card { background:var(--white);padding:28px 24px;border-top:3px solid var(--gray2); }
+.metric-card.accent { border-top-color:var(--black);background:var(--black); }
+.metric-card.accent .m-label { color:rgba(255,255,255,.4); }
+.metric-card.accent .m-big { color:var(--white); }
+.metric-card.accent .m-row { border-bottom-color:rgba(255,255,255,.08); }
+.metric-card.accent .m-row label { color:rgba(255,255,255,.35); }
+.metric-card.accent .m-row span { color:rgba(255,255,255,.6); }
+.metric-card.gold-top { border-top-color:var(--gold);background:var(--gold-bg); }
+.metric-card.red-top { border-top-color:var(--red); }
+.m-label { font-family:var(--FM);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px; }
+.m-label.gold { color:var(--gold); }
+.m-label.red { color:var(--red); }
+.m-big { font-family:var(--FM);font-size:32px;font-weight:700;color:var(--black);line-height:1;margin-bottom:16px; }
+.m-big.gold { color:var(--gold); }
+.m-row { display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray);font-size:12px; }
+.m-row:last-child { border-bottom:none; }
+.m-row label { font-family:var(--FM);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted); }
+.m-row span { color:var(--text-dim);font-weight:500; }
 
 /* ── TABLE ──────────────────────── */
-.table-wrap { overflow-x: auto; margin-top: 16px; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-thead tr { background: var(--black); }
-thead th {
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  padding: 12px 16px;
-  text-align: left;
-  white-space: nowrap;
-}
-tbody tr { border-bottom: 1px solid var(--gray); }
-tbody tr:nth-child(even) { background: var(--off); }
-tbody td {
-  padding: 12px 16px;
-  color: var(--text-dim);
-  vertical-align: top;
-}
-tbody td:first-child { color: var(--black); font-weight: 600; }
+.table-wrap { overflow-x:auto;margin-top:16px; }
+table { width:100%;border-collapse:collapse;font-size:13px; }
+thead tr { background:var(--black); }
+thead th { font-family:var(--FM);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:12px 16px;text-align:left;white-space:nowrap; }
+tbody tr { border-bottom:1px solid var(--gray); }
+tbody tr:nth-child(even) { background:var(--off); }
+tbody td { padding:12px 16px;color:var(--text-dim);vertical-align:top; }
+tbody td:first-child { color:var(--black);font-weight:600; }
 
 /* ── TIMELINE ───────────────────── */
-.timeline {
-  display: flex;
-  gap: 0;
-  margin-top: 24px;
-  position: relative;
-}
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 8px; left: 8px; right: 0;
-  height: 1px;
-  background: var(--gray2);
-}
-.tl-step { flex: 1; position: relative; padding-right: 8px; }
-.tl-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--black);
-  border: 2px solid var(--white);
-  outline: 2px solid var(--black);
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 1;
-}
-.tl-dot.red { background: var(--red); outline-color: var(--red); }
-.tl-phase {
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-.tl-text { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
-
-/* ── PRINCIPLES ─────────────────── */
-.principles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--gray);
-  border: 2px solid var(--gray);
-}
-.pc {
-  background: var(--white);
-  padding: 24px 20px;
-  border-top: 3px solid var(--gray2);
-  transition: border-top-color 0.15s;
-}
-.pc:hover { border-top-color: var(--black); }
-.pc-num {
-  font-family: var(--FM);
-  font-size: 11px;
-  color: var(--red);
-  letter-spacing: 0.1em;
-  margin-bottom: 6px;
-}
-.pc-title {
-  font-family: var(--FD);
-  font-size: 20px;
-  margin-bottom: 8px;
-}
-.pc-text { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
-
-/* ── CONTENT TYPES ──────────────── */
-.ct-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
-  background: var(--gray);
-  border: 2px solid var(--gray);
-}
-.ct-card {
-  background: var(--white);
-  padding: 24px 22px;
-  border-left: 3px solid transparent;
-  transition: border-left-color 0.15s, background 0.15s;
-}
-.ct-card:hover { border-left-color: var(--black); background: var(--off); }
-.ct-ico { font-size: 22px; margin-bottom: 8px; }
-.ct-freq {
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 4px;
-}
-.ct-name {
-  font-family: var(--FD);
-  font-size: 22px;
-  margin-bottom: 8px;
-}
-.ct-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
-.ct-resp {
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px solid var(--gray);
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-}
+.timeline { display:flex;gap:0;margin-top:24px;position:relative; }
+.timeline::before { content:'';position:absolute;top:8px;left:8px;right:0;height:1px;background:var(--gray2); }
+.tl-step { flex:1;position:relative;padding-right:8px; }
+.tl-dot { width:10px;height:10px;border-radius:50%;background:var(--black);border:2px solid var(--white);outline:2px solid var(--black);margin-bottom:12px;position:relative;z-index:1; }
+.tl-dot.red { background:var(--red);outline-color:var(--red); }
+.tl-phase { font-family:var(--FM);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px; }
+.tl-text { font-size:12px;color:var(--text-dim);line-height:1.4; }
 
 /* ── PRIMAL LIST ────────────────── */
-.primal-list { display: flex; flex-direction: column; gap: 2px; }
-.pr-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  background: var(--white);
-  border: 1px solid var(--gray);
-  border-left: 3px solid var(--gray2);
-  padding: 20px 24px;
-  transition: border-left-color 0.15s, background 0.15s;
-}
-.pr-item:hover { border-left-color: var(--red); background: var(--off); }
-.pr-num {
-  font-family: var(--FM);
-  font-size: 10px;
-  color: var(--red);
-  letter-spacing: 0.1em;
-  flex-shrink: 0;
-  min-width: 72px;
-  padding-top: 2px;
-}
-.pr-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
-.pr-text { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.primal-list { display:flex;flex-direction:column;gap:2px; }
+.pr-item { display:flex;align-items:flex-start;gap:24px;background:var(--white);border:1px solid var(--gray);border-left:3px solid var(--gray2);padding:20px 24px;transition:border-left-color .15s,background .15s; }
+.pr-item:hover { border-left-color:var(--red);background:var(--off); }
+.pr-num { font-family:var(--FM);font-size:10px;color:var(--red);letter-spacing:.1em;flex-shrink:0;min-width:72px;padding-top:2px; }
+.pr-title { font-weight:700;font-size:14px;margin-bottom:4px; }
+.pr-text { font-size:13px;color:var(--text-dim);line-height:1.6; }
 
 /* ── CHECKLIST ──────────────────── */
-.checklist { display: flex; flex-direction: column; gap: 8px; }
-.cl-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 16px;
-  background: var(--off);
-  border-left: 3px solid var(--gray2);
-  font-size: 13px;
-  color: var(--text-dim);
-  transition: background 0.15s, border-left-color 0.15s;
-}
-.cl-item:hover { background: var(--gray); border-left-color: var(--black); }
-.cl-item.red { border-left-color: var(--red); }
-.cl-item.gold { border-left-color: var(--gold); }
-.cl-item strong { color: var(--black); }
-.cl-ico { flex-shrink: 0; margin-top: 1px; }
+.checklist { display:flex;flex-direction:column;gap:8px; }
+.cl-item { display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--off);border-left:3px solid var(--gray2);font-size:13px;color:var(--text-dim);transition:background .15s,border-left-color .15s; }
+.cl-item:hover { background:var(--gray);border-left-color:var(--black); }
+.cl-item.red { border-left-color:var(--red);background:#FFF5F5; }
+.cl-item.gold { border-left-color:var(--gold);background:var(--gold-bg); }
+.cl-item strong { color:var(--black); }
+.cl-ico { flex-shrink:0;margin-top:1px; }
 
 /* ── SCRIPT ─────────────────────── */
-.script-card {
-  background: var(--black);
-  padding: 28px 32px;
-  margin-top: 16px;
-}
-.script-eyebrow {
-  font-family: var(--FM);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 14px;
-}
-.script-line {
-  font-family: var(--FM);
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.75;
-  margin-bottom: 20px;
-}
-.script-line strong { color: var(--white); }
-.script-steps { display: flex; flex-direction: column; gap: 10px; }
-.ss {
-  display: flex;
-  gap: 12px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.55);
-}
-.ss-arrow { color: var(--red); font-weight: 700; flex-shrink: 0; }
-.ss strong { color: rgba(255,255,255,0.9); }
+.script-card { background:var(--black);padding:28px 32px;margin-top:16px; }
+.script-eyebrow { font-family:var(--FM);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px; }
+.script-line { font-family:var(--FM);font-size:13px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:20px; }
+.script-line strong { color:var(--white); }
+.script-steps { display:flex;flex-direction:column;gap:10px; }
+.ss { display:flex;gap:12px;font-size:13px;color:rgba(255,255,255,.55); }
+.ss-arrow { color:var(--red);font-weight:700;flex-shrink:0; }
+.ss strong { color:rgba(255,255,255,.9); }
 
 /* ── ACTIONS ────────────────────── */
-.actions-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
-  background: var(--gray);
-  border: 2px solid var(--gray);
-}
-.ac-card {
-  background: var(--white);
-  padding: 22px 20px;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  transition: background 0.15s;
-}
-.ac-card:hover { background: var(--off); }
-.ac-num {
-  font-family: var(--FM);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--red);
-  opacity: 0.25;
-  line-height: 1;
-  flex-shrink: 0;
-  min-width: 44px;
-}
-.ac-title { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
-.ac-text { font-size: 12px; color: var(--text-dim); }
+.actions-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--gray);border:2px solid var(--gray); }
+.ac-card { background:var(--white);padding:22px 20px;display:flex;gap:16px;align-items:flex-start;transition:background .15s; }
+.ac-card:hover { background:var(--off); }
+.ac-num { font-family:var(--FD);font-size:40px;color:var(--red);line-height:1;flex-shrink:0;min-width:44px; }
+.ac-title { font-weight:700;font-size:14px;margin-bottom:3px; }
+.ac-text { font-size:12px;color:var(--text-dim); }
+
+/* ── CT GRID ────────────────────── */
+.ct-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--gray);border:2px solid var(--gray); }
+.ct-card { background:var(--white);padding:24px 22px;border-left:3px solid transparent;transition:border-left-color .15s,background .15s; }
+.ct-card:hover { border-left-color:var(--black);background:var(--off); }
+.ct-ico { font-size:22px;margin-bottom:8px; }
+.ct-freq { font-family:var(--FM);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:4px; }
+.ct-name { font-family:var(--FD);font-size:22px;margin-bottom:8px; }
+.ct-desc { font-size:13px;color:var(--text-dim);line-height:1.6; }
+.ct-resp { margin-top:10px;padding-top:8px;border-top:1px solid var(--gray);font-family:var(--FM);font-size:9px;letter-spacing:.06em;color:var(--text-muted); }
 
 /* ── FOOTER ─────────────────────── */
-.footer {
-  background: var(--dark);
-  padding: 40px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 3px solid var(--red);
-}
-.ft-brand {
-  font-family: var(--FD);
-  font-size: 28px;
-  color: var(--white);
-  letter-spacing: 0.05em;
-}
-.ft-brand span { color: var(--red); }
-.ft-info {
-  font-family: var(--FM);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.3);
-  text-align: right;
-  line-height: 2;
-}
+.footer { background:var(--dark);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;border-top:3px solid var(--red); }
+.ft-brand { font-family:var(--FD);font-size:28px;color:var(--white);letter-spacing:.05em; }
+.ft-brand span { color:var(--red); }
+.ft-info { font-family:var(--FM);font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.3);text-align:right;line-height:2; }
 
 /* ── FADE IN ────────────────────── */
-.fi {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
-.fi.on { opacity: 1; transform: translateY(0); }
+.fi { opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease; }
+.fi.on { opacity:1;transform:translateY(0); }
 
 /* ── MOBILE ─────────────────────── */
-.mob-bar {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 52px;
-  background: var(--dark);
-  border-bottom: 2px solid var(--red);
-  z-index: 500;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-}
-.mob-logo {
-  font-family: var(--FD);
-  font-size: 22px;
-  color: var(--white);
-  letter-spacing: 0.04em;
-}
-.mob-logo span { color: var(--red); }
-.ham { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-.ham span { display: block; width: 24px; height: 2px; background: rgba(255,255,255,0.7); transition: all 0.25s; }
-.ham.o span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.ham.o span:nth-child(2) { opacity: 0; }
-.ham.o span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mob-drawer {
-  display: none;
-  position: fixed;
-  top: 52px; left: 0; right: 0; bottom: 0;
-  background: var(--dark);
-  z-index: 499;
-  padding: 16px 0;
-  transform: translateX(-100%);
-  transition: transform 0.3s;
-  overflow-y: auto;
-}
-.mob-drawer.o { transform: translateX(0); }
-.mob-drawer .nav-tab {
-  display: flex;
-  padding: 16px 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  border-left: none;
-  border-right: none;
-  border-top: none;
-}
-.mob-drawer .nav-tab.active { border-bottom-color: rgba(255,255,255,0.06); border-left: 3px solid var(--red); color: var(--white); }
+.mob-bar { display:none;position:fixed;top:0;left:0;right:0;height:52px;background:var(--dark);border-bottom:2px solid var(--red);z-index:500;align-items:center;justify-content:space-between;padding:0 20px; }
+.mob-logo { font-family:var(--FD);font-size:22px;color:var(--white);letter-spacing:.04em; }
+.mob-logo span { color:var(--red); }
+.ham { display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:4px; }
+.ham span { display:block;width:24px;height:2px;background:rgba(255,255,255,.7);transition:all .25s; }
+.ham.o span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.ham.o span:nth-child(2) { opacity:0; }
+.ham.o span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+.mob-drawer { display:none;position:fixed;top:52px;left:0;right:0;bottom:0;background:var(--dark);z-index:499;padding:16px 0;transform:translateX(-100%);transition:transform .3s;overflow-y:auto; }
+.mob-drawer.o { transform:translateX(0); }
+.mob-drawer .nav-tab { display:flex;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.06); }
+.mob-drawer .nav-tab.active { border-left:3px solid var(--red);color:var(--white); }
 
-@media (max-width: 900px) {
-  .mob-bar { display: flex; }
-  .mob-drawer { display: block; }
-  .nav-wrap { display: none; }
-  .topbar { display: none; }
-  body { padding-top: 52px; }
-  .hero { padding: 48px 24px 40px; }
-  .section-inner { padding: 0 24px; }
-  .section { padding: 56px 0; }
-  .metric-grid { grid-template-columns: 1fr; }
-  .story-grid { grid-template-columns: 1fr; }
-  .grid-2 { grid-template-columns: 1fr; }
-  .principles { grid-template-columns: 1fr; }
-  .ct-grid { grid-template-columns: 1fr; }
-  .actions-grid { grid-template-columns: 1fr; }
-  .timeline { flex-direction: column; }
-  .timeline::before { display: none; }
-  .footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px; }
-  .ft-info { text-align: center; }
+@media (max-width:900px) {
+  .mob-bar { display:flex; }
+  .mob-drawer { display:block; }
+  .nav-wrap { display:none; }
+  .topbar { display:none; }
+  body { padding-top:52px; }
+  .hero { padding:48px 24px 40px; }
+  .section-inner { padding:0 24px; }
+  .section { padding:56px 0; }
+  .metric-grid { grid-template-columns:1fr; }
+  .story-grid { grid-template-columns:1fr; }
+  .split-grid { grid-template-columns:1fr; }
+  .num-grid.col2 { grid-template-columns:1fr; }
+  .num-grid.col3 { grid-template-columns:1fr; }
+  .ct-grid { grid-template-columns:1fr; }
+  .actions-grid { grid-template-columns:1fr; }
+  .timeline { flex-direction:column; }
+  .timeline::before { display:none; }
+  .footer { flex-direction:column;gap:16px;text-align:center;padding:28px 24px; }
+  .ft-info { text-align:center; }
 }
-@media (max-width: 480px) {
-  .hero-title { font-size: 64px; }
-  .hero-title-red { font-size: 36px; }
-  .sec-title { font-size: 38px; }
+@media (max-width:480px) {
+  .hero-title { font-size:64px; }
+  .hero-title-red { font-size:36px; }
+  .sec-title { font-size:38px; }
 }
 </style>
 </head>
@@ -795,7 +575,7 @@ tbody td:first-child { color: var(--black); font-weight: 600; }
 
   <div class="block fi">
     <div class="block-title">Por que DECRETO PMDF</div>
-    <div class="hcard gold">
+    <div class="hcard dark">
       <p>Murilo tem uma premissa que prega para todos os alunos: <strong>a reprovação não é parte do processo</strong> — ela é consequência de quem não decidiu de verdade. Ele mesmo nunca reprovou em nenhum concurso na vida. São <strong>11 aprovações</strong>. Não porque é gênio. Porque toda vez que decidiu, não tinha plano B.</p>
       <p>DECRETO PMDF nasce dessa premissa. Um decreto não é uma tentativa. É uma declaração. <strong>Quem entra no lançamento não está tentando passar na PMDF — está decretando.</strong></p>
     </div>
@@ -852,8 +632,17 @@ tbody td:first-child { color: var(--black); font-weight: 600; }
 
   <div class="block fi">
     <div class="block-title">Perpétuo + Lançamento Cíclico</div>
-    <div class="hcard">
-      <p>O produto fica disponível para venda o tempo todo no perpétuo. 30 dias antes do lançamento, começa a captação de leads via tráfego pago. O lançamento tem oferta especial + bônus exclusivo. Quem não comprou entra em sequência de nutrição e é convertido pelo time comercial nas semanas seguintes.</p>
+    <div class="split-grid" style="margin-bottom:16px">
+      <div class="split-card dark">
+        <div class="split-label">Perpétuo</div>
+        <div class="split-title">Sempre disponível</div>
+        <p>O produto fica ativo para venda o tempo todo. Cada lead que não comprou no lançamento entra em nutrição e é trabalhado pelo time comercial nas semanas seguintes.</p>
+      </div>
+      <div class="split-card red">
+        <div class="split-label">Lançamento</div>
+        <div class="split-title">Oferta especial</div>
+        <p>30 dias antes, captação intensa de leads. Na live: oferta com bônus exclusivo e preço âncora. Quem comprou no lançamento leva o que quem comprou depois não leva.</p>
+      </div>
     </div>
     <div class="timeline">
       <div class="tl-step"><div class="tl-dot red"></div><div class="tl-phase">Agora</div><div class="tl-text">Subida de preço + comunicação</div></div>
@@ -958,13 +747,25 @@ tbody td:first-child { color: var(--black); font-weight: 600; }
 
   <div class="block fi">
     <div class="block-title">Posicionamento</div>
-    <div class="hcard gold">
+    <div class="hcard dark" style="margin-bottom:16px">
       <p><strong>Murilo não é mais um professor de concurso.</strong> Ele é o único preparador para PMDF que foi soldado, virou oficial e depois foi pro Senado. Essa trajetória é o produto. O conteúdo é a prova disso.</p>
     </div>
-    <div class="principles" style="margin-top:16px">
-      <div class="pc"><div class="pc-num">01 ·</div><div class="pc-title">Autoridade sem arrogância</div><div class="pc-text">Murilo conta a história sem glamourizar. A Ceilândia, o hospital, a viatura. Quem vem de base fraca se vê nele.</div></div>
-      <div class="pc"><div class="pc-num">02 ·</div><div class="pc-title">Direto, sem romantizar</div><div class="pc-text">Reprovar não é normal. Esse posicionamento cria muro — afasta quem quer conforto, atrai quem quer resultado.</div></div>
-      <div class="pc"><div class="pc-num">03 ·</div><div class="pc-title">O Senado como vitrine</div><div class="pc-text">O cargo não é vaidade — é prova. Cada post do cotidiano lembra o avatar: é isso que está em jogo.</div></div>
+    <div class="num-grid col3">
+      <div class="num-card">
+        <div class="num-box">01</div>
+        <div class="num-card-title">Autoridade sem arrogância</div>
+        <div class="num-card-text">Murilo conta a história sem glamourizar. A Ceilândia, o hospital, a viatura. Quem vem de base fraca se vê nele. Quem vem de base boa o respeita.</div>
+      </div>
+      <div class="num-card dark-bg">
+        <div class="num-box">02</div>
+        <div class="num-card-title">Direto, sem romantizar</div>
+        <div class="num-card-text">Reprovar não é normal. Esse posicionamento cria muro — afasta quem quer conforto, atrai quem quer resultado.</div>
+      </div>
+      <div class="num-card red-bg">
+        <div class="num-box">03</div>
+        <div class="num-card-title">O Senado como vitrine</div>
+        <div class="num-card-text">O cargo não é vaidade — é prova. Cada post do cotidiano lembra o avatar: é isso que está em jogo.</div>
+      </div>
     </div>
   </div>
 
@@ -984,14 +785,41 @@ tbody td:first-child { color: var(--black); font-weight: 600; }
   <div class="block fi">
     <div class="block-title">Primal Branding</div>
     <div class="block-sub">Os 7 elementos que constroem uma marca que as pessoas seguem — não só compram.</div>
-    <div class="primal-list">
-      <div class="pr-item"><div class="pr-num">01 · CRIAÇÃO</div><div><div class="pr-title">A Origem</div><div class="pr-text">A origem do Murilo é o ativo mais valioso. Barraco na QNJ → Senado Federal. Essa história não é enfeite — é a fundação de tudo.</div></div></div>
-      <div class="pr-item"><div class="pr-num">02 · CREDO</div><div><div class="pr-title">A Crença</div><div class="pr-text">Você não reprova porque é fraco. Reprova porque não decidiu. DECRETO PMDF nasce disso: aprovação é consequência de decisão, não de sorte.</div></div></div>
-      <div class="pr-item"><div class="pr-num">03 · ÍCONES</div><div><div class="pr-title">Os Símbolos</div><div class="pr-text">A farda da PMDF. O plenário do Senado. A camiseta da mentoria. O TAF presencial. Esses elementos representam o que o avatar quer se tornar.</div></div></div>
-      <div class="pr-item"><div class="pr-num">04 · RITUAIS</div><div><div class="pr-title">Os Rituais</div><div class="pr-text">O TAF anual com alunos. O ciclo de lançamento. O processo de estudo fechando edital. Rituais criam pertencimento.</div></div></div>
-      <div class="pr-item"><div class="pr-num">05 · PAGÃOS</div><div><div class="pr-title">O Inimigo</div><div class="pr-text">O concurseiro profissional — que normalizou reprovar, posta foto de café e não estuda, tem plano B, C e D. Murilo é o oposto.</div></div></div>
-      <div class="pr-item"><div class="pr-num">06 · PALAVRAS</div><div><div class="pr-title">As Palavras Sagradas</div><div class="pr-text">Decretar. Fechar edital. Sem plano B. Pelotão. Farda. Aprovado — não concurseiro.</div></div></div>
-      <div class="pr-item"><div class="pr-num">07 · LÍDER</div><div><div class="pr-title">A Liderança</div><div class="pr-text">Murilo é o líder porque ele fez. Não ensina o que estudou em livro — ensina o que fez na prática, 11 vezes. Essa é a diferença intransponível.</div></div></div>
+    <div class="num-grid col2">
+      <div class="num-card">
+        <div class="num-card-label">01 · CRIAÇÃO</div>
+        <div class="num-card-title">A Origem</div>
+        <div class="num-card-text">A origem do Murilo é o ativo mais valioso. Barraco na QNJ → Senado Federal. Essa história não é enfeite — é a fundação de tudo.</div>
+      </div>
+      <div class="num-card dark-bg">
+        <div class="num-card-label">02 · CREDO</div>
+        <div class="num-card-title">A Crença</div>
+        <div class="num-card-text">Você não reprova porque é fraco. Reprova porque não decidiu. DECRETO PMDF: aprovação é consequência de decisão, não de sorte.</div>
+      </div>
+      <div class="num-card red-bg">
+        <div class="num-card-label">03 · ÍCONES</div>
+        <div class="num-card-title">Os Símbolos</div>
+        <div class="num-card-text">A farda da PMDF. O plenário do Senado. A camiseta da mentoria. O TAF presencial. Elementos que representam o que o avatar quer se tornar.</div>
+      </div>
+      <div class="num-card">
+        <div class="num-card-label">04 · RITUAIS</div>
+        <div class="num-card-title">Os Rituais</div>
+        <div class="num-card-text">O TAF anual com alunos. O ciclo de lançamento. O processo de estudo fechando edital. Rituais criam pertencimento.</div>
+      </div>
+      <div class="num-card dark-bg">
+        <div class="num-card-label">05 · PAGÃOS</div>
+        <div class="num-card-title">O Inimigo</div>
+        <div class="num-card-text">O concurseiro profissional — que normalizou reprovar, posta foto de café, tem plano B, C e D. Murilo é o oposto disso.</div>
+      </div>
+      <div class="num-card">
+        <div class="num-card-label">06 · PALAVRAS</div>
+        <div class="num-card-title">As Palavras Sagradas</div>
+        <div class="num-card-text">Decretar. Fechar edital. Sem plano B. Pelotão. Farda. <strong>Aprovado</strong> — não concurseiro.</div>
+      </div>
+    </div>
+    <div class="hcard dark" style="margin-top:2px">
+      <div class="hcard-label">07 · LÍDER</div>
+      <p><strong>Murilo é o líder porque ele fez.</strong> Não ensina o que estudou em livro — ensina o que fez na prática, 11 vezes. Essa é a diferença intransponível.</p>
     </div>
   </div>
 </div>
@@ -1047,12 +875,19 @@ tbody td:first-child { color: var(--black); font-weight: 600; }
   <div class="sec-sub">O 80/20 do projeto. Mentoria de R$1.997 não é compra por impulso — precisa de conversa.</div>
 
   <div class="block fi">
-    <div class="grid-2" style="margin-bottom:2px">
-      <div class="g2-card"><p>Murilo já recebe leads na DM todos os dias. Hoje responde quando consegue, sem processo. <strong>Sem processo = sem conversão.</strong></p></div>
-      <div class="g2-card"><p>Com 1 SDR bem treinado: meta de <strong>4 vendas/semana.</strong> R$1.000 fixo + 5% comissão = ~R$31.952 de faturamento adicional no mês. ROI imediato.</p></div>
-    </div>
-    <div class="hcard" style="margin-top:2px">
-      <p>A recorrência <strong>não é anunciada na Live.</strong> O SDR ativa essa opção no X1 apenas com quem não fecha por limitação de cartão. Converte quem seria perdido.</p>
+    <div class="num-grid col3">
+      <div class="num-card">
+        <div class="num-box">01</div>
+        <div class="num-card-text">Murilo já recebe leads na DM todos os dias. Hoje responde quando consegue, sem processo. <strong style="color:var(--black)">Sem processo = sem conversão.</strong></div>
+      </div>
+      <div class="num-card dark-bg">
+        <div class="num-box">02</div>
+        <div class="num-card-text">Com 1 SDR bem treinado: meta de <strong>4 vendas/semana.</strong> R$1.000 fixo + 5% comissão = ROI imediato no primeiro mês.</div>
+      </div>
+      <div class="num-card red-bg">
+        <div class="num-box">03</div>
+        <div class="num-card-text">A recorrência <strong>não é anunciada na Live.</strong> O SDR ativa no X1 apenas com quem não fecha por limitação de cartão. Converte quem seria perdido.</div>
+      </div>
     </div>
   </div>
 
@@ -1096,7 +931,7 @@ tbody td:first-child { color: var(--black); font-weight: 600; }
   <div class="sec-sub">Centro Olímpico da Ceilândia. Primeira grande operação de captação de conteúdo.</div>
 
   <div class="block fi">
-    <div class="hcard red">
+    <div class="hcard dark">
       <p>O TAF não é só um treino de alunos. É a primeira grande oportunidade de branding em ação: alunos uniformizados, Murilo presente, imagem de movimento real. <strong>O material capturado alimenta semanas de aquecimento antes do lançamento.</strong></p>
     </div>
   </div>
