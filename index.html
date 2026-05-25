@@ -1,1806 +1,1188 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plano Estratégico | Mentoria PMDF 2026</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            /* Paleta de Cores Estritamente Alinhada */
-            --fundo-principal: #0D1B2A;
-            --superficie-card: #1A2B3C;
-            --azul-destaque: #2E86C1;
-            --dourado-ancora: #C9A227;
-            --texto-primario: #F0F4F8;
-            --texto-secundario: #8FA8C0;
-            --separadores: rgba(46, 134, 193, 0.2);
-            --erro-alerta: #E74C3C;
-            --sucesso: #2ECC71;
-
-            /* Tipografia Coesa */
-            --font-titulo: "Bebas Neue", sans-serif;
-            --font-corpo: "DM Sans", sans-serif;
-            --font-tech: "Space Mono", monospace;
-        }
-
-        /* Reset Avançado */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-corpo);
-            background-color: var(--fundo-principal);
-            color: var(--texto-primario);
-            line-height: 1.6;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Layout Estrutural */
-        .app-container {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* Sidebar Fixa de Alta Performance */
-        .sidebar {
-            width: 320px;
-            height: 100vh;
-            background-color: rgba(13, 27, 42, 0.95);
-            border-right: 1px solid var(--separadores);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .sidebar-brand {
-            margin-bottom: 48px;
-        }
-
-        .sidebar-brand .company {
-            font-family: var(--font-tech);
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            color: var(--azul-destaque);
-            text-transform: uppercase;
-        }
-
-        .sidebar-brand .project {
-            font-family: var(--font-titulo);
-            font-size: 2rem;
-            color: var(--texto-primario);
-            letter-spacing: 0.05em;
-            margin-top: 4px;
-        }
-
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            flex-grow: 1;
-        }
-
-        .nav-item a {
-            display: flex;
-            flex-direction: column;
-            padding: 14px 18px;
-            color: var(--texto-secundario);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            border-left: 3px solid transparent;
-            background-color: rgba(26, 43, 60, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .nav-item a .num {
-            font-family: var(--font-tech);
-            font-size: 0.7rem;
-            color: var(--azul-destaque);
-            margin-bottom: 2px;
-            letter-spacing: 0.1em;
-        }
-
-        .nav-item a .title {
-            transition: color 0.3s ease;
-        }
-
-        .nav-item.active a, .nav-item a:hover {
-            background-color: var(--superficie-card);
-            border-left-color: var(--azul-destaque);
-            color: var(--texto-primario);
-        }
-
-        .nav-item.active a .title {
-            color: var(--azul-destaque);
-            font-weight: 700;
-        }
-
-        .sidebar-footer {
-            margin-top: auto;
-            padding-top: 24px;
-            border-top: 1px solid var(--separadores);
-        }
-
-        .sidebar-footer p {
-            font-family: var(--font-tech);
-            font-size: 0.7rem;
-            color: var(--texto-secundario);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Main Content Wrapper */
-        .main-content {
-            flex-grow: 1;
-            margin-left: 320px;
-            padding: 60px 80px;
-            max-width: 1400px;
-            width: calc(100% - 320px);
-            transition: all 0.4s ease;
-        }
-
-        /* Mobile Header */
-        .mobile-header {
-            display: none;
-            width: 100%;
-            padding: 20px;
-            background-color: var(--fundo-principal);
-            border-bottom: 1px solid var(--separadores);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 110;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .mobile-logo {
-            font-family: var(--font-titulo);
-            font-size: 1.5rem;
-            letter-spacing: 0.05em;
-        }
-
-        .hamburger {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 28px;
-            height: 2px;
-            background-color: var(--texto-primario);
-            transition: all 0.3s ease;
-        }
-
-        /* Hero Component */
-        .hero {
-            padding: 60px 0 80px 0;
-            border-bottom: 1px solid var(--separadores);
-            position: relative;
-            margin-bottom: 60px;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 300px;
-            background-image: radial-gradient(var(--separadores) 1px, transparent 1px);
-            background-size: 16px 16px;
-            opacity: 0.4;
-            pointer-events: none;
-        }
-
-        .badge-confidential {
-            display: inline-block;
-            font-family: var(--font-tech);
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--dourado-ancora);
-            border: 1px solid var(--dourado-ancora);
-            padding: 6px 16px;
-            letter-spacing: 0.2em;
-            margin-bottom: 24px;
-            background-color: rgba(201, 162, 39, 0.05);
-        }
-
-        .hero h1 {
-            font-family: var(--font-titulo);
-            font-size: clamp(3.5rem, 6vw, 5.5rem);
-            line-height: 0.95;
-            letter-spacing: 0.02em;
-            margin-bottom: 8px;
-        }
-
-        .hero .subtitle {
-            font-size: clamp(1.25rem, 2vw, 1.75rem);
-            color: var(--texto-secundario);
-            font-weight: 400;
-            margin-bottom: 24px;
-        }
-
-        .hero-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            font-family: var(--font-tech);
-            font-size: 0.85rem;
-            color: var(--texto-secundario);
-            border-top: 1px solid var(--separadores);
-            padding-top: 24px;
-        }
-
-        .hero-meta span strong {
-            color: var(--texto-primario);
-        }
-
-        /* UI Blocks & Components */
-        .section-anchor {
-            padding-top: 80px;
-            margin-top: -40px;
-            margin-bottom: 100px;
-        }
-
-        .section-header {
-            margin-bottom: 40px;
-            border-left: 4px solid var(--azul-destaque);
-            padding-left: 20px;
-        }
-
-        .section-header .sec-num {
-            font-family: var(--font-tech);
-            font-size: 0.85rem;
-            color: var(--azul-destaque);
-            letter-spacing: 0.1em;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .section-header h2 {
-            font-family: var(--font-titulo);
-            font-size: 2.5rem;
-            letter-spacing: 0.03em;
-            color: var(--texto-primario);
-        }
-
-        .section-header p {
-            color: var(--texto-secundario);
-            font-size: 1.1rem;
-            margin-top: 8px;
-            max-width: 800px;
-        }
-
-        .block-title {
-            font-family: var(--font-titulo);
-            font-size: 1.625rem;
-            letter-spacing: 0.05em;
-            margin: 40px 0 20px 0;
-            color: var(--texto-primario);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* Grid Framework */
-        .grid-2x2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        .grid-3col {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        /* Cards Layout */
-        .card {
-            background-color: var(--superficie-card);
-            border: 1px solid transparent;
-            padding: 32px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-        }
-
-        .card:hover {
-            border-color: var(--azul-destaque);
-            box-shadow: 0 12px 30px rgba(46, 134, 193, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .card-icon {
-            font-size: 1.5rem;
-            color: var(--azul-destaque);
-            margin-bottom: 16px;
-            font-family: var(--font-tech);
-        }
-
-        .card-value {
-            font-family: var(--font-titulo);
-            font-size: 2.5rem;
-            line-height: 1.1;
-            color: var(--texto-primario);
-            margin-bottom: 8px;
-        }
-
-        .card-label {
-            font-size: 1rem;
-            color: var(--texto-secundario);
-        }
-
-        /* Specific Component Enhancements */
-        .card.recommended {
-            border: 2px solid var(--dourado-ancora);
-            background-image: linear-gradient(135deg, var(--superficie-card) 0%, rgba(201,162,39,0.05) 100%);
-        }
-
-        .card.recommended:hover {
-            border-color: var(--dourado-ancora);
-            box-shadow: 0 12px 30px rgba(201, 162, 39, 0.15);
-        }
-
-        .card-badge-right {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            font-family: var(--font-tech);
-            font-size: 0.65rem;
-            padding: 4px 10px;
-            letter-spacing: 0.1em;
-            font-weight: 700;
-        }
-
-        .badge-opt-a { background: rgba(46,134,193,0.15); color: var(--azul-destaque); border: 1px solid var(--azul-destaque); }
-        .badge-opt-rec { background: rgba(201,162,39,0.2); color: var(--dourado-ancora); border: 1px solid var(--dourado-ancora); }
-        .badge-opt-c { background: rgba(143,168,192,0.15); color: var(--texto-secundario); border: 1px solid var(--texto-secundario); }
-
-        /* Lists styled strategically */
-        .bullet-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .bullet-list li {
-            background-color: var(--superficie-card);
-            padding: 18px 24px;
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-        }
-
-        .bullet-list.bottlenecks li {
-            border-left: 3px solid var(--erro-alerta);
-        }
-
-        .bullet-list li .icon {
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .bullet-list.bottlenecks li .icon {
-            color: var(--erro-alerta);
-        }
-
-        .bullet-list.standard-list li {
-            border-left: 3px solid var(--azul-destaque);
-        }
-
-        /* Timeline Horizontal Layout */
-        .timeline-horizontal {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin: 40px 0;
-            padding-bottom: 20px;
-        }
-
-        .timeline-horizontal::before {
-            content: '';
-            position: absolute;
-            top: 24px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--separadores);
-            z-index: 1;
-        }
-
-        .timeline-step {
-            position: relative;
-            z-index: 2;
-            width: 18%;
-            text-align: center;
-        }
-
-        .timeline-node {
-            width: 50px;
-            height: 50px;
-            background-color: var(--superficie-card);
-            border: 2px solid var(--azul-destaque);
-            font-family: var(--font-tech);
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--texto-primario);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px auto;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-step:hover .timeline-node {
-            background-color: var(--azul-destaque);
-            box-shadow: 0 0 15px var(--azul-destaque);
-        }
-
-        .timeline-step-title {
-            font-family: var(--font-titulo);
-            font-size: 1.25rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .timeline-step-desc {
-            font-size: 0.85rem;
-            color: var(--texto-secundario);
-            padding: 0 8px;
-        }
-
-        /* Data Tables Design */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            margin: 24px 0;
-            border: 1px solid var(--separadores);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-
-        th {
-            background-color: var(--superficie-card);
-            font-family: var(--font-tech);
-            color: var(--azul-destaque);
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 16px 24px;
-            border-bottom: 2px solid var(--separadores);
-        }
-
-        td {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--separadores);
-            color: var(--texto-primario);
-            background-color: rgba(26, 43, 60, 0.15);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Scenario Cards specific design */
-        .scenario-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 24px;
-        }
-
-        .scenario-card {
-            background-color: var(--superficie-card);
-            border-top: 4px solid var(--texto-secundario);
-            padding: 32px 24px;
-        }
-
-        .scenario-card.sc-conservador { border-top-color: var(--texto-secundario); }
-        .scenario-card.sc-moderado { border-top-color: var(--azul-destaque); }
-        .scenario-card.sc-otimista { border-top-color: var(--dourado-ancora); }
-
-        .scenario-label {
-            font-family: var(--font-tech);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        .sc-conservador .scenario-label { color: var(--texto-secundario); }
-        .sc-moderado .scenario-label { color: var(--azul-destaque); }
-        .sc-otimista .scenario-label { color: var(--dourado-ancora); }
-
-        .scenario-metrics {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 24px;
-            border-bottom: 1px solid var(--separadores);
-            padding-bottom: 24px;
-        }
-
-        .sc-metric-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: var(--texto-secundario);
-        }
-
-        .sc-metric-row span:last-child {
-            color: var(--texto-primario);
-            font-family: var(--font-tech);
-        }
-
-        .scenario-total {
-            text-align: center;
-            background-color: rgba(13, 27, 42, 0.4);
-            padding: 16px;
-            border: 1px solid var(--separadores);
-        }
-
-        .scenario-total .total-label {
-            font-family: var(--font-tech);
-            font-size: 0.7rem;
-            color: var(--texto-secundario);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .scenario-total .total-val {
-            font-family: var(--font-titulo);
-            font-size: 2.25rem;
-            color: var(--texto-primario);
-            line-height: 1.2;
-            margin-top: 4px;
-        }
-        .sc-otimista .scenario-total .total-val {
-            color: var(--dourado-ancora);
-        }
-
-        .note-block {
-            font-size: 0.85rem;
-            color: var(--texto-secundario);
-            margin-top: 24px;
-            line-height: 1.5;
-            padding-left: 12px;
-            border-left: 2px solid var(--separadores);
-        }
-
-        /* Checklists Design System */
-        .checklist-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .checklist-box {
-            background-color: var(--superficie-card);
-            padding: 28px;
-        }
-
-        .checklist-box h3 {
-            font-family: var(--font-titulo);
-            font-size: 1.35rem;
-            letter-spacing: 0.05em;
-            color: var(--azul-destaque);
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--separadores);
-            padding-bottom: 12px;
-        }
-
-        .chk-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .chk-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 0.9rem;
-            color: var(--texto-primario);
-        }
-
-        .chk-box-visual {
-            width: 18px;
-            height: 18px;
-            border: 1px solid var(--texto-secundario);
-            display: inline-block;
-            flex-shrink: 0;
-            margin-top: 2px;
-            position: relative;
-        }
-
-        /* Decision Callout UI */
-        .decision-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .decision-card {
-            background-color: rgba(201, 162, 39, 0.03);
-            border: 1px solid rgba(201, 162, 39, 0.2);
-            border-left: 4px solid var(--dourado-ancora);
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .decision-icon {
-            color: var(--dourado-ancora);
-            font-size: 1.25rem;
-        }
-
-        .decision-text {
-            font-family: var(--font-corpo);
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--texto-primario);
-        }
-
-        /* Narrative & Storytelling blocks */
-        .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .history-item {
-            background-color: var(--superficie-card);
-            padding: 20px 24px;
-            display: flex;
-            align-items: flex-start;
-            gap: 18px;
-            border-left: 1px solid var(--separadores);
-        }
-
-        .history-icon {
-            font-size: 1.35rem;
-            flex-shrink: 0;
-        }
-
-        .history-content {
-            font-size: 0.95rem;
-            color: var(--texto-primario);
-        }
-
-        /* Vertical Timeline (Live Roteiro) */
-        .timeline-vertical {
-            position: relative;
-            padding-left: 32px;
-            margin: 32px 0;
-        }
-
-        .timeline-vertical::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 7px;
-            width: 2px;
-            height: 100%;
-            background-color: var(--separadores);
-        }
-
-        .vt-step {
-            position: relative;
-            margin-bottom: 28px;
-        }
-
-        .vt-step:last-child {
-            margin-bottom: 0;
-        }
-
-        .vt-node {
-            position: absolute;
-            left: -32px;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: var(--fundo-principal);
-            border: 3px solid var(--azul-destaque);
-            z-index: 2;
-        }
-
-        .vt-time {
-            font-family: var(--font-tech);
-            font-size: 0.8rem;
-            color: var(--azul-destaque);
-            font-weight: 700;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .vt-content {
-            background-color: rgba(26, 43, 60, 0.2);
-            padding: 16px 20px;
-            border: 1px solid var(--separadores);
-        }
-
-        .vt-title {
-            font-family: var(--font-titulo);
-            font-size: 1.15rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .vt-desc {
-            font-size: 0.9rem;
-            color: var(--texto-secundario);
-        }
-
-        /* Gold highlight box layout */
-        .gold-highlight-box {
-            background-color: rgba(201, 162, 39, 0.05);
-            border: 1px solid var(--dourado-ancora);
-            padding: 32px;
-            margin: 24px 0;
-        }
-
-        .gold-highlight-box h4 {
-            font-family: var(--font-titulo);
-            font-size: 1.5rem;
-            color: var(--dourado-ancora);
-            letter-spacing: 0.05em;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        .gold-highlight-box p {
-            font-size: 0.95rem;
-            color: var(--texto-primario);
-        }
-
-        /* Technical Code script boxes */
-        .code-box {
-            background-color: rgba(13, 27, 42, 0.6);
-            border: 1px solid var(--separadores);
-            padding: 24px;
-            font-family: var(--font-tech);
-            font-size: 0.9rem;
-            color: var(--azul-destaque);
-            line-height: 1.5;
-            margin: 16px 0;
-            overflow-x: auto;
-            white-space: pre-wrap;
-        }
-
-        /* Animations Framework (Intersection Observer Layouts) */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Footer Element */
-        .app-footer {
-            margin-left: 320px;
-            background-color: #070F17;
-            padding: 40px 80px;
-            border-top: 1px solid var(--separadores);
-            text-align: center;
-            font-family: var(--font-tech);
-            font-size: 0.8rem;
-            color: var(--texto-secundario);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        /* Responsive Breakpoints (Mobile First Overrides) */
-        @media (max-width: 1024px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            body.menu-open .sidebar {
-                transform: translateX(0);
-                width: 100%;
-            }
-
-            .mobile-header {
-                display: flex;
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-                padding: 100px 24px 40px 24px;
-            }
-
-            .app-footer {
-                margin-left: 0;
-                padding: 40px 24px;
-            }
-
-            body.menu-open .hamburger span:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
-            }
-            body.menu-open .hamburger span:nth-child(2) {
-                opacity: 0;
-            }
-            body.menu-open .hamburger span:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
-            }
-
-            .grid-2x2, .grid-3col, .scenario-grid, .checklist-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .timeline-horizontal {
-                flex-direction: column;
-                gap: 32px;
-                padding-left: 20px;
-            }
-            .timeline-horizontal::before {
-                left: 24px;
-                top: 0;
-                width: 2px;
-                height: 100%;
-            }
-            .timeline-step {
-                width: 100%;
-                text-align: left;
-                display: flex;
-                align-items: flex-start;
-                gap: 16px;
-            }
-            .timeline-node {
-                margin: 0;
-                flex-shrink: 0;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APROBATUM · Decreto PMDF</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #CC0000;
+  --black: #111111;
+  --dark: #0D0D0D;
+  --white: #FFFFFF;
+  --off: #F5F5F5;
+  --gray: #E8E8E8;
+  --gray2: #D0D0D0;
+  --text-dim: #555555;
+  --text-muted: #999999;
+  --gold: #B8860B;
+  --green: #1A7A3C;
+  --blue: #1A5FA8;
+  --FD: 'Bebas Neue', sans-serif;
+  --FB: 'DM Sans', sans-serif;
+  --FM: 'Space Mono', monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--FB);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── TOPBAR ──────────────────────── */
+.topbar {
+  background: var(--dark);
+  padding: 10px 0;
+  text-align: center;
+  font-family: var(--FM);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.topbar span { color: rgba(255,255,255,0.6); }
+
+/* ── HERO ────────────────────────── */
+.hero {
+  background: var(--dark);
+  padding: 80px 40px 72px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+.hero-title {
+  font-family: var(--FD);
+  font-size: clamp(80px, 12vw, 160px);
+  line-height: 0.88;
+  color: var(--white);
+  letter-spacing: 0.01em;
+  margin-bottom: 4px;
+}
+.hero-title-red {
+  font-family: var(--FD);
+  font-size: clamp(40px, 6vw, 80px);
+  color: var(--red);
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+.hero-sub {
+  font-family: var(--FM);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
+  font-family: var(--FM);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 7px 16px;
+  border-radius: 100px;
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  background: #27AE60;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(39,174,96,0.5); }
+  50% { opacity:.8; box-shadow: 0 0 0 5px rgba(39,174,96,0); }
+}
+
+/* ── NAV TABS ────────────────────── */
+.nav-wrap {
+  background: var(--dark);
+  border-bottom: 2px solid var(--black);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  font-family: var(--FM);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+.nav-tab:hover { color: rgba(255,255,255,0.7); }
+.nav-tab.active { color: var(--white); border-bottom-color: var(--red); }
+.nav-tab.active .tdot { background: currentColor; }
+.tdot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.tdot.r { color: var(--red); }
+.tdot.b { color: #4A9EE8; }
+.tdot.g { color: #27AE60; }
+.tdot.gold { color: #C9A227; }
+
+/* ── SECTION ─────────────────────── */
+.section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--gray);
+}
+.section-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+.sec-eyebrow {
+  font-family: var(--FM);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 2px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.sec-title {
+  font-family: var(--FD);
+  font-size: clamp(44px, 6vw, 72px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.sec-sub {
+  font-size: 15px;
+  color: var(--text-dim);
+  margin-bottom: 56px;
+  font-style: italic;
+  max-width: 600px;
+}
+
+/* ── BLOCK ──────────────────────── */
+.block { margin-bottom: 64px; }
+.block:last-child { margin-bottom: 0; }
+.block-title {
+  font-family: var(--FD);
+  font-size: 30px;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+  border-bottom: 2px solid var(--black);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+.block-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: -12px;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* ── HIGHLIGHT CARD ──────────────── */
+.hcard {
+  background: var(--off);
+  border-left: 4px solid var(--black);
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+.hcard.red { border-left-color: var(--red); }
+.hcard.gold { border-left-color: var(--gold); background: #FFFDF4; }
+.hcard.green { border-left-color: var(--green); }
+.hcard p { color: var(--text-dim); font-size: 14px; line-height: 1.75; }
+.hcard p + p { margin-top: 10px; }
+.hcard strong { color: var(--black); font-weight: 700; }
+.hcard-label {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.hcard-label.red { color: var(--red); }
+.hcard-label.gold { color: var(--gold); }
+.hcard-label.green { color: var(--green); }
+.hcard-title {
+  font-family: var(--FD);
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+/* ── QUOTE ──────────────────────── */
+.quote-block {
+  border-left: 4px solid var(--gray2);
+  padding: 24px 32px;
+  background: var(--off);
+  margin-top: 16px;
+}
+.quote-mark {
+  font-family: var(--FD);
+  font-size: 56px;
+  line-height: 0.6;
+  color: var(--red);
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+.quote-text {
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.quote-author {
+  font-family: var(--FM);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── ALERT ──────────────────────── */
+.alert {
+  background: #FFF5F5;
+  border: 1px solid rgba(204,0,0,0.15);
+  border-left: 4px solid var(--red);
+  padding: 18px 22px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+.alert strong { color: #AA0000; }
+.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+
+/* ── STORY GRID ─────────────────── */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--gray);
+  border: 2px solid var(--gray);
+  margin-top: 20px;
+}
+.story-card {
+  background: var(--white);
+  padding: 24px;
+  transition: background 0.15s;
+}
+.story-card:hover { background: var(--off); }
+.s-icon { font-size: 22px; margin-bottom: 6px; }
+.s-num {
+  font-family: var(--FM);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--red);
+  opacity: 0.25;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.s-text { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.s-text strong { color: var(--black); }
+
+/* ── METRIC CARDS ────────────────── */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gray);
+  border: 2px solid var(--gray);
+}
+.metric-card {
+  background: var(--white);
+  padding: 28px 24px;
+  border-top: 3px solid var(--gray2);
+}
+.metric-card.accent { border-top-color: var(--black); }
+.metric-card.gold-top { border-top-color: var(--gold); background: #FFFDF7; }
+.metric-card.red-top { border-top-color: var(--red); }
+.m-label {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.m-label.gold { color: var(--gold); }
+.m-label.red { color: var(--red); }
+.m-big {
+  font-family: var(--FM);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.m-big.gold { color: var(--gold); }
+.m-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gray);
+  font-size: 12px;
+}
+.m-row:last-child { border-bottom: none; }
+.m-row label {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.m-row span { color: var(--text-dim); font-weight: 500; }
+
+/* ── GRID 2 ─────────────────────── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--gray);
+  border: 2px solid var(--gray);
+}
+.g2-card { background: var(--white); padding: 28px 24px; }
+.g2-label {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.g2-label.red { color: var(--red); }
+.g2-label.gold { color: var(--gold); }
+.g2-title {
+  font-family: var(--FD);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.g2-card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+.g2-card p + p { margin-top: 8px; }
+.g2-card strong { color: var(--black); }
+
+/* ── TABLE ──────────────────────── */
+.table-wrap { overflow-x: auto; margin-top: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead tr { background: var(--black); }
+thead th {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  padding: 12px 16px;
+  text-align: left;
+  white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid var(--gray); }
+tbody tr:nth-child(even) { background: var(--off); }
+tbody td {
+  padding: 12px 16px;
+  color: var(--text-dim);
+  vertical-align: top;
+}
+tbody td:first-child { color: var(--black); font-weight: 600; }
+
+/* ── TIMELINE ───────────────────── */
+.timeline {
+  display: flex;
+  gap: 0;
+  margin-top: 24px;
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 8px; left: 8px; right: 0;
+  height: 1px;
+  background: var(--gray2);
+}
+.tl-step { flex: 1; position: relative; padding-right: 8px; }
+.tl-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--black);
+  border: 2px solid var(--white);
+  outline: 2px solid var(--black);
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.tl-dot.red { background: var(--red); outline-color: var(--red); }
+.tl-phase {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.tl-text { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+/* ── PRINCIPLES ─────────────────── */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gray);
+  border: 2px solid var(--gray);
+}
+.pc {
+  background: var(--white);
+  padding: 24px 20px;
+  border-top: 3px solid var(--gray2);
+  transition: border-top-color 0.15s;
+}
+.pc:hover { border-top-color: var(--black); }
+.pc-num {
+  font-family: var(--FM);
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.pc-title {
+  font-family: var(--FD);
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.pc-text { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* ── CONTENT TYPES ──────────────── */
+.ct-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--gray);
+  border: 2px solid var(--gray);
+}
+.ct-card {
+  background: var(--white);
+  padding: 24px 22px;
+  border-left: 3px solid transparent;
+  transition: border-left-color 0.15s, background 0.15s;
+}
+.ct-card:hover { border-left-color: var(--black); background: var(--off); }
+.ct-ico { font-size: 22px; margin-bottom: 8px; }
+.ct-freq {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+.ct-name {
+  font-family: var(--FD);
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.ct-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.ct-resp {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--gray);
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+/* ── PRIMAL LIST ────────────────── */
+.primal-list { display: flex; flex-direction: column; gap: 2px; }
+.pr-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  background: var(--white);
+  border: 1px solid var(--gray);
+  border-left: 3px solid var(--gray2);
+  padding: 20px 24px;
+  transition: border-left-color 0.15s, background 0.15s;
+}
+.pr-item:hover { border-left-color: var(--red); background: var(--off); }
+.pr-num {
+  font-family: var(--FM);
+  font-size: 10px;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  min-width: 72px;
+  padding-top: 2px;
+}
+.pr-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.pr-text { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+/* ── CHECKLIST ──────────────────── */
+.checklist { display: flex; flex-direction: column; gap: 8px; }
+.cl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--off);
+  border-left: 3px solid var(--gray2);
+  font-size: 13px;
+  color: var(--text-dim);
+  transition: background 0.15s, border-left-color 0.15s;
+}
+.cl-item:hover { background: var(--gray); border-left-color: var(--black); }
+.cl-item.red { border-left-color: var(--red); }
+.cl-item.gold { border-left-color: var(--gold); }
+.cl-item strong { color: var(--black); }
+.cl-ico { flex-shrink: 0; margin-top: 1px; }
+
+/* ── SCRIPT ─────────────────────── */
+.script-card {
+  background: var(--black);
+  padding: 28px 32px;
+  margin-top: 16px;
+}
+.script-eyebrow {
+  font-family: var(--FM);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 14px;
+}
+.script-line {
+  font-family: var(--FM);
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+.script-line strong { color: var(--white); }
+.script-steps { display: flex; flex-direction: column; gap: 10px; }
+.ss {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+.ss-arrow { color: var(--red); font-weight: 700; flex-shrink: 0; }
+.ss strong { color: rgba(255,255,255,0.9); }
+
+/* ── ACTIONS ────────────────────── */
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--gray);
+  border: 2px solid var(--gray);
+}
+.ac-card {
+  background: var(--white);
+  padding: 22px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: background 0.15s;
+}
+.ac-card:hover { background: var(--off); }
+.ac-num {
+  font-family: var(--FM);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--red);
+  opacity: 0.25;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 44px;
+}
+.ac-title { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+.ac-text { font-size: 12px; color: var(--text-dim); }
+
+/* ── FOOTER ─────────────────────── */
+.footer {
+  background: var(--dark);
+  padding: 40px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 3px solid var(--red);
+}
+.ft-brand {
+  font-family: var(--FD);
+  font-size: 28px;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.ft-brand span { color: var(--red); }
+.ft-info {
+  font-family: var(--FM);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  text-align: right;
+  line-height: 2;
+}
+
+/* ── FADE IN ────────────────────── */
+.fi {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.fi.on { opacity: 1; transform: translateY(0); }
+
+/* ── MOBILE ─────────────────────── */
+.mob-bar {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--dark);
+  border-bottom: 2px solid var(--red);
+  z-index: 500;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.mob-logo {
+  font-family: var(--FD);
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+}
+.mob-logo span { color: var(--red); }
+.ham { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.ham span { display: block; width: 24px; height: 2px; background: rgba(255,255,255,0.7); transition: all 0.25s; }
+.ham.o span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.ham.o span:nth-child(2) { opacity: 0; }
+.ham.o span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mob-drawer {
+  display: none;
+  position: fixed;
+  top: 52px; left: 0; right: 0; bottom: 0;
+  background: var(--dark);
+  z-index: 499;
+  padding: 16px 0;
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+  overflow-y: auto;
+}
+.mob-drawer.o { transform: translateX(0); }
+.mob-drawer .nav-tab {
+  display: flex;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+.mob-drawer .nav-tab.active { border-bottom-color: rgba(255,255,255,0.06); border-left: 3px solid var(--red); color: var(--white); }
+
+@media (max-width: 900px) {
+  .mob-bar { display: flex; }
+  .mob-drawer { display: block; }
+  .nav-wrap { display: none; }
+  .topbar { display: none; }
+  body { padding-top: 52px; }
+  .hero { padding: 48px 24px 40px; }
+  .section-inner { padding: 0 24px; }
+  .section { padding: 56px 0; }
+  .metric-grid { grid-template-columns: 1fr; }
+  .story-grid { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .principles { grid-template-columns: 1fr; }
+  .ct-grid { grid-template-columns: 1fr; }
+  .actions-grid { grid-template-columns: 1fr; }
+  .timeline { flex-direction: column; }
+  .timeline::before { display: none; }
+  .footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px; }
+  .ft-info { text-align: center; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: 64px; }
+  .hero-title-red { font-size: 36px; }
+  .sec-title { font-size: 38px; }
+}
+</style>
 </head>
 <body>
 
-    <!-- Mobile Navigation Top Bar -->
-    <div class="mobile-header">
-        <div class="mobile-logo" style="color: var(--texto-primario);">SCALE CO.</div>
-        <button class="hamburger" id="menuToggle" aria-label="Abrir Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+<!-- MOBILE BAR -->
+<div class="mob-bar">
+  <div class="mob-logo">APROBA<span>TUM</span></div>
+  <div class="ham" id="ham"><span></span><span></span><span></span></div>
+</div>
+<div class="mob-drawer" id="mob-drawer">
+  <a class="nav-tab active" href="#s01"><span class="tdot r"></span> Briefing Lançamento</a>
+  <a class="nav-tab" href="#s02"><span class="tdot b"></span> Conteúdo & Branding</a>
+  <a class="nav-tab" href="#s03"><span class="tdot gold"></span> Perpétuo</a>
+  <a class="nav-tab" href="#s04"><span class="tdot g"></span> Time Comercial</a>
+  <a class="nav-tab" href="#s05"><span class="tdot r"></span> TAF Presencial</a>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar"><span>Scale Company</span> · Planejamento Estratégico</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-title">APROBATUM</div>
+  <div class="hero-title-red">DECRETO PMDF</div>
+  <div class="hero-sub">Estratégia de Lançamento 2026 · Prof. Murilo Marques</div>
+  <div class="hero-badge"><span class="badge-dot"></span> Documento ativo · Maio/2026</div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-wrap">
+  <div class="nav-inner">
+    <a class="nav-tab active" href="#s01" data-s="s01"><span class="tdot r"></span> Briefing Lançamento</a>
+    <a class="nav-tab" href="#s02" data-s="s02"><span class="tdot b"></span> Conteúdo & Branding</a>
+    <a class="nav-tab" href="#s03" data-s="s03"><span class="tdot gold"></span> Perpétuo</a>
+    <a class="nav-tab" href="#s04" data-s="s04"><span class="tdot g"></span> Time Comercial</a>
+    <a class="nav-tab" href="#s05" data-s="s05"><span class="tdot r"></span> TAF Presencial</a>
+  </div>
+</div>
+
+<!-- ── S01 ── -->
+<section class="section" id="s01">
+<div class="section-inner">
+  <div class="sec-eyebrow">Lançamento</div>
+  <div class="sec-title">DECRETO PMDF</div>
+  <div class="sec-sub">Um lançamento não é um evento. É uma operação.</div>
+
+  <div class="block fi">
+    <div class="block-title">Por que DECRETO PMDF</div>
+    <div class="hcard gold">
+      <p>Murilo tem uma premissa que prega para todos os alunos: <strong>a reprovação não é parte do processo</strong> — ela é consequência de quem não decidiu de verdade. Ele mesmo nunca reprovou em nenhum concurso na vida. São <strong>11 aprovações</strong>. Não porque é gênio. Porque toda vez que decidiu, não tinha plano B.</p>
+      <p>DECRETO PMDF nasce dessa premissa. Um decreto não é uma tentativa. É uma declaração. <strong>Quem entra no lançamento não está tentando passar na PMDF — está decretando.</strong></p>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">A história real</div>
+    <div class="block-sub">Esses fatos não são marketing. São o currículo de quem vai te preparar.</div>
+    <div class="story-grid">
+      <div class="story-card"><div class="s-icon">🏚</div><div class="s-num">01</div><div class="s-text">Cresceu na Ceilândia. Família sem nenhum servidor público. Escola pública fraca o tempo inteiro. Sabia que tinha que se virar.</div></div>
+      <div class="story-card"><div class="s-icon">💼</div><div class="s-num">02</div><div class="s-text">Menor aprendiz desde os 13 anos. R$140 por mês. Vendeu fruta em feira, entregou panfleto, pintou casa. Não havia outra opção.</div></div>
+      <div class="story-card"><div class="s-icon">🎓</div><div class="s-num">03</div><div class="s-text">Aprendeu inglês e virou professor aos 16. Dava aula das 8h às 22h por R$10–12 a hora. Era isso que o sustentava.</div></div>
+      <div class="story-card"><div class="s-icon">🏆</div><div class="s-num">04</div><div class="s-text">Primeiro concurso que fez: passou. Nunca reprovou em nenhum. <strong>São 11 aprovações.</strong></div></div>
+      <div class="story-card"><div class="s-icon">🚔</div><div class="s-num">05</div><div class="s-text">Entrou na PMDF como soldado. Sonhava ser oficial. Estudava dentro da viatura nas paradas de madrugada.</div></div>
+      <div class="story-card"><div class="s-icon">🏥</div><div class="s-num">06</div><div class="s-text">Quebrou os dois braços num acidente de moto. Começou a estudar para o CFO no hospital com os livros que a mãe trouxe. <strong>Passou em 4º lugar.</strong></div></div>
+      <div class="story-card"><div class="s-icon">⚡</div><div class="s-num">07</div><div class="s-text">Para o Senado: 723 horas de estudo em menos de 3 meses. Comia lasanha de micro-ondas. Foi encontrado correndo às 3h da manhã treinando o TAF.</div></div>
+      <div class="story-card"><div class="s-icon">🏛</div><div class="s-num">08</div><div class="s-text">Hoje é Policial Legislativo do Senado Federal. <strong>Ganha mais que qualquer delegado do Brasil.</strong> O ex-subordinado da PM trabalha do lado como igual.</div></div>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">A premissa do lançamento</div>
+    <div class="hcard red">
+      <p>O edital vai sair. A questão não é se você vai estar pronto — <strong>é se você já decretou que vai passar.</strong></p>
+      <p>Murilo nunca estudou para tentar. Estudou para passar. Cada concurso, ele decretou. Sem plano B. Quem entra no DECRETO PMDF não está comprando mais um curso — está adotando uma mentalidade que ele nunca abandonou.</p>
+    </div>
+    <div class="quote-block">
+      <div class="quote-mark">"</div>
+      <div class="quote-text">As pessoas normalizaram a reprovação. Ficam confortáveis sendo concurseiras. Enquanto isso, alguém que nunca havia estudado para concurso na vida passa na frente — porque essa pessoa precisava. E você achava que podia esperar.</div>
+      <div class="quote-author">— Prof. Murilo Marques</div>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">Data estratégica — agosto 2026</div>
+    <div class="alert">
+      <span class="alert-icon">⚠</span>
+      <span><strong>Copa do Mundo 2026:</strong> 11 de junho a 19 de julho. Durante grandes eventos nacionais o mercado sofre queda de atenção e conversão. Lançar em agosto garante mercado focado, cartão virado e sem ruído externo.</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Critério</th><th>Recomendação</th></tr></thead>
+        <tbody>
+          <tr><td>Dia da semana</td><td>Segunda, terça ou quarta</td></tr>
+          <tr><td>Dia do mês</td><td>Após o 5º dia útil (cartão virado)</td></tr>
+          <tr><td>Janela ideal</td><td>2ª semana de agosto</td></tr>
+          <tr><td>Datas prováveis</td><td>10, 11 ou 12 de agosto de 2026</td></tr>
+          <tr><td>Por que não julho?</td><td>Copa do Mundo até 19/07 — mercado distraído</td></tr>
+          <tr><td>Alternativa acelerada</td><td>Julho — 2ª quinzena (se tudo começar imediatamente)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">Perpétuo + Lançamento Cíclico</div>
+    <div class="hcard">
+      <p>O produto fica disponível para venda o tempo todo no perpétuo. 30 dias antes do lançamento, começa a captação de leads via tráfego pago. O lançamento tem oferta especial + bônus exclusivo. Quem não comprou entra em sequência de nutrição e é convertido pelo time comercial nas semanas seguintes.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-step"><div class="tl-dot red"></div><div class="tl-phase">Agora</div><div class="tl-text">Subida de preço + comunicação</div></div>
+      <div class="tl-step"><div class="tl-dot"></div><div class="tl-phase">Mês 1</div><div class="tl-text">Estrutura + TAF presencial</div></div>
+      <div class="tl-step"><div class="tl-dot"></div><div class="tl-phase">Mês 2</div><div class="tl-text">Captação de leads — 30 dias antes</div></div>
+      <div class="tl-step"><div class="tl-dot"></div><div class="tl-phase">Mês 3</div><div class="tl-text">Aquecimento + Live de lançamento</div></div>
+      <div class="tl-step"><div class="tl-dot red"></div><div class="tl-phase">Pós</div><div class="tl-text">Follow-up + recorrência</div></div>
+    </div>
+  </div>
+
+  <!-- LEADS ORGÂNICOS -->
+  <div class="block fi">
+    <div class="block-title">Projeção de Leads Orgânicos</div>
+    <div class="block-sub">Estimativa de leads captados via YouTube, Instagram e grupo gratuito — sem investimento em ads.</div>
+
+    <div class="table-wrap" style="margin-bottom:20px">
+      <table>
+        <thead>
+          <tr>
+            <th>Fonte</th>
+            <th>Conservador</th>
+            <th>Moderado</th>
+            <th>Otimista</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>YouTube — link de captura em todos os vídeos</td><td>~400 leads</td><td>~700 leads</td><td>~1.100 leads</td></tr>
+          <tr><td>Instagram — Stories diários + Reels + bio</td><td>~600 leads</td><td>~1.200 leads</td><td>~2.200 leads</td></tr>
+          <tr><td>Grupo gratuito já existente</td><td>1.022 leads</td><td>1.022 leads</td><td>1.022 leads</td></tr>
+          <tr style="background:var(--off)"><td><strong>Total orgânico (30 dias)</strong></td><td><strong>~2.022</strong></td><td><strong>~2.922</strong></td><td><strong>~4.322</strong></td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="app-container">
-        
-        <!-- Navigation Component (Sidebar) -->
-        <nav class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <div class="company">SCALE COMPANY</div>
-                <div class="project">MENTORIA PMDF</div>
-            </div>
+    <div class="hcard red" style="margin-top:4px">
+      <p>O vídeo de <strong>38k views</strong> está sem link do grupo na descrição. Esse vídeo sozinho já justifica as projeções conservadoras de YouTube — adicionar o link hoje captura viewers que já assistiram e ainda vão assistir, sem custo algum. Com 100k no Instagram e frequência de Stories, 600–2.200 leads orgânicos em 30 dias é realista para o porte do canal.</p>
+    </div>
+  </div>
 
-            <ul class="nav-menu">
-                <li class="nav-item active" data-sec="estrategia">
-                    <a href="#estrategia">
-                        <span class="num">01</span>
-                        <span class="title">Estratégia do Lançamento</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-sec="checklist">
-                    <a href="#checklist">
-                        <span class="num">02</span>
-                        <span class="title">Checklist Operacional</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-sec="narrativa">
-                    <a href="#narrativa">
-                        <span class="num">03</span>
-                        <span class="title">Narrativa e Storytelling</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-sec="precificacao">
-                    <a href="#precificacao">
-                        <span class="num">04</span>
-                        <span class="title">Perpétuo + Precificação</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-sec="comercial">
-                    <a href="#comercial">
-                        <span class="num">05</span>
-                        <span class="title">Time Comercial</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-sec="organico">
-                    <a href="#organico">
-                        <span class="num">06</span>
-                        <span class="title">Conteúdo Orgânico</span>
-                    </a>
-                </li>
-            </ul>
+  <!-- PROJEÇÃO DE FATURAMENTO -->
+  <div class="block fi">
+    <div class="block-title">Projeção de Faturamento</div>
+    <div class="block-sub">Base: R$10k em ads · Ticket: R$1.997 · Taxas sobre total combinado (pago + orgânico). Perpétuo não contabilizado.</div>
 
-            <div class="sidebar-footer">
-                <p>Maio 2026 · Versão 1.0</p>
-            </div>
-        </nav>
-
-        <!-- Main Content Area -->
-        <main class="main-content">
-            
-            <!-- Hero Layout Section -->
-            <header class="hero">
-                <div class="badge-confidential">CONFIDENCIAL</div>
-                <h1>PLANO ESTRATÉGICO</h1>
-                <div class="subtitle">Mentoria PMDF · Lançamento 2026</div>
-                
-                <div class="hero-meta">
-                    <span>PARCERIA: <strong>Scale Company × Prof. Murilo Marques</strong></span>
-                    <span>LOCAL: <strong>Brasília · DF</strong></span>
-                    <span>DATA: <strong>Maio de 2026</strong></span>
-                </div>
-            </header>
-
-            <!-- SECTION 01 -->
-            <section id="estrategia" class="section-anchor fade-in-section">
-                <div class="section-header">
-                    <span class="sec-num">DIRETRIZ 01</span>
-                    <h2>Estratégia do Lançamento</h2>
-                    <p>Mapeamento analítico do cenário atual, gargalos estruturais e o modelo híbrido focado em escala exponencial.</p>
-                </div>
-
-                <div class="block-title">Onde o projeto está hoje</div>
-                <div class="grid-2x2">
-                    <div class="card">
-                        <div class="card-icon">01</div>
-                        <div class="card-value">R$ 40–50k</div>
-                        <div class="card-label">Faturamento mensal atual (100% orgânico, zero tráfego pago).</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">02</div>
-                        <div class="card-value">~120</div>
-                        <div class="card-label">Alunos ativos atualmente integrados na mentoria PMDF.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">03</div>
-                        <div class="card-value">3</div>
-                        <div class="card-label">Total de anúncios ativos no Meta Ads hoje.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">04</div>
-                        <div class="card-value">0</div>
-                        <div class="card-label">Leads/dia em pipeline estruturado de vendas qualificadas.</div>
-                    </div>
-                </div>
-
-                <div class="block-title">Gargalos identificados</div>
-                <ul class="bullet-list bottlenecks">
-                    <li>
-                        <span class="icon">⚠</span>
-                        <div class="text"><strong>Sem funil de vendas estruturado:</strong> Candidatos que demonstram interesse mas não possuem o capital imediato para a mentoria saem do ecossistema sem deixar nenhuma conversão ativa.</div>
-                    </li>
-                    <li>
-                        <span class="icon">⚠</span>
-                        <div class="text"><strong>Sem tráfego pago ativo:</strong> O crescimento e a captação são 100% dependentes da energia e exposição orgânica direta do Murilo no Instagram.</div>
-                    </li>
-                    <li>
-                        <span class="icon">⚠</span>
-                        <div class="text"><strong>Página de vendas feita na raça:</strong> Ausência de copy persuasiva profissional, parametrização de pixel inconsistente e inexistência de testes A/B estruturados.</div>
-                    </li>
-                    <li>
-                        <span class="icon">⚠</span>
-                        <div class="text"><strong>Sem time comercial especializado:</strong> Todas as conversões de vendas de alto valor dependem do Murilo respondendo DMs no direct, gerando gargalo operacional imediato sem processo escalável.</div>
-                    </li>
-                    <li>
-                        <span class="icon">⚠</span>
-                        <div class="text"><strong>Sem produto de entrada (low ticket):</strong> A porta de entrada do funil de vendas não existe, impedindo a monetização imediata de leads mais frios ou com menor poder aquisitivo.</div>
-                    </li>
-                    <li>
-                        <span class="icon">⚠</span>
-                        <div class="text"><strong>Flashcards sem infraestrutura comercial:</strong> Embora estejam em fase final de produção, os flashcards ainda carecem de um produto comercialmente empacotado e validado para distribuição.</div>
-                    </li>
-                </ul>
-
-                <div class="block-title">O que muda com a parceria (Scale)</div>
-                <div class="grid-3col">
-                    <div class="card">
-                        <div class="card-icon">ANÚNCIOS</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Tráfego Pago</div>
-                        <div class="card-label">Meta Ads estruturado com testes constantes de múltiplos criativos e otimização cirúrgica diária de orçamento.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">CONVERSÃO</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Copy e Páginas</div>
-                        <div class="card-label">Páginas de vendas profissionais, páginas de captura otimizadas, réguas de e-mail marketing e automações de WhatsApp.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">OPERAÇÃO</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Gestão de Projeto</div>
-                        <div class="card-label">Gestora dedicada no projeto, fluxos organizados via Notion/Trello e controle rígido de cronogramas e entregas.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">ESCALA</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Time Comercial</div>
-                        <div class="card-label">Recrutamento e treinamento de SDR, scripts de conversão validados no X1, metas claras e comissionamento agressivo.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">TECH</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Automações</div>
-                        <div class="card-label">Estruturação de ManyChat no Direct, sequências automáticas de WhatsApp e sistemas automáticos de qualificação de leads.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">MEDIA</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Audiovisual</div>
-                        <div class="card-label">Direção de captação, edição de alto nível de vídeos de vendas, anúncios e roteiros validados para o expert gravar com facilidade.</div>
-                    </div>
-                </div>
-
-                <div class="block-title">Modelo de lançamento: Perpétuo + Lançamento Cíclico</div>
-                <p style="color: var(--texto-secundario); margin-bottom: 24px;">O produto principal permanece continuamente disponível para aquisição no modelo perpétuo. A cada 2 ou 3 meses, a Scale executa um grande lançamento focado em uma oferta especial atrelada a bônus exclusivos para aquecer a base acumulada e maximizar o faturamento. O lançamento não canibaliza o perpétuo — ele funciona como um multiplicador de resultados.</p>
-                
-                <div class="timeline-horizontal">
-                    <div class="timeline-step">
-                        <div class="timeline-node">01</div>
-                        <div class="timeline-step-title">Estrutura Base</div>
-                        <div class="timeline-step-desc">Páginas, infraestrutura de rastreamento (pixel), automações e setup de contingência de anúncios. (Semanas 1–2)</div>
-                    </div>
-                    <div class="timeline-horizontal-line"></div>
-                    <div class="timeline-step">
-                        <div class="timeline-node">02</div>
-                        <div class="timeline-step-title">Captação</div>
-                        <div class="timeline-step-desc">Tráfego pago direto para a lista, distribuição em massa de conteúdos e aquecimento estratégico. TAF em 06/06. (Semanas 3–6)</div>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="timeline-node">03</div>
-                        <div class="timeline-step-title">Aquecimento</div>
-                        <div class="timeline-step-desc">Sequência estruturada de conteúdos temáticos de alta retenção enviados via e-mail e grupos de WhatsApp. (Semanas 6–8)</div>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="timeline-node">04</div>
-                        <div class="timeline-step-title">Lançamento</div>
-                        <div class="timeline-step-desc">Live principal de vendas + oferta irresistível + bônus exclusivos. Janela de carrinho aberto por 5 a 7 dias. (Semanas 9–10)</div>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="timeline-node">05</div>
-                        <div class="timeline-step-title">Pós-Ciclo</div>
-                        <div class="timeline-step-desc">Estratégias de follow-up pelo time comercial, otimização da recorrência e planejamento do ciclo subsequente. (Semanas 11–12)</div>
-                    </div>
-                </div>
-
-                <div class="block-title">Data ideal — agosto de 2026</div>
-                <p style="color: var(--texto-secundario); margin-bottom: 16px;">A Copa do Mundo de 2026 ocorrerá entre os dias 11 de junho e 19 de julho. Historicamente, o mercado de infoprodutos e preparatórios para concursos públicos sofre uma retração severa na atenção coletiva e nas taxas de conversão durante os jogos da seleção e grandes eventos esportivos. Executar a abertura de carrinho em agosto assegura captação limpa de atenção, virada de limite de cartão de crédito e foco total da audiência.</p>
-                
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Critério Estratégico</th>
-                                <th>Recomendação Executiva</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Dia da semana</strong></td>
-                                <td>Segunda-feira, terça-feira ou quarta-feira (maiores taxas de abertura e engajamento em lives)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Dia do mês</strong></td>
-                                <td>Imediatamente após o 5º dia útil (aproveitando a virada do cartão de crédito da base)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Janela recomendada</strong></td>
-                                <td>Segunda semana do mês de agosto</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Data exata sugerida</strong></td>
-                                <td>11 ou 12 de agosto de 2026</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Por que não julho?</strong></td>
-                                <td>A Copa do Mundo vai até dia 19 de julho. O mercado estará disperso e focado no encerramento do evento.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Alternativa viável</strong></td>
-                                <td>Segunda quinzena de julho (apenas se a assinatura do acordo e execução inicial ocorrerem imediatamente)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="block-title">Cenários de Faturamento — Lançamento PMDF</div>
-                <p style="color: var(--texto-secundario); font-size: 0.95rem;"><strong>Base analítica de cálculo:</strong> Alocação inicial em anúncios de R$ 10.000. CPL (Custo por Lead) médio histórico do nicho policial mapeado entre R$ 6,00 e R$ 9,00. Ticket médio da mentoria fixado em R$ 1.997. O faturamento orgânico base do perpétuo de R$ 50.000 já se encontra somado nos resultados finais de cada projeção mensal.</p>
-                
-                <div class="scenario-grid">
-                    <div class="scenario-card sc-conservador">
-                        <div class="scenario-label">CONSERVADOR</div>
-                        <div class="scenario-metrics">
-                            <div class="sc-metric-row"><span>Investimento Ads:</span><span>R$ 10.000</span></div>
-                            <div class="sc-metric-row"><span>CPL Estimado:</span><span>R$ 9,00</span></div>
-                            <div class="sc-metric-row"><span>Leads Gerados:</span><span>~1.100 leads</span></div>
-                            <div class="sc-metric-row"><span>Taxa de Conversão:</span><span>1,5%</span></div>
-                            <div class="sc-metric-row"><span>Vendas Estimadas:</span><span>~16 vendas</span></div>
-                            <div class="sc-metric-row"><span>Ticket Médio:</span><span>R$ 1.997</span></div>
-                            <div class="sc-metric-row"><span>Faturamento Lançamento:</span><span>R$ 31.952</span></div>
-                            <div class="sc-metric-row"><span>+ Perpétuo Base:</span><span>R$ 50.000</span></div>
-                        </div>
-                        <div class="scenario-total">
-                            <div class="total-label">TOTAL ESTIMADO MÊS</div>
-                            <div class="total-val">R$ 81.952</div>
-                        </div>
-                    </div>
-
-                    <div class="scenario-card sc-moderado">
-                        <div class="scenario-label">MODERADO</div>
-                        <div class="scenario-metrics">
-                            <div class="sc-metric-row"><span>Investimento Ads:</span><span>R$ 10.000</span></div>
-                            <div class="sc-metric-row"><span>CPL Estimado:</span><span>R$ 7,50</span></div>
-                            <div class="sc-metric-row"><span>Leads Gerados:</span><span>~1.330 leads</span></div>
-                            <div class="sc-metric-row"><span>Taxa de Conversão:</span><span>2,5%</span></div>
-                            <div class="sc-metric-row"><span>Vendas Estimadas:</span><span>~33 vendas</span></div>
-                            <div class="sc-metric-row"><span>Ticket Médio:</span><span>R$ 1.997</span></div>
-                            <div class="sc-metric-row"><span>Faturamento Lançamento:</span><span>R$ 65.901</span></div>
-                            <div class="sc-metric-row"><span>+ Perpétuo Base:</span><span>R$ 50.000</span></div>
-                        </div>
-                        <div class="scenario-total">
-                            <div class="total-label">TOTAL ESTIMADO MÊS</div>
-                            <div class="total-val">R$ 115.901</div>
-                        </div>
-                    </div>
-
-                    <div class="scenario-card sc-otimista">
-                        <div class="scenario-label">OTIMISTA</div>
-                        <div class="scenario-metrics">
-                            <div class="sc-metric-row"><span>Investimento Ads:</span><span>R$ 10.000</span></div>
-                            <div class="sc-metric-row"><span>CPL Estimado:</span><span>R$ 6,00</span></div>
-                            <div class="sc-metric-row"><span>Leads Gerados:</span><span>~1.666 leads</span></div>
-                            <div class="sc-metric-row"><span>Taxa de Conversão:</span><span>4,0%</span></div>
-                            <div class="sc-metric-row"><span>Vendas Estimadas:</span><span>~66 vendas</span></div>
-                            <div class="sc-metric-row"><span>Ticket Médio:</span><span>R$ 1.997</span></div>
-                            <div class="sc-metric-row"><span>Faturamento Lançamento:</span><span>R$ 131.802</span></div>
-                            <div class="sc-metric-row"><span>+ Perpétuo Base:</span><span>R$ 50.000</span></div>
-                        </div>
-                        <div class="scenario-total">
-                            <div class="total-label">TOTAL ESTIMADO MÊS</div>
-                            <div class="total-val">R$ 181.802</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="note-block">
-                    * Estes cenários projetam estritamente o faturamento gerado pelo lançamento pontual da mentoria PMDF somado ao fluxo orgânico recorrente. Não estão contabilizados os novos fluxos de receitas decorrentes de renovações de planos, vendas individuais de flashcards ou a futura expansão programada para outros editais de peso (PCDF, PRF, PF). O ROI (Retorno sobre Investimento) em anúncios já está implícito nos cálculos de conversão.
-                </div>
-            </section>
-
-            <!-- SECTION 02 -->
-            <section id="checklist" class="section-anchor fade-in-section">
-                <div class="section-header">
-                    <span class="sec-num">DIRETRIZ 02</span>
-                    <h2>Checklist Operacional</h2>
-                    <p>Mapeamento de responsabilidades e atribuições técnicas obrigatórias. Divisão clara de tarefas para garantir execução sem falhas.</p>
-                </div>
-
-                <div class="checklist-grid">
-                    <div class="checklist-box">
-                        <h3>01 · ESTRUTURA BASE</h3>
-                        <ul class="chk-list">
-                            <li class="chk-item"><span class="chk-box-visual"></span>Contrato formal de parceria estratégica assinado.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Liberação e auditoria de acessos: Meta Ads, Instagram Business, Tutory.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Instalação e parametrização correta do Pixel do Meta na página de checkout e vendas.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Preenchimento detalhado do Briefing de Voz e História pelo Murilo.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Criação dos ecossistemas de gestão do projeto (WhatsApp + Trello/Notion).</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Página de vendas reestruturada do zero com copy profissional de alto impacto.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Comunicação estratégica da futura subida de preço realizada no perfil oficial.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Automação de ManyChat configurada com fluxos automatizados de triagem.</li>
-                        </ul>
-                    </div>
-
-                    <div class="checklist-box">
-                        <h3>02 · CONTEÚDO E CAPTAÇÃO</h3>
-                        <ul class="chk-list">
-                            <li class="chk-item"><span class="chk-box-visual"></span>Roteirização detalhada para a cobertura do TAF presencial (dia 06/06).</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Captação de material audiovisual e depoimentos direto no evento do TAF.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Roteirização dos primeiros 6 Reels estratégicos focados no aquecimento da base.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Página de captura de leads desenvolvida, otimizada e testada contra falhas.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Início da veiculação de anúncios de tráfego pago focados na construção de lista.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Configuração de sequências automáticas de e-mails e automações de WhatsApp.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Processo de recrutamento, onboarding e treinamento do profissional de SDR.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Script comercial validado, adaptado e carregado nas ferramentas de atendimento.</li>
-                        </ul>
-                    </div>
-
-                    <div class="checklist-box">
-                        <h3>03 · LANÇAMENTO</h3>
-                        <ul class="chk-list">
-                            <li class="chk-item"><span class="chk-box-visual"></span>Macro-narrativa de conversão do lançamento validada.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Nome do movimento/lançamento definido estrategicamente.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Estruturação e roteirização passo a passo da Live Principal de Vendas.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Confirmação operacional da entrega dos Flashcards como bônus exclusivo.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Definição do estúdio ou locação profissional para a transmissão ao vivo.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Setup completo de campanhas agressivas de Retargeting de vendas.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Abertura do carrinho de compras com gatilhos de escassez e tempo ativados.</li>
-                            <li class="chk-item"><span class="chk-box-visual"></span>Dashboard centralizado de monitoramento de métricas e vendas em tempo real pronto.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="block-title">Decisões que o Murilo precisa tomar</div>
-                <div class="decision-container">
-                    <div class="decision-card">
-                        <div class="decision-icon">⚡</div>
-                        <div class="decision-text"><strong>DECISÃO 1 — Calendário de Lançamento:</strong> Validar cronograma acelerado para o mês de julho ou adotar o cronograma ideal de segurança máxima planejado para agosto.</div>
-                    </div>
-                    <div class="decision-card">
-                        <div class="decision-icon">⚡</div>
-                        <div class="decision-text"><strong>DECISÃO 2 — Direcionamento Criativo da Narrativa:</strong> Definir entre a Opção A (Foco em progressão interna da carreira policial), a Opção B (A trajetória emocional do "Do Barraco ao Senado" — Altamente Recomendada pela Scale) ou a Opção C (Foco estrito em mentalidade implacável e quebra de zona de conforto).</div>
-                    </div>
-                    <div class="decision-card">
-                        <div class="decision-icon">⚡</div>
-                        <div class="decision-text"><strong>DECISÃO 3 — Naming do Lançamento:</strong> Analisar e validar internamente as opções de nome do movimento apresentadas para alinhamento e registro de criativos.</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 03 -->
-            <section id="narrativa" class="section-anchor fade-in-section">
-                <div class="section-header">
-                    <span class="sec-num">DIRETRIZ 03</span>
-                    <h2>Narrativa e Storytelling</h2>
-                    <p>A engenharia de copy por trás de um lançamento de milhões baseia-se na profundidade e autenticidade da jornada do especialista. O histórico do Murilo possui autoridade incomparável no mercado atual.</p>
-                </div>
-
-                <div class="block-title">Os fatos que nenhum concorrente possui</div>
-                <div class="history-list">
-                    <div class="history-item">
-                        <div class="history-icon">🏚</div>
-                        <div class="history-content">Origem humilde na Ceilândia. Infância em Taguatinga, morando em barraco de madeira localizado na QNJ. Origem familiar totalmente desprovida de servidores públicos ou conexões influentes.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">💼</div>
-                        <div class="history-content">Ingresso precoce no mercado de trabalho a partir dos 13 anos de idade: feirante vendendo frutas, panfleteiro de rua e pintor residencial. Remuneração inicial de apenas R$ 140,00 mensais na condição de menor aprendiz.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">🎓</div>
-                        <div class="history-content">Domínio autônomo da língua inglesa, tornando-se professor aos 16 anos. Jornadas exaustivas de aula das 08h às 22h, recebendo entre R$ 10,00 e R$ 12,00 por hora-aula para viabilizar o próprio sustento.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">🏆</div>
-                        <div class="history-content">Histórico de aprovação imediata: aprovado no primeiro concurso público realizado. Absolutamente zero reprovações acumuladas ao longo da trajetória, totalizando 11 aprovações de peso em concursos de alto nível.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">🚔</div>
-                        <div class="history-content">Sonho consolidado de ingressar como Oficial na PMDF. Durante sua atuação na ponta como soldado da corporação, mantinha rotina rígida de estudos técnicos no interior da viatura policial durante as paradas estratégicas.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">🏥</div>
-                        <div class="history-content">Superação de trauma crítico: sofreu acidente grave de motocicleta que resultou na fratura de ambos os braços. Deu início à preparação intensiva focada no CFO da PMDF dentro do hospital, utilizando livros trazidos por sua mãe.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">🥇</div>
-                        <div class="history-content">Resultado de elite: conquistou a 4ª colocação geral no CFO da PMDF. Concomitantemente, obteve aprovação nos exigentes concursos para o CFO de Minas Gerais e de Goiás — abrindo mão de ambos para permanecer no Distrito Federal.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">⚡</div>
-                        <div class="history-content">Métrica extrema para o Senado Federal: contabilizou 723 horas líquidas de estudo rigoroso em um intervalo menor que 3 meses. Suspendeu atividades físicas rotineiras, manteve dieta baseada em conveniência e treinava corrida para o TAF de madrugada, às 03h, nas quadras da Octogonal.</div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">🏛</div>
-                        <div class="history-content">Cenário atual de máxima autoridade: atua diretamente nas dependências do Senado Federal. Antigos oficiais superiores da instituição militar hoje trabalham ao seu lado, na mesma hierarquia e posicionamento funcional de igualdade.</div>
-                    </div>
-                </div>
-
-                <div class="block-title">Escolha a narrativa do lançamento</div>
-                <div class="grid-3col">
-                    <div class="card">
-                        <span class="card-badge-right badge-opt-a">OPÇÃO A</span>
-                        <div class="card-icon">PROGRESÃO</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">"De Praça a Oficial a Senado"</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Ângulo:</strong> Evolução interna e superação de degraus dentro das carreiras policiais.</p>
-                        <p class="card-label" style="font-size: 0.85rem; color: var(--texto-primario);">"Eu trilhei exatamente o caminho que você deseja trilhar hoje. Conheço a realidade de soldado, a liderança de oficial e o topo no Senado. Sei encurtar a sua jornada."</p>
-                    </div>
-
-                    <div class="card recommended">
-                        <span class="card-badge-right badge-opt-rec">RECOMENDADA ★</span>
-                        <div class="card-icon" style="color: var(--dourado-ancora);">MÁXIMO IMPACTO</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px; color: var(--dourado-ancora);">"Do Barraco ao Senado"</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Ângulo:</strong> Superação total, quebra de ciclo socioeconômico e método infalível.</p>
-                        <p class="card-label" style="font-size: 0.85rem; color: var(--texto-primario); margin-bottom: 12px;">"Vim do barraco na QNJ. Sem colégios de elite ou heranças. Estudei com os dois braços quebrados em uma maca de hospital. Nunca reprovei porque criei uma mecânica cega de execução."</p>
-                        <p class="card-label" style="font-size: 0.8rem; font-style: italic;"><strong>Por que funciona:</strong> Conecta diretamente com o avatar majoritário do nicho PMDF, gerando forte apelo emocional verídico.</p>
-                    </div>
-
-                    <div class="card">
-                        <span class="card-badge-right badge-opt-c">OPÇÃO C</span>
-                        <div class="card-icon">MENTALIDADE</div>
-                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">"O Talento é um Mito"</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Ângulo:</strong> Desconstrução da crença limitante de que a reprovação crônica é normal.</p>
-                        <p class="card-label" style="font-size: 0.85rem; color: var(--texto-primario);">"O mercado normalizou a derrota contínua. Enquanto concorrentes romantizam rotinas confortáveis de estudo com café na mesa, o candidato obstinado e necessitado passa na sua frente utilizando método pragmático."</p>
-                    </div>
-                </div>
-
-                <div class="block-title">Sugestão de nome para o lançamento</div>
-                <p style="color: var(--texto-secundario); margin-bottom: 16px;">O naming estratégico precisa evocar um senso claro de movimento coletivo e pertencimento de elite. Quem compra o produto não adquire um curso genérico, mas ingressa em uma força de preparação integrada:</p>
-                
-                <div class="grid-3col">
-                    <div class="card" style="padding: 24px; text-align: center;">
-                        <div class="card-value" style="font-size: 1.5rem; margin: 0; color: var(--azul-destaque);">"OPERAÇÃO PMDF"</div>
-                        <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 8px;">Estética puramente militar, direta e com forte senso de missão institucional.</p>
-                    </div>
-                    <div class="card" style="padding: 24px; text-align: center;">
-                        <div class="card-value" style="font-size: 1.5rem; margin: 0; color: var(--azul-destaque);">"MISSÃO PMDF"</div>
-                        <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 8px;">Foco profundo no propósito, na entrega de longo prazo e na jornada de transformação.</p>
-                    </div>
-                    <div class="card" style="padding: 24px; text-align: center;">
-                        <div class="card-value" style="font-size: 1.5rem; margin: 0; color: var(--azul-destaque);">"PELOTÃO PMDF"</div>
-                        <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 8px;">Metáfora de equipe, suporte mútuo e blindagem contra fraquezas coletivas.</p>
-                    </div>
-                </div>
-                <p class="note-block" style="margin-top: 16px;">* Nota: O alinhamento final e o refinamento do nome serão definidos estrategicamente em conjunto com os sócios após a seleção da narrativa mestra.</p>
-
-                <div class="block-title">Estrutura da Live de Lançamento — Roteiro por Bloco</div>
-                <div class="timeline-vertical">
-                    <div class="vt-step">
-                        <div class="vt-node"></div>
-                        <span class="vt-time">00 – 05 MIN</span>
-                        <div class="vt-content">
-                            <div class="vt-title">Abertura de Alto Impacto</div>
-                            <div class="vt-desc">Introdução em tom cinematográfico e imersivo. Murilo narra o choque de realidade de sua origem humilde antes do início de sua jornada. Conexão e retenção instantânea do público.</div>
-                        </div>
-                    </div>
-                    <div class="vt-step">
-                        <div class="vt-node"></div>
-                        <span class="vt-time">05 – 15 MIN</span>
-                        <div class="vt-content">
-                            <div class="vt-title">A Jornada da Origem</div>
-                            <div class="vt-desc">Exploração dos fatos reais: o cotidiano no barraco de madeira, a superação do acidente grave de moto e a dedicação total aos estudos deitado em uma cama de hospital. Fixação do recorde de 11 aprovações sem derrotas.</div>
-                        </div>
-                    </div>
-                    <div class="vt-step">
-                        <div class="vt-node"></div>
-                        <span class="vt-time">15 – 30 MIN</span>
-                        <div class="vt-content">
-                            <div class="vt-title">A Revelação do Método</div>
-                            <div class="vt-desc">Diferenciação clara entre o estudante profissional que conquista a aprovação logo na primeira tentativa e o concurseiro amador que desperdiça anos acumulando reprovações por erros invisíveis de planejamento.</div>
-                        </div>
-                    </div>
-                    <div class="vt-step">
-                        <div class="vt-node"></div>
-                        <span class="vt-time">30 – 40 MIN</span>
-                        <div class="vt-content">
-                            <div class="vt-title">Prova Social de Elite</div>
-                            <div class="vt-desc">Apresentação focada de depoimentos em vídeo e estudos de caso reais de alunos aprovados. Dados precisos: nome do aluno, cargo conquistado, tempo de preparação e evolução de notas.</div>
-                        </div>
-                    </div>
-                    <div class="vt-step">
-                        <div class="vt-node"></div>
-                        <span class="vt-time">40 – 55 MIN</span>
-                        <div class="vt-content">
-                            <div class="vt-title">A Oferta Irresistível</div>
-                            <div class="vt-desc">Apresentação oficial da Mentoria. Utilização de ancoragem de preço forte, introdução dos Flashcards PMDF como bônus de escassez máxima imediata, detalhamento de bônus e condições flexíveis de pagamento.</div>
-                        </div>
-                    </div>
-                    <div class="vt-step">
-                        <div class="vt-node"></div>
-                        <span class="vt-time">55 – 60 MIN</span>
-                        <div class="vt-content">
-                            <div class="vt-title">Fechamento e Chamada de Ação (CTA)</div>
-                            <div class="vt-desc">Chamada para ação direta, assertiva e agressiva. Alerta de que as vagas bônus fecham em poucas horas ou mediante término do lote. Aplicação do bordão característico do expert para fechamento.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 04 -->
-            <section id="precificacao" class="section-anchor fade-in-section">
-                <div class="section-header">
-                    <span class="sec-num">DIRETRIZ 04</span>
-                    <h2>Perpétuo + Precificação</h2>
-                    <p>Desenho da arquitetura de produtos e estratégia comercial de ancoragem de valor. A esteira foi desenvolvida para monetizar múltiplos perfis de poder aquisitivo.</p>
-                </div>
-
-                <div class="block-title">Esteira de Produtos e Nova Precificação</div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Produto Comercial</th>
-                                <th>Preço Sugerido</th>
-                                <th>Entrega / Escopo de Conteúdo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Flashcard PMDF (Low Ticket)</strong></td>
-                                <td style="font-family: var(--font-tech); color: var(--sucesso);">R$ 97 a R$ 197</td>
-                                <td>Material estratégico de revisão otimizada cobrindo integralmente o edital da PMDF. Funciona como o principal atrativo de entrada do funil de vendas (tripwire).</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mentoria - Plano 3 Meses</strong></td>
-                                <td style="font-family: var(--font-tech); color: var(--sucesso);">R$ 897 à vista</td>
-                                <td>Preparação tática acelerada e de tiro curto. Ideal para candidatos com necessidade iminente de ajuste de rota pré-edital ou pós-edital próximo.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mentoria - Plano 6 Meses</strong></td>
-                                <td style="font-family: var(--font-tech); color: var(--sucesso);">R$ 1.397 à vista</td>
-                                <td>Preparação completa estruturada de médio prazo. Utilizado na estratégia como uma forte âncora de valor para impulsionar a venda do plano de 12 meses.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mentoria - Plano 12 Meses (Principal)</strong></td>
-                                <td style="font-family: var(--font-tech); color: var(--dourado-ancora); font-weight: 700;">R$ 1.997 à vista</td>
-                                <td>Acompanhamento estratégico anual completo + inclusão dos Flashcards PMDF + atualizações contínuas de simulados e mentorias de rota ao vivo.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Recorrência Mensal (Bastidores X1)</strong></td>
-                                <td style="font-family: var(--font-tech); color: var(--azul-destaque);">R$ 197 a R$ 247/mês</td>
-                                <td>Ativação de contingência realizada pelo time comercial no atendimento um para um. Direcionado para leads sem limite de crédito imediato na modalidade à vista.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="note-block">* Nota Estratégica: A opção de recorrência mensal jamais será veiculada abertamente na Live de Lançamento para evitar a canibalização dos planos à vista de maior margem. Sua aplicação é restrita à atuação oculta do time de vendas no X1 para recuperar leads com restrição de limite bancário.</p>
-
-                <div class="gold-highlight-box">
-                    <h4>Ação Estratégica Imediata: Subida de Preço Pré-Lançamento</h4>
-                    <p>Devemos iniciar a comunicação ostensiva no Instagram do Murilo informando que o valor atual da mentoria sofrerá um reajuste definitivo nos próximos dias. Essa movimentação gera um gatilho imediato de urgência na base morna, provocando um pico de vendas orgânicas imediatas de pessoas que estavam indecisas. Além disso, valoriza os alunos atuais e estabelece o novo valor mais alto como a âncora visual perfeita para a oferta especial com bônus que faremos na Live do Lançamento.</p>
-                </div>
-
-                <div class="block-title">O papel dos Flashcards na Oferta de Lançamento</div>
-                <p style="color: var(--texto-secundario); margin-bottom: 16px;">Os novos flashcards desenvolvidos pelo Rodrigo serão introduzidos na oferta como o principal gerador de valor e bônus exclusivo da janela de lançamento. Um produto de alto valor utilitário percebido, que posteriormente será comercializado separadamente, incluído sem custo extra apenas para quem garantir a vaga na mentoria durante o período de abertura do carrinho.</p>
-                
-                <div class="card" style="border-left: 4px solid var(--dourado-ancora);">
-                    <div class="card-value" style="font-size: 1.5rem; color: var(--dourado-ancora); margin-bottom: 8px;">BÔNUS EXCLUSIVO DE LANÇAMENTO</div>
-                    <p class="card-label" style="color: var(--texto-primario);">Os compradores que ingressarem na janela oficial de lançamento receberão acesso integral aos <strong>Flashcards PMDF (Valor de mercado isolado: R$ 197)</strong> de forma 100% gratuita como incentivo de compra imediata.</p>
-                </div>
-            </section>
-
-            <!-- SECTION 05 -->
-            <section id="comercial" class="section-anchor fade-in-section">
-                <div class="section-header">
-                    <span class="sec-num">DIRETRIZ 05</span>
-                    <h2>Time Comercial</h2>
-                    <p>Estruturação de processos e força de vendas focada em alta conversão. Retirar o expert da operação direta de atendimento nas DMs é o primeiro passo rumo à escala real.</p>
-                </div>
-
-                <div class="block-title">Por que o time comercial é o 80/20 deste projeto?</div>
-                <div class="grid-3col">
-                    <div class="card" style="padding: 24px;">
-                        <div class="card-icon">💬</div>
-                        <p class="card-label" style="color: var(--texto-primario); font-size: 0.9rem;">Produtos de alto ticket (R$ 1.997) não são adquiridos por puro impulso. Exigem interações personalizadas, quebra ativa de objeções e construção de um ambiente de extrema segurança.</p>
-                    </div>
-                    <div class="card" style="padding: 24px;">
-                        <div class="card-icon">📱</div>
-                        <p class="card-label" style="color: var(--texto-primario); font-size: 0.9rem;">O fluxo diário de leads espontâneos que o Murilo recebe nas DMs é massivo. Sem um processo de triagem profissionalizado, dezenas de oportunidades de alta conversão expiram sem atendimento diário.</p>
-                    </div>
-                    <div class="card" style="padding: 24px;">
-                        <div class="card-icon">📈</div>
-                        <p class="card-label" style="color: var(--texto-primario); font-size: 0.9rem;">Eficiência comprovada: 1 SDR capacitado realizando apenas 10 vendas adicionais no mês gera R$ 19.970 em faturamento extra, demandando um custo fixo baixo. ROI positivo imediato.</p>
-                    </div>
-                </div>
-
-                <div class="block-title">Arquitetura Estrutural do Time de Vendas</div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Pilar Operacional</th>
-                                <th>Especificação Técnica da Scale</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Perfil de Contratação Ideal</strong></td>
-                                <td>Ex-aluno aprovado ou candidato avançado focado na PMDF. Domina as dores e a linguagem interna do produto.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Recrutamento Estratégico</strong></td>
-                                <td>Seleção por indicação direta dos sócios — focando em candidatos chaves já pré-mapeados pelo Rodrigo.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Estrutura de Remuneração</strong></td>
-                                <td>R$ 1.000,00 de salário fixo + 5% de comissão por cada conversão de venda liquidada. Meta base fixada em 4 vendas semanais.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Treinamento de Conversão</strong></td>
-                                <td>Fornecimento de script de vendas validado e adaptado. Execução obrigatória de duas sessões intensivas de roleplay antes da operação.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>CRM e Gestão de Contatos</strong></td>
-                                <td>Implementação imediata de esteira de contatos estruturada: Novo lead → Em contato → Proposta → Fechamento → Perdido.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Supervisão Técnica</strong></td>
-                                <td>Acompanhamento rígido e diário de KPIs e taxas de conversão comerciais executado pela gestora dedicada da Scale.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="block-title">Script de Entrada do SDR (Abordagem de Alta Conversão)</div>
-                <p style="color: var(--texto-secundario); margin-bottom: 12px;">Demonstração prática do tom de atendimento inicial adotado pelo profissional de vendas nas abordagens um para um:</p>
-                <div class="code-box">"Oi [Nome do Lead], tudo bem? Notei que você entrou em contato demonstrando interesse em acelerar sua preparação com a mentoria oficial da PMDF. 
-
-Posso te fazer 3 perguntas rápidas e cirúrgicas para entender seu cenário atual e validar se este é o momento ideal para sua aprovação?"</div>
-
-                <div class="block-title">As 3 Etapas Fundamentais do Fluxo Comercial</div>
-                <div class="timeline-vertical" style="margin-top: 20px;">
-                    <div class="vt-step">
-                        <div class="vt-node" style="border-color: var(--dourado-ancora);"></div>
-                        <span class="vt-time">FASE 01</span>
-                        <div class="vt-content">
-                            <div class="vt-title">Qualificação Ativa</div>
-                            <div class="vt-desc">Mapeamento da dor do candidato. Perguntas obrigatórias: "Há quanto tempo você vem estudando para carreiras policiais? Qual tem sido seu principal gargalo ou obstáculo técnico de rendimento hoje?"</div>
-                        </div>
-                    </div>
-                    <div class="vt-step">
-                        <div class="vt-node" style="border-color: var(--dourado-ancora);"></div>
-                        <span class="vt-time">FASE 02</span>
-                        <div class="vt-content">
-                            <div class="vt-title">Apresentação da Solução</div>
-                            <div class="vt-desc">Conexão direta entre a dor relatada pelo lead e as ferramentas internas específicas que a Mentoria entrega (cronograma de estudos, inteligência emocional ou técnicas exclusivas de resolução de questões).</div>
-                        </div>
-                    </div>
-                    <div class="vt-step">
-                        <div class="vt-node" style="border-color: var(--dourado-ancora);"></div>
-                        <span class="vt-time">FASE 03</span>
-                        <div class="vt-content">
-                            <div class="vt-title">Fechamento Direto ou Contigência</div>
-                            <div class="vt-desc">Apresentação dos links de pagamento para os planos à vista de maior valor ou ativação sutil do plano de parcelamento recorrente caso o cliente alegue bloqueio ou falta de limite total no cartão.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card" style="margin-top: 32px; background-color: rgba(46,134,193,0.05); border-left: 4px solid var(--azul-destaque);">
-                    <p class="card-label" style="color: var(--texto-primario);">📋 <strong>Fluxo de Governança e Alinhamento de Linha Editorial:</strong> Toda e qualquer peça de copy produzida (anúncios em vídeo, disparos de e-mail marketing, comunicações oficiais de WhatsApp ou roteiros criativos) passará obrigatoriamente pela validação prévia do Murilo antes de sua publicação oficial. <strong>Processo:</strong> Scale executa a criação → Murilo faz o crivo e aprovação → Scale implementa e distribui.</p>
-                </div>
-            </section>
-
-            <!-- SECTION 06 -->
-            <section id="organico" class="section-anchor fade-in-section">
-                <div class="section-header">
-                    <span class="sec-num">DIRETRIZ 06</span>
-                    <h2>Conteúdo Orgânico</h2>
-                    <p>O ecossistema orgânico atual do Murilo já possui alto poder de conversão. A atuação estratégica da Scale consiste em criar uma rotina de alta previsibilidade, organizando os formatos que mais trazem vendas.</p>
-                </div>
-
-                <div class="block-title">Matriz de Distribuição Semanal (Estratégia Taco de Beisebol)</div>
-                <div class="grid-3col">
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--azul-destaque);">🎯 TÉCNICO</div>
-                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">2x por semana</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Vídeos educativos dissecando pontos complexos do edital da PMDF, estratégias avançadas de estudo e análises detalhadas de questões tradicionais da banca examinadora.</p>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--azul-destaque);"><strong>Meta:</strong> Provar autoridade técnica incontestável.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--dourado-ancora);">🏆 AUTORIDADE</div>
-                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">1x por semana</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Publicações de resultados explícitos. Prints de aprovação, depoimentos em vídeo, histórico de conquistas do próprio expert e dados reais de evolução de alunos.</p>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--dourado-ancora);"><strong>Meta:</strong> Gerar máxima credibilidade inabalável.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--sucesso);">🔥 CRESCIMENTO</div>
-                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">1x por semana</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Reels de alto potencial viral. Humor inteligente contextualizado na rotina de concursos públicos, situações cotidianas das forças de segurança e trends adaptadas.</p>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--sucesso);"><strong>Meta:</strong> Atração em massa de novos seguidores e topo de funil.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--texto-secundario);">🤝 CONEXÃO</div>
-                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">Diário (Stories)</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Bastidores reais sem filtros. Rotina profissional na estrutura do Senado Federal, dinâmicas de treino, vida familiar, interações com animais e rotina pessoal do expert.</p>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--texto-secundario);"><strong>Meta:</strong> Construção de identificação e engajamento humano.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon" style="color: var(--erro-alerta);">💡 OBJEÇÃO</div>
-                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">1x por semana</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Conteúdos focados em desarmar as desculpas mais frequentes da base ("falta de tempo", "idade avançada", "base fraca em matérias exatas").</p>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--erro-alerta);"><strong>Meta:</strong> Facilitar a conversão, aquecendo o público frio.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon" style="color: #9B59B6;">⚡ HYPE</div>
-                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">Oportunista</div>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Coberturas rápidas e análises em tempo real de notícias urgentes do mercado, rumores de movimentações de bancas ou vazamentos lícitos de informações de editais.</p>
-                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: #9B59B6;"><strong>Meta:</strong> Capturar picos de atenção orgânica explosiva.</p>
-                    </div>
-                </div>
-
-                <div class="block-title">Planejamento do TAF Presencial — Cobertura Operacional 6 de Junho</div>
-                <p style="color: var(--texto-secundario); margin-bottom: 20px;">O evento presencial do TAF na Ceilândia representa a primeira grande janela de oportunidade de produção audiovisual estratégica pós-parceria. O material coletado servirá como base de criativos de alta conversão para nutrir as semanas de aquecimento pré-lançamento.</p>
-                
-                <ul class="bullet-list standard-list" style="margin-bottom: 32px;">
-                    <li>
-                        <span class="icon">✓</span>
-                        <div class="text"><strong>Aparência de Tropa Unificada:</strong> Registro cinematográfico da chegada impactante do Murilo acompanhado dos sócios devidamente fardados com a identidade visual unificada da marca.</div>
-                    </li>
-                    <li>
-                        <span class="icon">✓</span>
-                        <div class="text"><strong>Captação de Prova Social Inicial:</strong> Coleta de depoimentos rápidos com 2 a 3 alunos antes da realização dos testes de esforço físico: "Qual foi o motivo chave que te fez buscar a mentoria?".</div>
-                    </li>
-                    <li>
-                        <span class="icon">✓</span>
-                        <div class="text"><strong>Mídia de Ação Imersiva:</strong> Filmagem dinâmica dos testes físicos em andamento — corridas, barras, flexões e esforço máximo real. Imagens de alto impacto emocional e estético.</div>
-                    </li>
-                    <li>
-                        <span class="icon">✓</span>
-                        <div class="text"><strong>Pico Emocional Pós-TAF:</strong> Coleta de depoimentos emocionados imediatamente após a superação das metas físicas dos alunos, chancelando a eficiência prática da preparação recebida.</div>
-                    </li>
-                    <li>
-                        <span class="icon">✓</span>
-                        <div class="text"><strong>Encerramento de Tropa:</strong> Registro da confraternização final, evidenciando o forte senso de camaradagem e conexão humana direta do Murilo com seus alunos.</div>
-                    </li>
-                    <li>
-                        <span class="icon">✓</span>
-                        <div class="text"><strong>Navegação em Tempo Real:</strong> Cobertura densa e ininterrupta nos Stories ao longo de todo o dia, criando uma narrativa imersiva de acompanhamento para os seguidores que estão em casa.</div>
-                    </li>
-                </ul>
-
-                <div class="block-title">Formatos de Reels de Alta Performance Mapeados para o Nicho Policial</div>
-                <ul style="list-style: none; padding-left: 20px; display: flex; flex-direction: column; gap: 12px; color: var(--texto-primario); font-size: 0.95rem; margin-bottom: 40px;">
-                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Comparativos diretos de remuneração e benefícios:</strong> Tabelas dinâmicas detalhando salários iniciais e planos de cargos das forças policiais (formato com métricas históricas altíssimas de salvamentos e compartilhamentos).</li>
-                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Ironia e Quebra de Paradigma:</strong> "Para que serve dominar análise sintática de orações subordinadas para combater a criminalidade na rua?" — Abordagem bem-humorada com forte identificação do público (Referência prática de +19k novos seguidores convertidos com um único vídeo deste formato).</li>
-                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Estética Operacional Real:</strong> Vídeos curtos de bastidores técnicos do TAF, corridas de rua em alta intensidade e detalhes de fardamento institucional — apelo aspiracional puro.</li>
-                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Resolução Técnica de Questões polêmicas:</strong> Desmonte cirúrgico de pegadinhas de bancas examinadoras famosas, blindando a autoridade técnica do expert.</li>
-                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Estudos de Caso de Sucesso:</strong> Vídeos curtos detalhando a história de superação de alunos específicos aprovados da mentoria.</li>
-                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Provocação Metodológica:</strong> "A engenharia do meu método de aprovação imediata versus as falhas graves do modelo de estudo tradicional que todo cursinho genérico te vende."</li>
-                </ul>
-
-                <div class="block-title">Matriz de Atribuições e Responsabilidades de Conteúdo</div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Atividade Operacional</th>
-                                <th>Responsável Principal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Planejamento e Roteirização Estratégica de Reels</strong></td>
-                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gravação e Atuação de Frente para a Câmera</strong></td>
-                                <td>Prof. Murilo Marques</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Edição Audiovisual Profissional e Efeitos de Retenção</strong></td>
-                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Revisão de Linha Editorial e Aprovação das Copys</strong></td>
-                                <td>Prof. Murilo Marques</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Agendamento, Postagem e Otimização de Descrições/Tags</strong></td>
-                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Produção Espontânea de Stories do Cotidiano</strong></td>
-                                <td>Prof. Murilo Marques</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Cobertura Audiovisual In Loco em Eventos Presenciais (TAF)</strong></td>
-                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-        </main>
+    <div class="table-wrap" style="margin-bottom:20px">
+      <table>
+        <thead>
+          <tr>
+            <th>Fonte de leads</th>
+            <th>Conservador</th>
+            <th>Moderado</th>
+            <th>Otimista</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Leads pagos (R$10k ads)</td><td>~1.100</td><td>~1.330</td><td>~1.666</td></tr>
+          <tr><td>Leads orgânicos (30 dias)</td><td>~2.022</td><td>~2.922</td><td>~4.322</td></tr>
+          <tr style="background:var(--off)"><td><strong>Total de leads</strong></td><td><strong>~3.122</strong></td><td><strong>~4.252</strong></td><td><strong>~5.988</strong></td></tr>
+          <tr><td>Taxa de conversão</td><td>1,5%</td><td>2,5%</td><td>5%</td></tr>
+          <tr style="background:var(--off)"><td><strong>Vendas estimadas</strong></td><td><strong>~47</strong></td><td><strong>~106</strong></td><td><strong>~299</strong></td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- Page Footer -->
-    <footer class="app-footer">
-        <div>Scale Company × Prof. Murilo Marques</div>
-        <div style="color: var(--texto-secundario); font-size: 0.75rem; margin-top: 4px;">Plano Estratégico Integrado — Lançamento Mentoria PMDF · 2026</div>
-        <div style="color: var(--dourado-ancora); font-size: 0.7rem; margin-top: 4px; letter-spacing: 0.15em;">Documento estritamente confidencial. Produção executiva Scale Company.</div>
-    </footer>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">Conservador · 1,5%</div>
+        <div class="m-big">R$93.859</div>
+        <div class="m-row"><label>Total leads</label><span>~3.122</span></div>
+        <div class="m-row"><label>Conversão</label><span>1,5%</span></div>
+        <div class="m-row"><label>Vendas</label><span>~47</span></div>
+        <div class="m-row"><label>Receita lançamento</label><span>R$ 93.859</span></div>
+      </div>
+      <div class="metric-card accent">
+        <div class="m-label red">Moderado · 2,5%</div>
+        <div class="m-big">R$211.682</div>
+        <div class="m-row"><label>Total leads</label><span>~4.252</span></div>
+        <div class="m-row"><label>Conversão</label><span>2,5%</span></div>
+        <div class="m-row"><label>Vendas</label><span>~106</span></div>
+        <div class="m-row"><label>Receita lançamento</label><span>R$ 211.682</span></div>
+      </div>
+      <div class="metric-card gold-top">
+        <div class="m-label gold">Otimista · 5%</div>
+        <div class="m-big gold">R$597.103</div>
+        <div class="m-row"><label>Total leads</label><span>~5.988</span></div>
+        <div class="m-row"><label>Conversão</label><span>5%</span></div>
+        <div class="m-row"><label>Vendas</label><span>~299</span></div>
+        <div class="m-row"><label>Receita lançamento</label><span>R$ 597.103</span></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-family:var(--FM);font-size:10px;color:var(--text-muted);letter-spacing:0.04em">* Não inclui recorrência, flashcards ou expansão para outros editais.</div>
+  </div>
+</div>
+</section>
 
-    <!-- Interactive JavaScript Framework -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // Mobile Menu Control Logic
-            const menuToggle = document.getElementById('menuToggle');
-            const sidebar = document.getElementById('sidebar');
-            const navLinks = document.querySelectorAll('.nav-item a');
+<!-- ── S02 ── -->
+<section class="section" id="s02">
+<div class="section-inner">
+  <div class="sec-eyebrow">Conteúdo</div>
+  <div class="sec-title">MANUAL DO COMUNICADOR</div>
+  <div class="sec-sub">A Scale entrega os roteiros — Murilo grava.</div>
 
-            menuToggle.addEventListener('click', () => {
-                document.body.classList.toggle('menu-open');
-            });
+  <div class="block fi">
+    <div class="block-title">Posicionamento</div>
+    <div class="hcard gold">
+      <p><strong>Murilo não é mais um professor de concurso.</strong> Ele é o único preparador para PMDF que foi soldado, virou oficial e depois foi pro Senado. Essa trajetória é o produto. O conteúdo é a prova disso.</p>
+    </div>
+    <div class="principles" style="margin-top:16px">
+      <div class="pc"><div class="pc-num">01 ·</div><div class="pc-title">Autoridade sem arrogância</div><div class="pc-text">Murilo conta a história sem glamourizar. A Ceilândia, o hospital, a viatura. Quem vem de base fraca se vê nele.</div></div>
+      <div class="pc"><div class="pc-num">02 ·</div><div class="pc-title">Direto, sem romantizar</div><div class="pc-text">Reprovar não é normal. Esse posicionamento cria muro — afasta quem quer conforto, atrai quem quer resultado.</div></div>
+      <div class="pc"><div class="pc-num">03 ·</div><div class="pc-title">O Senado como vitrine</div><div class="pc-text">O cargo não é vaidade — é prova. Cada post do cotidiano lembra o avatar: é isso que está em jogo.</div></div>
+    </div>
+  </div>
 
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    document.body.classList.remove('menu-open');
-                });
-            });
+  <div class="block fi">
+    <div class="block-title">Os 6 Tipos de Conteúdo</div>
+    <div class="block-sub">Distribuição semanal para alcance, autoridade e vínculo simultâneos.</div>
+    <div class="ct-grid">
+      <div class="ct-card"><div class="ct-ico">🎯</div><div class="ct-freq">2x/semana</div><div class="ct-name">TÉCNICO</div><div class="ct-desc">Reel educativo — edital, análise de prova, dica de estudo. Prova competência e atrai quem busca ajuda real.</div><div class="ct-resp">Scale roteiro → Murilo grava</div></div>
+      <div class="ct-card"><div class="ct-ico">🏆</div><div class="ct-freq">1x/semana</div><div class="ct-name">AUTORIDADE</div><div class="ct-desc">Post de resultado — aprovação de aluno com nome e cargo. "Ele chegou lá e ajuda outros a chegar."</div><div class="ct-resp">Scale identifica + produz</div></div>
+      <div class="ct-card"><div class="ct-ico">🔥</div><div class="ct-freq">1x/semana</div><div class="ct-name">CRESCIMENTO</div><div class="ct-desc">Reels com potencial viral — humor, identidade policial, provocação. Formato que gerou 19k seguidores em 1 Reel.</div><div class="ct-resp">Roteiro Scale + Murilo</div></div>
+      <div class="ct-card"><div class="ct-ico">🤝</div><div class="ct-freq">3–5x/semana</div><div class="ct-name">CONEXÃO</div><div class="ct-desc">Bastidores, rotina, cachorros, Senado. Vínculo humano. Mantém seguidor existente e humaniza o expert.</div><div class="ct-resp">Murilo (espontâneo)</div></div>
+      <div class="ct-card"><div class="ct-ico">💡</div><div class="ct-freq">1x/semana</div><div class="ct-name">OBJEÇÃO</div><div class="ct-desc">Reel quebrando a principal dúvida sobre a mentoria. Prepara o lead para a venda. Aquece o indeciso.</div><div class="ct-resp">Scale entrega roteiro</div></div>
+      <div class="ct-card"><div class="ct-ico">⚡</div><div class="ct-freq">Quando relevante</div><div class="ct-name">HYPE</div><div class="ct-desc">Análise de edital em tempo real, notícia de concurso. Autoridade no momento certo. Engajamento explosivo.</div><div class="ct-resp">Murilo + Scale</div></div>
+    </div>
+  </div>
 
-            // Advanced Intersection Observer for Fade-in Layout Animations
-            const fadeSections = document.querySelectorAll('.fade-in-section');
-            const animationOptions = {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            };
+  <div class="block fi">
+    <div class="block-title">Primal Branding</div>
+    <div class="block-sub">Os 7 elementos que constroem uma marca que as pessoas seguem — não só compram.</div>
+    <div class="primal-list">
+      <div class="pr-item"><div class="pr-num">01 · CRIAÇÃO</div><div><div class="pr-title">A Origem</div><div class="pr-text">A origem do Murilo é o ativo mais valioso. Barraco na QNJ → Senado Federal. Essa história não é enfeite — é a fundação de tudo.</div></div></div>
+      <div class="pr-item"><div class="pr-num">02 · CREDO</div><div><div class="pr-title">A Crença</div><div class="pr-text">Você não reprova porque é fraco. Reprova porque não decidiu. DECRETO PMDF nasce disso: aprovação é consequência de decisão, não de sorte.</div></div></div>
+      <div class="pr-item"><div class="pr-num">03 · ÍCONES</div><div><div class="pr-title">Os Símbolos</div><div class="pr-text">A farda da PMDF. O plenário do Senado. A camiseta da mentoria. O TAF presencial. Esses elementos representam o que o avatar quer se tornar.</div></div></div>
+      <div class="pr-item"><div class="pr-num">04 · RITUAIS</div><div><div class="pr-title">Os Rituais</div><div class="pr-text">O TAF anual com alunos. O ciclo de lançamento. O processo de estudo fechando edital. Rituais criam pertencimento.</div></div></div>
+      <div class="pr-item"><div class="pr-num">05 · PAGÃOS</div><div><div class="pr-title">O Inimigo</div><div class="pr-text">O concurseiro profissional — que normalizou reprovar, posta foto de café e não estuda, tem plano B, C e D. Murilo é o oposto.</div></div></div>
+      <div class="pr-item"><div class="pr-num">06 · PALAVRAS</div><div><div class="pr-title">As Palavras Sagradas</div><div class="pr-text">Decretar. Fechar edital. Sem plano B. Pelotão. Farda. Aprovado — não concurseiro.</div></div></div>
+      <div class="pr-item"><div class="pr-num">07 · LÍDER</div><div><div class="pr-title">A Liderança</div><div class="pr-text">Murilo é o líder porque ele fez. Não ensina o que estudou em livro — ensina o que fez na prática, 11 vezes. Essa é a diferença intransponível.</div></div></div>
+    </div>
+  </div>
+</div>
+</section>
 
-            const sectionObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        // Optional: unobserve if animation is one-way only
-                        // observer.unobserve(entry.target);
-                    }
-                });
-            }, animationOptions);
+<!-- ── S03 ── -->
+<section class="section" id="s03">
+<div class="section-inner">
+  <div class="sec-eyebrow">Perpétuo</div>
+  <div class="sec-title">ESTEIRA DE PRODUTOS</div>
+  <div class="sec-sub">O produto fica sempre disponível. O lançamento amplifica. A esteira converte quem entra por qualquer porta.</div>
 
-            fadeSections.forEach(section => {
-                sectionObserver.observe(section);
-            });
+  <div class="block fi">
+    <div class="block-title">Atualização de Preços — Ação Imediata</div>
+    <div class="alert">
+      <span class="alert-icon">⚡</span>
+      <span><strong>Subir o preço agora</strong> e comunicar no Instagram. Gera uma onda de compras antes do lançamento. O lançamento chega com preço mais alto como âncora, e a oferta especial representa desconto real.</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Produto</th><th>Preço</th><th>O que inclui</th></tr></thead>
+        <tbody>
+          <tr><td>Flashcard PMDF</td><td>R$ 97–197</td><td>Material de revisão — porta de entrada do funil</td></tr>
+          <tr><td>Mentoria 3 meses</td><td>R$ 897</td><td>Preparação intensiva para prova próxima</td></tr>
+          <tr><td>Mentoria 6 meses</td><td>R$ 1.397</td><td>Âncora — faz o de 12 meses parecer mais vantajoso</td></tr>
+          <tr><td>Mentoria 12 meses ← PRINCIPAL</td><td>R$ 1.997</td><td>Preparação total + bônus flashcard</td></tr>
+          <tr><td>Recorrência</td><td>R$ 197–247/mês</td><td>Ativada pelo time comercial. Não anunciada na Live.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-            // High Precision Scroll Spy Framework for Left Sidebar Active Highlighting
-            const sections = document.querySelectorAll('.section-anchor');
-            const navItems = document.querySelectorAll('.nav-item');
+  <div class="block fi">
+    <div class="hcard gold">
+      <div class="hcard-label gold">Bônus Exclusivo do Lançamento</div>
+      <div class="hcard-title">Flashcard PMDF</div>
+      <p>Os flashcards entram como bônus exclusivo para quem comprar durante o lançamento. Produto que será vendido a R$97–197 — <strong>incluso sem custo apenas no DECRETO PMDF.</strong> Quem comprar depois não leva o bônus.</p>
+      <div style="display:flex;gap:32px;margin-top:16px;padding:14px 18px;background:rgba(184,134,11,0.06);border-left:2px solid var(--gold)">
+        <div><div style="font-family:var(--FM);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;margin-bottom:2px">Valor agregado</div><div style="font-family:var(--FM);font-size:22px;font-weight:700;color:var(--gold)">R$ 197</div></div>
+        <div style="color:var(--text-muted);font-size:20px;align-self:center">→</div>
+        <div><div style="font-family:var(--FM);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;margin-bottom:2px">Custo para o aluno</div><div style="font-family:var(--FM);font-size:22px;font-weight:700;color:var(--green)">R$ 0</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
 
-            window.addEventListener('scroll', () => {
-                let currentSectionId = '';
-                const scrollPosition = window.scrollY + 150; // Offset check value
+<!-- ── S04 ── -->
+<section class="section" id="s04">
+<div class="section-inner">
+  <div class="sec-eyebrow">Comercial</div>
+  <div class="sec-title">TIME COMERCIAL</div>
+  <div class="sec-sub">O 80/20 do projeto. Mentoria de R$1.997 não é compra por impulso — precisa de conversa.</div>
 
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
+  <div class="block fi">
+    <div class="grid-2" style="margin-bottom:2px">
+      <div class="g2-card"><p>Murilo já recebe leads na DM todos os dias. Hoje responde quando consegue, sem processo. <strong>Sem processo = sem conversão.</strong></p></div>
+      <div class="g2-card"><p>Com 1 SDR bem treinado: meta de <strong>4 vendas/semana.</strong> R$1.000 fixo + 5% comissão = ~R$31.952 de faturamento adicional no mês. ROI imediato.</p></div>
+    </div>
+    <div class="hcard" style="margin-top:2px">
+      <p>A recorrência <strong>não é anunciada na Live.</strong> O SDR ativa essa opção no X1 apenas com quem não fecha por limitação de cartão. Converte quem seria perdido.</p>
+    </div>
+  </div>
 
-                    if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + sectionHeight)) {
-                        currentSectionId = section.getAttribute('id');
-                    }
-                });
+  <div class="block fi">
+    <div class="block-title">Estrutura</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Elemento</th><th>Detalhe</th></tr></thead>
+        <tbody>
+          <tr><td>Perfil ideal</td><td>Ex-aluno aprovado ou candidato PMDF. Fala a língua do avatar.</td></tr>
+          <tr><td>Recrutamento</td><td>Indicação direta pelo Rodrigo — candidatos já identificados.</td></tr>
+          <tr><td>Remuneração</td><td>R$ 1.000 fixo + 5% por venda. Meta: 4 vendas/semana.</td></tr>
+          <tr><td>Treinamento</td><td>Script validado + 2 sessões de roleplay antes de ir ao vivo.</td></tr>
+          <tr><td>CRM</td><td>Planilha: novo → em conversa → proposta → fechado → perdido.</td></tr>
+          <tr><td>Copys</td><td>Scale produz → Murilo aprova → Scale publica.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-                if (currentSectionId) {
-                    navItems.forEach(item => {
-                        item.classList.remove('active');
-                        if (item.getAttribute('data-sec') === currentSectionId) {
-                            item.classList.add('active');
-                        }
-                    });
-                }
-            });
-        });
-    </script>
+  <div class="block fi">
+    <div class="block-title">Script de Abertura — SDR</div>
+    <div class="script-card">
+      <div class="script-eyebrow">Abertura</div>
+      <div class="script-line">"Oi <strong>[nome]</strong>, vi que você perguntou sobre a mentoria PMDF. Posso te fazer <strong>3 perguntas rápidas</strong> para entender se é o momento certo pra você?"</div>
+      <div class="script-steps">
+        <div class="ss"><span class="ss-arrow">→</span><span><strong>QUALIFICAÇÃO:</strong> "Há quanto tempo você estuda para a PMDF? Qual é sua maior dificuldade hoje?"</span></div>
+        <div class="ss"><span class="ss-arrow">→</span><span><strong>SOLUÇÃO:</strong> Conecta a dor específica ao produto certo com base na resposta.</span></div>
+        <div class="ss"><span class="ss-arrow">→</span><span><strong>FECHAMENTO:</strong> Oferta direta. Se limitação de cartão → ativa recorrência silenciosa.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── S05 ── -->
+<section class="section" id="s05">
+<div class="section-inner">
+  <div class="sec-eyebrow">Operação</div>
+  <div class="sec-title">TAF PRESENCIAL — 6 DE JUNHO</div>
+  <div class="sec-sub">Centro Olímpico da Ceilândia. Primeira grande operação de captação de conteúdo.</div>
+
+  <div class="block fi">
+    <div class="hcard red">
+      <p>O TAF não é só um treino de alunos. É a primeira grande oportunidade de branding em ação: alunos uniformizados, Murilo presente, imagem de movimento real. <strong>O material capturado alimenta semanas de aquecimento antes do lançamento.</strong></p>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">Antes do Dia 6 — Scale entrega</div>
+    <div class="checklist">
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#CC0000" stroke-width="1.5" fill="none"/></svg></span>Roteiro completo de captação definido</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#CC0000" stroke-width="1.5" fill="none"/></svg></span>Equipe de captação confirmada (câmera + foto)</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#CC0000" stroke-width="1.5" fill="none"/></svg></span>Lista de perguntas para depoimentos de alunos</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#CC0000" stroke-width="1.5" fill="none"/></svg></span>Briefing de fardamento — confirmar camisetas prontas</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#CC0000" stroke-width="1.5" fill="none"/></svg></span>Sequência de Stories planejada para o dia</div>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">No Dia — Capturar</div>
+    <div class="checklist">
+      <div class="cl-item gold"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#B8860B" stroke-width="1.5" fill="none"/></svg></span>Chegada de Murilo + sócios uniformizados (imagem de marca)</div>
+      <div class="cl-item gold"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#B8860B" stroke-width="1.5" fill="none"/></svg></span>Depoimento 2–3 alunos antes do TAF: <strong>"Por que você entrou na mentoria?"</strong></div>
+      <div class="cl-item gold"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#B8860B" stroke-width="1.5" fill="none"/></svg></span>Registro do TAF em ação — movimento, esforço, preparação</div>
+      <div class="cl-item gold"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#B8860B" stroke-width="1.5" fill="none"/></svg></span>Depoimento pós-TAF — emoção real, resultado da preparação</div>
+      <div class="cl-item gold"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#B8860B" stroke-width="1.5" fill="none"/></svg></span>Confraternização final — conexão humana, descontração</div>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">Conteúdo Gerado — Usos</div>
+    <div class="checklist">
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#111" stroke-width="1.5" fill="none"/></svg></span>3–5 Reels de aquecimento pré-lançamento</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#111" stroke-width="1.5" fill="none"/></svg></span>Posts de autoridade e prova social</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#111" stroke-width="1.5" fill="none"/></svg></span>Stories de bastidores durante o evento</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#111" stroke-width="1.5" fill="none"/></svg></span>Material para página de vendas (fotos, depoimentos)</div>
+      <div class="cl-item"><span class="cl-ico"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="#111" stroke-width="1.5" fill="none"/></svg></span>Âncora visual da narrativa do DECRETO PMDF</div>
+    </div>
+  </div>
+
+  <div class="block fi">
+    <div class="block-title">Ações — Esta Semana</div>
+    <div class="actions-grid">
+      <div class="ac-card"><div class="ac-num">01</div><div><div class="ac-title">Criar grupo de projeto (WhatsApp)</div></div></div>
+      <div class="ac-card"><div class="ac-num">02</div><div><div class="ac-title">Acesso às contas</div><div class="ac-text">Meta Ads, Instagram Business, Tutory, YouTube</div></div></div>
+      <div class="ac-card"><div class="ac-num">03</div><div><div class="ac-title">Confirmar equipe de captação para 6/06</div></div></div>
+      <div class="ac-card"><div class="ac-num">04</div><div><div class="ac-title">Rodrigo ir atrás de possíveis candidatos para o time comercial</div></div></div>
+      <div class="ac-card"><div class="ac-num">05</div><div><div class="ac-title">Criar linha editorial para Instagram / YouTube</div><div class="ac-text">Scale</div></div></div>
+      <div class="ac-card"><div class="ac-num">06</div><div><div class="ac-title">Montar material de recrutamento e treinamento do time comercial</div><div class="ac-text">Sequência de mensagens + script de vendas</div></div></div>
+      <div class="ac-card"><div class="ac-num">07</div><div><div class="ac-title">Analisar campanhas do Murilo e subir novas campanhas</div></div></div>
+      <div class="ac-card"><div class="ac-num">08</div><div><div class="ac-title">Criar roteiros para vídeos de anúncios</div><div class="ac-text">Mentoria PMDF</div></div></div>
+      <div class="ac-card"><div class="ac-num">09</div><div><div class="ac-title">Criar artes estáticas / carrosséis para anúncios</div><div class="ac-text">Mentoria PMDF</div></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="ft-brand">APROBA<span>TUM</span> · DECRETO PMDF</div>
+  <div class="ft-info">Scale Company × Prof. Murilo Marques · Maio 2026<br>Documento confidencial.</div>
+</footer>
+
+<script>
+// SCROLL SPY
+const tabs = document.querySelectorAll('.nav-tab[data-s]');
+const secs = document.querySelectorAll('section[id]');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.s === e.target.id));
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+secs.forEach(s => io.observe(s));
+
+// FADE IN
+const fio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); fio.unobserve(e.target); }
+  });
+}, { rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fi').forEach(el => fio.observe(el));
+
+// HAMBURGER
+const ham = document.getElementById('ham');
+const drawer = document.getElementById('mob-drawer');
+ham.addEventListener('click', () => { ham.classList.toggle('o'); drawer.classList.toggle('o'); });
+drawer.querySelectorAll('.nav-tab').forEach(t => t.addEventListener('click', () => { ham.classList.remove('o'); drawer.classList.remove('o'); }));
+</script>
 </body>
 </html>
