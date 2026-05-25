@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Estratégico | Mentoria PMDF 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta de Cores Estritamente Alinhada */
+            --fundo-principal: #0D1B2A;
+            --superficie-card: #1A2B3C;
+            --azul-destaque: #2E86C1;
+            --dourado-ancora: #C9A227;
+            --texto-primario: #F0F4F8;
+            --texto-secundario: #8FA8C0;
+            --separadores: rgba(46, 134, 193, 0.2);
+            --erro-alerta: #E74C3C;
+            --sucesso: #2ECC71;
+
+            /* Tipografia Coesa */
+            --font-titulo: "Bebas Neue", sans-serif;
+            --font-corpo: "DM Sans", sans-serif;
+            --font-tech: "Space Mono", monospace;
+        }
+
+        /* Reset Avançado */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-corpo);
+            background-color: var(--fundo-principal);
+            color: var(--texto-primario);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout Estrutural */
+        .app-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Sidebar Fixa de Alta Performance */
+        .sidebar {
+            width: 320px;
+            height: 100vh;
+            background-color: rgba(13, 27, 42, 0.95);
+            border-right: 1px solid var(--separadores);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sidebar-brand {
+            margin-bottom: 48px;
+        }
+
+        .sidebar-brand .company {
+            font-family: var(--font-tech);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: var(--azul-destaque);
+            text-transform: uppercase;
+        }
+
+        .sidebar-brand .project {
+            font-family: var(--font-titulo);
+            font-size: 2rem;
+            color: var(--texto-primario);
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .nav-item a {
+            display: flex;
+            flex-direction: column;
+            padding: 14px 18px;
+            color: var(--texto-secundario);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            background-color: rgba(26, 43, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item a .num {
+            font-family: var(--font-tech);
+            font-size: 0.7rem;
+            color: var(--azul-destaque);
+            margin-bottom: 2px;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-item a .title {
+            transition: color 0.3s ease;
+        }
+
+        .nav-item.active a, .nav-item a:hover {
+            background-color: var(--superficie-card);
+            border-left-color: var(--azul-destaque);
+            color: var(--texto-primario);
+        }
+
+        .nav-item.active a .title {
+            color: var(--azul-destaque);
+            font-weight: 700;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 24px;
+            border-top: 1px solid var(--separadores);
+        }
+
+        .sidebar-footer p {
+            font-family: var(--font-tech);
+            font-size: 0.7rem;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main Content Wrapper */
+        .main-content {
+            flex-grow: 1;
+            margin-left: 320px;
+            padding: 60px 80px;
+            max-width: 1400px;
+            width: calc(100% - 320px);
+            transition: all 0.4s ease;
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: none;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--fundo-principal);
+            border-bottom: 1px solid var(--separadores);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 110;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-logo {
+            font-family: var(--font-titulo);
+            font-size: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hamburger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 2px;
+            background-color: var(--texto-primario);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Component */
+        .hero {
+            padding: 60px 0 80px 0;
+            border-bottom: 1px solid var(--separadores);
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background-image: radial-gradient(var(--separadores) 1px, transparent 1px);
+            background-size: 16px 16px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .badge-confidential {
+            display: inline-block;
+            font-family: var(--font-tech);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--dourado-ancora);
+            border: 1px solid var(--dourado-ancora);
+            padding: 6px 16px;
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            background-color: rgba(201, 162, 39, 0.05);
+        }
+
+        .hero h1 {
+            font-family: var(--font-titulo);
+            font-size: clamp(3.5rem, 6vw, 5.5rem);
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            color: var(--texto-secundario);
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            font-family: var(--font-tech);
+            font-size: 0.85rem;
+            color: var(--texto-secundario);
+            border-top: 1px solid var(--separadores);
+            padding-top: 24px;
+        }
+
+        .hero-meta span strong {
+            color: var(--texto-primario);
+        }
+
+        /* UI Blocks & Components */
+        .section-anchor {
+            padding-top: 80px;
+            margin-top: -40px;
+            margin-bottom: 100px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            border-left: 4px solid var(--azul-destaque);
+            padding-left: 20px;
+        }
+
+        .section-header .sec-num {
+            font-family: var(--font-tech);
+            font-size: 0.85rem;
+            color: var(--azul-destaque);
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-titulo);
+            font-size: 2.5rem;
+            letter-spacing: 0.03em;
+            color: var(--texto-primario);
+        }
+
+        .section-header p {
+            color: var(--texto-secundario);
+            font-size: 1.1rem;
+            margin-top: 8px;
+            max-width: 800px;
+        }
+
+        .block-title {
+            font-family: var(--font-titulo);
+            font-size: 1.625rem;
+            letter-spacing: 0.05em;
+            margin: 40px 0 20px 0;
+            color: var(--texto-primario);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Grid Framework */
+        .grid-2x2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        /* Cards Layout */
+        .card {
+            background-color: var(--superficie-card);
+            border: 1px solid transparent;
+            padding: 32px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: var(--azul-destaque);
+            box-shadow: 0 12px 30px rgba(46, 134, 193, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            color: var(--azul-destaque);
+            margin-bottom: 16px;
+            font-family: var(--font-tech);
+        }
+
+        .card-value {
+            font-family: var(--font-titulo);
+            font-size: 2.5rem;
+            line-height: 1.1;
+            color: var(--texto-primario);
+            margin-bottom: 8px;
+        }
+
+        .card-label {
+            font-size: 1rem;
+            color: var(--texto-secundario);
+        }
+
+        /* Specific Component Enhancements */
+        .card.recommended {
+            border: 2px solid var(--dourado-ancora);
+            background-image: linear-gradient(135deg, var(--superficie-card) 0%, rgba(201,162,39,0.05) 100%);
+        }
+
+        .card.recommended:hover {
+            border-color: var(--dourado-ancora);
+            box-shadow: 0 12px 30px rgba(201, 162, 39, 0.15);
+        }
+
+        .card-badge-right {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-family: var(--font-tech);
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+
+        .badge-opt-a { background: rgba(46,134,193,0.15); color: var(--azul-destaque); border: 1px solid var(--azul-destaque); }
+        .badge-opt-rec { background: rgba(201,162,39,0.2); color: var(--dourado-ancora); border: 1px solid var(--dourado-ancora); }
+        .badge-opt-c { background: rgba(143,168,192,0.15); color: var(--texto-secundario); border: 1px solid var(--texto-secundario); }
+
+        /* Lists styled strategically */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .bullet-list li {
+            background-color: var(--superficie-card);
+            padding: 18px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .bullet-list.bottlenecks li {
+            border-left: 3px solid var(--erro-alerta);
+        }
+
+        .bullet-list li .icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .bullet-list.bottlenecks li .icon {
+            color: var(--erro-alerta);
+        }
+
+        .bullet-list.standard-list li {
+            border-left: 3px solid var(--azul-destaque);
+        }
+
+        /* Timeline Horizontal Layout */
+        .timeline-horizontal {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 40px 0;
+            padding-bottom: 20px;
+        }
+
+        .timeline-horizontal::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--separadores);
+            z-index: 1;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 2;
+            width: 18%;
+            text-align: center;
+        }
+
+        .timeline-node {
+            width: 50px;
+            height: 50px;
+            background-color: var(--superficie-card);
+            border: 2px solid var(--azul-destaque);
+            font-family: var(--font-tech);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--texto-primario);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-step:hover .timeline-node {
+            background-color: var(--azul-destaque);
+            box-shadow: 0 0 15px var(--azul-destaque);
+        }
+
+        .timeline-step-title {
+            font-family: var(--font-titulo);
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .timeline-step-desc {
+            font-size: 0.85rem;
+            color: var(--texto-secundario);
+            padding: 0 8px;
+        }
+
+        /* Data Tables Design */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid var(--separadores);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: var(--superficie-card);
+            font-family: var(--font-tech);
+            color: var(--azul-destaque);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 16px 24px;
+            border-bottom: 2px solid var(--separadores);
+        }
+
+        td {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--separadores);
+            color: var(--texto-primario);
+            background-color: rgba(26, 43, 60, 0.15);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Scenario Cards specific design */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .scenario-card {
+            background-color: var(--superficie-card);
+            border-top: 4px solid var(--texto-secundario);
+            padding: 32px 24px;
+        }
+
+        .scenario-card.sc-conservador { border-top-color: var(--texto-secundario); }
+        .scenario-card.sc-moderado { border-top-color: var(--azul-destaque); }
+        .scenario-card.sc-otimista { border-top-color: var(--dourado-ancora); }
+
+        .scenario-label {
+            font-family: var(--font-tech);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .sc-conservador .scenario-label { color: var(--texto-secundario); }
+        .sc-moderado .scenario-label { color: var(--azul-destaque); }
+        .sc-otimista .scenario-label { color: var(--dourado-ancora); }
+
+        .scenario-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--separadores);
+            padding-bottom: 24px;
+        }
+
+        .sc-metric-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--texto-secundario);
+        }
+
+        .sc-metric-row span:last-child {
+            color: var(--texto-primario);
+            font-family: var(--font-tech);
+        }
+
+        .scenario-total {
+            text-align: center;
+            background-color: rgba(13, 27, 42, 0.4);
+            padding: 16px;
+            border: 1px solid var(--separadores);
+        }
+
+        .scenario-total .total-label {
+            font-family: var(--font-tech);
+            font-size: 0.7rem;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .scenario-total .total-val {
+            font-family: var(--font-titulo);
+            font-size: 2.25rem;
+            color: var(--texto-primario);
+            line-height: 1.2;
+            margin-top: 4px;
+        }
+        .sc-otimista .scenario-total .total-val {
+            color: var(--dourado-ancora);
+        }
+
+        .note-block {
+            font-size: 0.85rem;
+            color: var(--texto-secundario);
+            margin-top: 24px;
+            line-height: 1.5;
+            padding-left: 12px;
+            border-left: 2px solid var(--separadores);
+        }
+
+        /* Checklists Design System */
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .checklist-box {
+            background-color: var(--superficie-card);
+            padding: 28px;
+        }
+
+        .checklist-box h3 {
+            font-family: var(--font-titulo);
+            font-size: 1.35rem;
+            letter-spacing: 0.05em;
+            color: var(--azul-destaque);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--separadores);
+            padding-bottom: 12px;
+        }
+
+        .chk-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .chk-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--texto-primario);
+        }
+
+        .chk-box-visual {
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--texto-secundario);
+            display: inline-block;
+            flex-shrink: 0;
+            margin-top: 2px;
+            position: relative;
+        }
+
+        /* Decision Callout UI */
+        .decision-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .decision-card {
+            background-color: rgba(201, 162, 39, 0.03);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-left: 4px solid var(--dourado-ancora);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .decision-icon {
+            color: var(--dourado-ancora);
+            font-size: 1.25rem;
+        }
+
+        .decision-text {
+            font-family: var(--font-corpo);
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--texto-primario);
+        }
+
+        /* Narrative & Storytelling blocks */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .history-item {
+            background-color: var(--superficie-card);
+            padding: 20px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            border-left: 1px solid var(--separadores);
+        }
+
+        .history-icon {
+            font-size: 1.35rem;
+            flex-shrink: 0;
+        }
+
+        .history-content {
+            font-size: 0.95rem;
+            color: var(--texto-primario);
+        }
+
+        /* Vertical Timeline (Live Roteiro) */
+        .timeline-vertical {
+            position: relative;
+            padding-left: 32px;
+            margin: 32px 0;
+        }
+
+        .timeline-vertical::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 7px;
+            width: 2px;
+            height: 100%;
+            background-color: var(--separadores);
+        }
+
+        .vt-step {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .vt-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .vt-node {
+            position: absolute;
+            left: -32px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--fundo-principal);
+            border: 3px solid var(--azul-destaque);
+            z-index: 2;
+        }
+
+        .vt-time {
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            color: var(--azul-destaque);
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .vt-content {
+            background-color: rgba(26, 43, 60, 0.2);
+            padding: 16px 20px;
+            border: 1px solid var(--separadores);
+        }
+
+        .vt-title {
+            font-family: var(--font-titulo);
+            font-size: 1.15rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .vt-desc {
+            font-size: 0.9rem;
+            color: var(--texto-secundario);
+        }
+
+        /* Gold highlight box layout */
+        .gold-highlight-box {
+            background-color: rgba(201, 162, 39, 0.05);
+            border: 1px solid var(--dourado-ancora);
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .gold-highlight-box h4 {
+            font-family: var(--font-titulo);
+            font-size: 1.5rem;
+            color: var(--dourado-ancora);
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .gold-highlight-box p {
+            font-size: 0.95rem;
+            color: var(--texto-primario);
+        }
+
+        /* Technical Code script boxes */
+        .code-box {
+            background-color: rgba(13, 27, 42, 0.6);
+            border: 1px solid var(--separadores);
+            padding: 24px;
+            font-family: var(--font-tech);
+            font-size: 0.9rem;
+            color: var(--azul-destaque);
+            line-height: 1.5;
+            margin: 16px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* Animations Framework (Intersection Observer Layouts) */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer Element */
+        .app-footer {
+            margin-left: 320px;
+            background-color: #070F17;
+            padding: 40px 80px;
+            border-top: 1px solid var(--separadores);
+            text-align: center;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Responsive Breakpoints (Mobile First Overrides) */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            body.menu-open .sidebar {
+                transform: translateX(0);
+                width: 100%;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 100px 24px 40px 24px;
+            }
+
+            .app-footer {
+                margin-left: 0;
+                padding: 40px 24px;
+            }
+
+            body.menu-open .hamburger span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            body.menu-open .hamburger span:nth-child(2) {
+                opacity: 0;
+            }
+            body.menu-open .hamburger span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .grid-2x2, .grid-3col, .scenario-grid, .checklist-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-horizontal {
+                flex-direction: column;
+                gap: 32px;
+                padding-left: 20px;
+            }
+            .timeline-horizontal::before {
+                left: 24px;
+                top: 0;
+                width: 2px;
+                height: 100%;
+            }
+            .timeline-step {
+                width: 100%;
+                text-align: left;
+                display: flex;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .timeline-node {
+                margin: 0;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Navigation Top Bar -->
+    <div class="mobile-header">
+        <div class="mobile-logo" style="color: var(--texto-primario);">SCALE CO.</div>
+        <button class="hamburger" id="menuToggle" aria-label="Abrir Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <div class="app-container">
+        
+        <!-- Navigation Component (Sidebar) -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="company">SCALE COMPANY</div>
+                <div class="project">MENTORIA PMDF</div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active" data-sec="estrategia">
+                    <a href="#estrategia">
+                        <span class="num">01</span>
+                        <span class="title">Estratégia do Lançamento</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-sec="checklist">
+                    <a href="#checklist">
+                        <span class="num">02</span>
+                        <span class="title">Checklist Operacional</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-sec="narrativa">
+                    <a href="#narrativa">
+                        <span class="num">03</span>
+                        <span class="title">Narrativa e Storytelling</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-sec="precificacao">
+                    <a href="#precificacao">
+                        <span class="num">04</span>
+                        <span class="title">Perpétuo + Precificação</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-sec="comercial">
+                    <a href="#comercial">
+                        <span class="num">05</span>
+                        <span class="title">Time Comercial</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-sec="organico">
+                    <a href="#organico">
+                        <span class="num">06</span>
+                        <span class="title">Conteúdo Orgânico</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <p>Maio 2026 · Versão 1.0</p>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Hero Layout Section -->
+            <header class="hero">
+                <div class="badge-confidential">CONFIDENCIAL</div>
+                <h1>PLANO ESTRATÉGICO</h1>
+                <div class="subtitle">Mentoria PMDF · Lançamento 2026</div>
+                
+                <div class="hero-meta">
+                    <span>PARCERIA: <strong>Scale Company × Prof. Murilo Marques</strong></span>
+                    <span>LOCAL: <strong>Brasília · DF</strong></span>
+                    <span>DATA: <strong>Maio de 2026</strong></span>
+                </div>
+            </header>
+
+            <!-- SECTION 01 -->
+            <section id="estrategia" class="section-anchor fade-in-section">
+                <div class="section-header">
+                    <span class="sec-num">DIRETRIZ 01</span>
+                    <h2>Estratégia do Lançamento</h2>
+                    <p>Mapeamento analítico do cenário atual, gargalos estruturais e o modelo híbrido focado em escala exponencial.</p>
+                </div>
+
+                <div class="block-title">Onde o projeto está hoje</div>
+                <div class="grid-2x2">
+                    <div class="card">
+                        <div class="card-icon">01</div>
+                        <div class="card-value">R$ 40–50k</div>
+                        <div class="card-label">Faturamento mensal atual (100% orgânico, zero tráfego pago).</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">02</div>
+                        <div class="card-value">~120</div>
+                        <div class="card-label">Alunos ativos atualmente integrados na mentoria PMDF.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">03</div>
+                        <div class="card-value">3</div>
+                        <div class="card-label">Total de anúncios ativos no Meta Ads hoje.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">04</div>
+                        <div class="card-value">0</div>
+                        <div class="card-label">Leads/dia em pipeline estruturado de vendas qualificadas.</div>
+                    </div>
+                </div>
+
+                <div class="block-title">Gargalos identificados</div>
+                <ul class="bullet-list bottlenecks">
+                    <li>
+                        <span class="icon">⚠</span>
+                        <div class="text"><strong>Sem funil de vendas estruturado:</strong> Candidatos que demonstram interesse mas não possuem o capital imediato para a mentoria saem do ecossistema sem deixar nenhuma conversão ativa.</div>
+                    </li>
+                    <li>
+                        <span class="icon">⚠</span>
+                        <div class="text"><strong>Sem tráfego pago ativo:</strong> O crescimento e a captação são 100% dependentes da energia e exposição orgânica direta do Murilo no Instagram.</div>
+                    </li>
+                    <li>
+                        <span class="icon">⚠</span>
+                        <div class="text"><strong>Página de vendas feita na raça:</strong> Ausência de copy persuasiva profissional, parametrização de pixel inconsistente e inexistência de testes A/B estruturados.</div>
+                    </li>
+                    <li>
+                        <span class="icon">⚠</span>
+                        <div class="text"><strong>Sem time comercial especializado:</strong> Todas as conversões de vendas de alto valor dependem do Murilo respondendo DMs no direct, gerando gargalo operacional imediato sem processo escalável.</div>
+                    </li>
+                    <li>
+                        <span class="icon">⚠</span>
+                        <div class="text"><strong>Sem produto de entrada (low ticket):</strong> A porta de entrada do funil de vendas não existe, impedindo a monetização imediata de leads mais frios ou com menor poder aquisitivo.</div>
+                    </li>
+                    <li>
+                        <span class="icon">⚠</span>
+                        <div class="text"><strong>Flashcards sem infraestrutura comercial:</strong> Embora estejam em fase final de produção, os flashcards ainda carecem de um produto comercialmente empacotado e validado para distribuição.</div>
+                    </li>
+                </ul>
+
+                <div class="block-title">O que muda com a parceria (Scale)</div>
+                <div class="grid-3col">
+                    <div class="card">
+                        <div class="card-icon">ANÚNCIOS</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Tráfego Pago</div>
+                        <div class="card-label">Meta Ads estruturado com testes constantes de múltiplos criativos e otimização cirúrgica diária de orçamento.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">CONVERSÃO</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Copy e Páginas</div>
+                        <div class="card-label">Páginas de vendas profissionais, páginas de captura otimizadas, réguas de e-mail marketing e automações de WhatsApp.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">OPERAÇÃO</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Gestão de Projeto</div>
+                        <div class="card-label">Gestora dedicada no projeto, fluxos organizados via Notion/Trello e controle rígido de cronogramas e entregas.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">ESCALA</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Time Comercial</div>
+                        <div class="card-label">Recrutamento e treinamento de SDR, scripts de conversão validados no X1, metas claras e comissionamento agressivo.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">TECH</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Automações</div>
+                        <div class="card-label">Estruturação de ManyChat no Direct, sequências automáticas de WhatsApp e sistemas automáticos de qualificação de leads.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">MEDIA</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">Audiovisual</div>
+                        <div class="card-label">Direção de captação, edição de alto nível de vídeos de vendas, anúncios e roteiros validados para o expert gravar com facilidade.</div>
+                    </div>
+                </div>
+
+                <div class="block-title">Modelo de lançamento: Perpétuo + Lançamento Cíclico</div>
+                <p style="color: var(--texto-secundario); margin-bottom: 24px;">O produto principal permanece continuamente disponível para aquisição no modelo perpétuo. A cada 2 ou 3 meses, a Scale executa um grande lançamento focado em uma oferta especial atrelada a bônus exclusivos para aquecer a base acumulada e maximizar o faturamento. O lançamento não canibaliza o perpétuo — ele funciona como um multiplicador de resultados.</p>
+                
+                <div class="timeline-horizontal">
+                    <div class="timeline-step">
+                        <div class="timeline-node">01</div>
+                        <div class="timeline-step-title">Estrutura Base</div>
+                        <div class="timeline-step-desc">Páginas, infraestrutura de rastreamento (pixel), automações e setup de contingência de anúncios. (Semanas 1–2)</div>
+                    </div>
+                    <div class="timeline-horizontal-line"></div>
+                    <div class="timeline-step">
+                        <div class="timeline-node">02</div>
+                        <div class="timeline-step-title">Captação</div>
+                        <div class="timeline-step-desc">Tráfego pago direto para a lista, distribuição em massa de conteúdos e aquecimento estratégico. TAF em 06/06. (Semanas 3–6)</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-node">03</div>
+                        <div class="timeline-step-title">Aquecimento</div>
+                        <div class="timeline-step-desc">Sequência estruturada de conteúdos temáticos de alta retenção enviados via e-mail e grupos de WhatsApp. (Semanas 6–8)</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-node">04</div>
+                        <div class="timeline-step-title">Lançamento</div>
+                        <div class="timeline-step-desc">Live principal de vendas + oferta irresistível + bônus exclusivos. Janela de carrinho aberto por 5 a 7 dias. (Semanas 9–10)</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-node">05</div>
+                        <div class="timeline-step-title">Pós-Ciclo</div>
+                        <div class="timeline-step-desc">Estratégias de follow-up pelo time comercial, otimização da recorrência e planejamento do ciclo subsequente. (Semanas 11–12)</div>
+                    </div>
+                </div>
+
+                <div class="block-title">Data ideal — agosto de 2026</div>
+                <p style="color: var(--texto-secundario); margin-bottom: 16px;">A Copa do Mundo de 2026 ocorrerá entre os dias 11 de junho e 19 de julho. Historicamente, o mercado de infoprodutos e preparatórios para concursos públicos sofre uma retração severa na atenção coletiva e nas taxas de conversão durante os jogos da seleção e grandes eventos esportivos. Executar a abertura de carrinho em agosto assegura captação limpa de atenção, virada de limite de cartão de crédito e foco total da audiência.</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Critério Estratégico</th>
+                                <th>Recomendação Executiva</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Dia da semana</strong></td>
+                                <td>Segunda-feira, terça-feira ou quarta-feira (maiores taxas de abertura e engajamento em lives)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dia do mês</strong></td>
+                                <td>Imediatamente após o 5º dia útil (aproveitando a virada do cartão de crédito da base)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Janela recomendada</strong></td>
+                                <td>Segunda semana do mês de agosto</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data exata sugerida</strong></td>
+                                <td>11 ou 12 de agosto de 2026</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Por que não julho?</strong></td>
+                                <td>A Copa do Mundo vai até dia 19 de julho. O mercado estará disperso e focado no encerramento do evento.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alternativa viável</strong></td>
+                                <td>Segunda quinzena de julho (apenas se a assinatura do acordo e execução inicial ocorrerem imediatamente)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="block-title">Cenários de Faturamento — Lançamento PMDF</div>
+                <p style="color: var(--texto-secundario); font-size: 0.95rem;"><strong>Base analítica de cálculo:</strong> Alocação inicial em anúncios de R$ 10.000. CPL (Custo por Lead) médio histórico do nicho policial mapeado entre R$ 6,00 e R$ 9,00. Ticket médio da mentoria fixado em R$ 1.997. O faturamento orgânico base do perpétuo de R$ 50.000 já se encontra somado nos resultados finais de cada projeção mensal.</p>
+                
+                <div class="scenario-grid">
+                    <div class="scenario-card sc-conservador">
+                        <div class="scenario-label">CONSERVADOR</div>
+                        <div class="scenario-metrics">
+                            <div class="sc-metric-row"><span>Investimento Ads:</span><span>R$ 10.000</span></div>
+                            <div class="sc-metric-row"><span>CPL Estimado:</span><span>R$ 9,00</span></div>
+                            <div class="sc-metric-row"><span>Leads Gerados:</span><span>~1.100 leads</span></div>
+                            <div class="sc-metric-row"><span>Taxa de Conversão:</span><span>1,5%</span></div>
+                            <div class="sc-metric-row"><span>Vendas Estimadas:</span><span>~16 vendas</span></div>
+                            <div class="sc-metric-row"><span>Ticket Médio:</span><span>R$ 1.997</span></div>
+                            <div class="sc-metric-row"><span>Faturamento Lançamento:</span><span>R$ 31.952</span></div>
+                            <div class="sc-metric-row"><span>+ Perpétuo Base:</span><span>R$ 50.000</span></div>
+                        </div>
+                        <div class="scenario-total">
+                            <div class="total-label">TOTAL ESTIMADO MÊS</div>
+                            <div class="total-val">R$ 81.952</div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-card sc-moderado">
+                        <div class="scenario-label">MODERADO</div>
+                        <div class="scenario-metrics">
+                            <div class="sc-metric-row"><span>Investimento Ads:</span><span>R$ 10.000</span></div>
+                            <div class="sc-metric-row"><span>CPL Estimado:</span><span>R$ 7,50</span></div>
+                            <div class="sc-metric-row"><span>Leads Gerados:</span><span>~1.330 leads</span></div>
+                            <div class="sc-metric-row"><span>Taxa de Conversão:</span><span>2,5%</span></div>
+                            <div class="sc-metric-row"><span>Vendas Estimadas:</span><span>~33 vendas</span></div>
+                            <div class="sc-metric-row"><span>Ticket Médio:</span><span>R$ 1.997</span></div>
+                            <div class="sc-metric-row"><span>Faturamento Lançamento:</span><span>R$ 65.901</span></div>
+                            <div class="sc-metric-row"><span>+ Perpétuo Base:</span><span>R$ 50.000</span></div>
+                        </div>
+                        <div class="scenario-total">
+                            <div class="total-label">TOTAL ESTIMADO MÊS</div>
+                            <div class="total-val">R$ 115.901</div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-card sc-otimista">
+                        <div class="scenario-label">OTIMISTA</div>
+                        <div class="scenario-metrics">
+                            <div class="sc-metric-row"><span>Investimento Ads:</span><span>R$ 10.000</span></div>
+                            <div class="sc-metric-row"><span>CPL Estimado:</span><span>R$ 6,00</span></div>
+                            <div class="sc-metric-row"><span>Leads Gerados:</span><span>~1.666 leads</span></div>
+                            <div class="sc-metric-row"><span>Taxa de Conversão:</span><span>4,0%</span></div>
+                            <div class="sc-metric-row"><span>Vendas Estimadas:</span><span>~66 vendas</span></div>
+                            <div class="sc-metric-row"><span>Ticket Médio:</span><span>R$ 1.997</span></div>
+                            <div class="sc-metric-row"><span>Faturamento Lançamento:</span><span>R$ 131.802</span></div>
+                            <div class="sc-metric-row"><span>+ Perpétuo Base:</span><span>R$ 50.000</span></div>
+                        </div>
+                        <div class="scenario-total">
+                            <div class="total-label">TOTAL ESTIMADO MÊS</div>
+                            <div class="total-val">R$ 181.802</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="note-block">
+                    * Estes cenários projetam estritamente o faturamento gerado pelo lançamento pontual da mentoria PMDF somado ao fluxo orgânico recorrente. Não estão contabilizados os novos fluxos de receitas decorrentes de renovações de planos, vendas individuais de flashcards ou a futura expansão programada para outros editais de peso (PCDF, PRF, PF). O ROI (Retorno sobre Investimento) em anúncios já está implícito nos cálculos de conversão.
+                </div>
+            </section>
+
+            <!-- SECTION 02 -->
+            <section id="checklist" class="section-anchor fade-in-section">
+                <div class="section-header">
+                    <span class="sec-num">DIRETRIZ 02</span>
+                    <h2>Checklist Operacional</h2>
+                    <p>Mapeamento de responsabilidades e atribuições técnicas obrigatórias. Divisão clara de tarefas para garantir execução sem falhas.</p>
+                </div>
+
+                <div class="checklist-grid">
+                    <div class="checklist-box">
+                        <h3>01 · ESTRUTURA BASE</h3>
+                        <ul class="chk-list">
+                            <li class="chk-item"><span class="chk-box-visual"></span>Contrato formal de parceria estratégica assinado.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Liberação e auditoria de acessos: Meta Ads, Instagram Business, Tutory.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Instalação e parametrização correta do Pixel do Meta na página de checkout e vendas.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Preenchimento detalhado do Briefing de Voz e História pelo Murilo.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Criação dos ecossistemas de gestão do projeto (WhatsApp + Trello/Notion).</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Página de vendas reestruturada do zero com copy profissional de alto impacto.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Comunicação estratégica da futura subida de preço realizada no perfil oficial.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Automação de ManyChat configurada com fluxos automatizados de triagem.</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-box">
+                        <h3>02 · CONTEÚDO E CAPTAÇÃO</h3>
+                        <ul class="chk-list">
+                            <li class="chk-item"><span class="chk-box-visual"></span>Roteirização detalhada para a cobertura do TAF presencial (dia 06/06).</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Captação de material audiovisual e depoimentos direto no evento do TAF.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Roteirização dos primeiros 6 Reels estratégicos focados no aquecimento da base.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Página de captura de leads desenvolvida, otimizada e testada contra falhas.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Início da veiculação de anúncios de tráfego pago focados na construção de lista.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Configuração de sequências automáticas de e-mails e automações de WhatsApp.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Processo de recrutamento, onboarding e treinamento do profissional de SDR.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Script comercial validado, adaptado e carregado nas ferramentas de atendimento.</li>
+                        </ul>
+                    </div>
+
+                    <div class="checklist-box">
+                        <h3>03 · LANÇAMENTO</h3>
+                        <ul class="chk-list">
+                            <li class="chk-item"><span class="chk-box-visual"></span>Macro-narrativa de conversão do lançamento validada.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Nome do movimento/lançamento definido estrategicamente.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Estruturação e roteirização passo a passo da Live Principal de Vendas.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Confirmação operacional da entrega dos Flashcards como bônus exclusivo.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Definição do estúdio ou locação profissional para a transmissão ao vivo.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Setup completo de campanhas agressivas de Retargeting de vendas.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Abertura do carrinho de compras com gatilhos de escassez e tempo ativados.</li>
+                            <li class="chk-item"><span class="chk-box-visual"></span>Dashboard centralizado de monitoramento de métricas e vendas em tempo real pronto.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="block-title">Decisões que o Murilo precisa tomar</div>
+                <div class="decision-container">
+                    <div class="decision-card">
+                        <div class="decision-icon">⚡</div>
+                        <div class="decision-text"><strong>DECISÃO 1 — Calendário de Lançamento:</strong> Validar cronograma acelerado para o mês de julho ou adotar o cronograma ideal de segurança máxima planejado para agosto.</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="decision-icon">⚡</div>
+                        <div class="decision-text"><strong>DECISÃO 2 — Direcionamento Criativo da Narrativa:</strong> Definir entre a Opção A (Foco em progressão interna da carreira policial), a Opção B (A trajetória emocional do "Do Barraco ao Senado" — Altamente Recomendada pela Scale) ou a Opção C (Foco estrito em mentalidade implacável e quebra de zona de conforto).</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="decision-icon">⚡</div>
+                        <div class="decision-text"><strong>DECISÃO 3 — Naming do Lançamento:</strong> Analisar e validar internamente as opções de nome do movimento apresentadas para alinhamento e registro de criativos.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 03 -->
+            <section id="narrativa" class="section-anchor fade-in-section">
+                <div class="section-header">
+                    <span class="sec-num">DIRETRIZ 03</span>
+                    <h2>Narrativa e Storytelling</h2>
+                    <p>A engenharia de copy por trás de um lançamento de milhões baseia-se na profundidade e autenticidade da jornada do especialista. O histórico do Murilo possui autoridade incomparável no mercado atual.</p>
+                </div>
+
+                <div class="block-title">Os fatos que nenhum concorrente possui</div>
+                <div class="history-list">
+                    <div class="history-item">
+                        <div class="history-icon">🏚</div>
+                        <div class="history-content">Origem humilde na Ceilândia. Infância em Taguatinga, morando em barraco de madeira localizado na QNJ. Origem familiar totalmente desprovida de servidores públicos ou conexões influentes.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">💼</div>
+                        <div class="history-content">Ingresso precoce no mercado de trabalho a partir dos 13 anos de idade: feirante vendendo frutas, panfleteiro de rua e pintor residencial. Remuneração inicial de apenas R$ 140,00 mensais na condição de menor aprendiz.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">🎓</div>
+                        <div class="history-content">Domínio autônomo da língua inglesa, tornando-se professor aos 16 anos. Jornadas exaustivas de aula das 08h às 22h, recebendo entre R$ 10,00 e R$ 12,00 por hora-aula para viabilizar o próprio sustento.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">🏆</div>
+                        <div class="history-content">Histórico de aprovação imediata: aprovado no primeiro concurso público realizado. Absolutamente zero reprovações acumuladas ao longo da trajetória, totalizando 11 aprovações de peso em concursos de alto nível.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">🚔</div>
+                        <div class="history-content">Sonho consolidado de ingressar como Oficial na PMDF. Durante sua atuação na ponta como soldado da corporação, mantinha rotina rígida de estudos técnicos no interior da viatura policial durante as paradas estratégicas.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">🏥</div>
+                        <div class="history-content">Superação de trauma crítico: sofreu acidente grave de motocicleta que resultou na fratura de ambos os braços. Deu início à preparação intensiva focada no CFO da PMDF dentro do hospital, utilizando livros trazidos por sua mãe.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">🥇</div>
+                        <div class="history-content">Resultado de elite: conquistou a 4ª colocação geral no CFO da PMDF. Concomitantemente, obteve aprovação nos exigentes concursos para o CFO de Minas Gerais e de Goiás — abrindo mão de ambos para permanecer no Distrito Federal.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">⚡</div>
+                        <div class="history-content">Métrica extrema para o Senado Federal: contabilizou 723 horas líquidas de estudo rigoroso em um intervalo menor que 3 meses. Suspendeu atividades físicas rotineiras, manteve dieta baseada em conveniência e treinava corrida para o TAF de madrugada, às 03h, nas quadras da Octogonal.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon">🏛</div>
+                        <div class="history-content">Cenário atual de máxima autoridade: atua diretamente nas dependências do Senado Federal. Antigos oficiais superiores da instituição militar hoje trabalham ao seu lado, na mesma hierarquia e posicionamento funcional de igualdade.</div>
+                    </div>
+                </div>
+
+                <div class="block-title">Escolha a narrativa do lançamento</div>
+                <div class="grid-3col">
+                    <div class="card">
+                        <span class="card-badge-right badge-opt-a">OPÇÃO A</span>
+                        <div class="card-icon">PROGRESÃO</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">"De Praça a Oficial a Senado"</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Ângulo:</strong> Evolução interna e superação de degraus dentro das carreiras policiais.</p>
+                        <p class="card-label" style="font-size: 0.85rem; color: var(--texto-primario);">"Eu trilhei exatamente o caminho que você deseja trilhar hoje. Conheço a realidade de soldado, a liderança de oficial e o topo no Senado. Sei encurtar a sua jornada."</p>
+                    </div>
+
+                    <div class="card recommended">
+                        <span class="card-badge-right badge-opt-rec">RECOMENDADA ★</span>
+                        <div class="card-icon" style="color: var(--dourado-ancora);">MÁXIMO IMPACTO</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px; color: var(--dourado-ancora);">"Do Barraco ao Senado"</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Ângulo:</strong> Superação total, quebra de ciclo socioeconômico e método infalível.</p>
+                        <p class="card-label" style="font-size: 0.85rem; color: var(--texto-primario); margin-bottom: 12px;">"Vim do barraco na QNJ. Sem colégios de elite ou heranças. Estudei com os dois braços quebrados em uma maca de hospital. Nunca reprovei porque criei uma mecânica cega de execução."</p>
+                        <p class="card-label" style="font-size: 0.8rem; font-style: italic;"><strong>Por que funciona:</strong> Conecta diretamente com o avatar majoritário do nicho PMDF, gerando forte apelo emocional verídico.</p>
+                    </div>
+
+                    <div class="card">
+                        <span class="card-badge-right badge-opt-c">OPÇÃO C</span>
+                        <div class="card-icon">MENTALIDADE</div>
+                        <div class="card-value" style="font-size: 1.5rem; margin-bottom: 12px;">"O Talento é um Mito"</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-bottom: 12px;"><strong>Ângulo:</strong> Desconstrução da crença limitante de que a reprovação crônica é normal.</p>
+                        <p class="card-label" style="font-size: 0.85rem; color: var(--texto-primario);">"O mercado normalizou a derrota contínua. Enquanto concorrentes romantizam rotinas confortáveis de estudo com café na mesa, o candidato obstinado e necessitado passa na sua frente utilizando método pragmático."</p>
+                    </div>
+                </div>
+
+                <div class="block-title">Sugestão de nome para o lançamento</div>
+                <p style="color: var(--texto-secundario); margin-bottom: 16px;">O naming estratégico precisa evocar um senso claro de movimento coletivo e pertencimento de elite. Quem compra o produto não adquire um curso genérico, mas ingressa em uma força de preparação integrada:</p>
+                
+                <div class="grid-3col">
+                    <div class="card" style="padding: 24px; text-align: center;">
+                        <div class="card-value" style="font-size: 1.5rem; margin: 0; color: var(--azul-destaque);">"OPERAÇÃO PMDF"</div>
+                        <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 8px;">Estética puramente militar, direta e com forte senso de missão institucional.</p>
+                    </div>
+                    <div class="card" style="padding: 24px; text-align: center;">
+                        <div class="card-value" style="font-size: 1.5rem; margin: 0; color: var(--azul-destaque);">"MISSÃO PMDF"</div>
+                        <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 8px;">Foco profundo no propósito, na entrega de longo prazo e na jornada de transformação.</p>
+                    </div>
+                    <div class="card" style="padding: 24px; text-align: center;">
+                        <div class="card-value" style="font-size: 1.5rem; margin: 0; color: var(--azul-destaque);">"PELOTÃO PMDF"</div>
+                        <p style="font-size: 0.8rem; color: var(--texto-secundario); margin-top: 8px;">Metáfora de equipe, suporte mútuo e blindagem contra fraquezas coletivas.</p>
+                    </div>
+                </div>
+                <p class="note-block" style="margin-top: 16px;">* Nota: O alinhamento final e o refinamento do nome serão definidos estrategicamente em conjunto com os sócios após a seleção da narrativa mestra.</p>
+
+                <div class="block-title">Estrutura da Live de Lançamento — Roteiro por Bloco</div>
+                <div class="timeline-vertical">
+                    <div class="vt-step">
+                        <div class="vt-node"></div>
+                        <span class="vt-time">00 – 05 MIN</span>
+                        <div class="vt-content">
+                            <div class="vt-title">Abertura de Alto Impacto</div>
+                            <div class="vt-desc">Introdução em tom cinematográfico e imersivo. Murilo narra o choque de realidade de sua origem humilde antes do início de sua jornada. Conexão e retenção instantânea do público.</div>
+                        </div>
+                    </div>
+                    <div class="vt-step">
+                        <div class="vt-node"></div>
+                        <span class="vt-time">05 – 15 MIN</span>
+                        <div class="vt-content">
+                            <div class="vt-title">A Jornada da Origem</div>
+                            <div class="vt-desc">Exploração dos fatos reais: o cotidiano no barraco de madeira, a superação do acidente grave de moto e a dedicação total aos estudos deitado em uma cama de hospital. Fixação do recorde de 11 aprovações sem derrotas.</div>
+                        </div>
+                    </div>
+                    <div class="vt-step">
+                        <div class="vt-node"></div>
+                        <span class="vt-time">15 – 30 MIN</span>
+                        <div class="vt-content">
+                            <div class="vt-title">A Revelação do Método</div>
+                            <div class="vt-desc">Diferenciação clara entre o estudante profissional que conquista a aprovação logo na primeira tentativa e o concurseiro amador que desperdiça anos acumulando reprovações por erros invisíveis de planejamento.</div>
+                        </div>
+                    </div>
+                    <div class="vt-step">
+                        <div class="vt-node"></div>
+                        <span class="vt-time">30 – 40 MIN</span>
+                        <div class="vt-content">
+                            <div class="vt-title">Prova Social de Elite</div>
+                            <div class="vt-desc">Apresentação focada de depoimentos em vídeo e estudos de caso reais de alunos aprovados. Dados precisos: nome do aluno, cargo conquistado, tempo de preparação e evolução de notas.</div>
+                        </div>
+                    </div>
+                    <div class="vt-step">
+                        <div class="vt-node"></div>
+                        <span class="vt-time">40 – 55 MIN</span>
+                        <div class="vt-content">
+                            <div class="vt-title">A Oferta Irresistível</div>
+                            <div class="vt-desc">Apresentação oficial da Mentoria. Utilização de ancoragem de preço forte, introdução dos Flashcards PMDF como bônus de escassez máxima imediata, detalhamento de bônus e condições flexíveis de pagamento.</div>
+                        </div>
+                    </div>
+                    <div class="vt-step">
+                        <div class="vt-node"></div>
+                        <span class="vt-time">55 – 60 MIN</span>
+                        <div class="vt-content">
+                            <div class="vt-title">Fechamento e Chamada de Ação (CTA)</div>
+                            <div class="vt-desc">Chamada para ação direta, assertiva e agressiva. Alerta de que as vagas bônus fecham em poucas horas ou mediante término do lote. Aplicação do bordão característico do expert para fechamento.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 04 -->
+            <section id="precificacao" class="section-anchor fade-in-section">
+                <div class="section-header">
+                    <span class="sec-num">DIRETRIZ 04</span>
+                    <h2>Perpétuo + Precificação</h2>
+                    <p>Desenho da arquitetura de produtos e estratégia comercial de ancoragem de valor. A esteira foi desenvolvida para monetizar múltiplos perfis de poder aquisitivo.</p>
+                </div>
+
+                <div class="block-title">Esteira de Produtos e Nova Precificação</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto Comercial</th>
+                                <th>Preço Sugerido</th>
+                                <th>Entrega / Escopo de Conteúdo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Flashcard PMDF (Low Ticket)</strong></td>
+                                <td style="font-family: var(--font-tech); color: var(--sucesso);">R$ 97 a R$ 197</td>
+                                <td>Material estratégico de revisão otimizada cobrindo integralmente o edital da PMDF. Funciona como o principal atrativo de entrada do funil de vendas (tripwire).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mentoria - Plano 3 Meses</strong></td>
+                                <td style="font-family: var(--font-tech); color: var(--sucesso);">R$ 897 à vista</td>
+                                <td>Preparação tática acelerada e de tiro curto. Ideal para candidatos com necessidade iminente de ajuste de rota pré-edital ou pós-edital próximo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mentoria - Plano 6 Meses</strong></td>
+                                <td style="font-family: var(--font-tech); color: var(--sucesso);">R$ 1.397 à vista</td>
+                                <td>Preparação completa estruturada de médio prazo. Utilizado na estratégia como uma forte âncora de valor para impulsionar a venda do plano de 12 meses.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mentoria - Plano 12 Meses (Principal)</strong></td>
+                                <td style="font-family: var(--font-tech); color: var(--dourado-ancora); font-weight: 700;">R$ 1.997 à vista</td>
+                                <td>Acompanhamento estratégico anual completo + inclusão dos Flashcards PMDF + atualizações contínuas de simulados e mentorias de rota ao vivo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recorrência Mensal (Bastidores X1)</strong></td>
+                                <td style="font-family: var(--font-tech); color: var(--azul-destaque);">R$ 197 a R$ 247/mês</td>
+                                <td>Ativação de contingência realizada pelo time comercial no atendimento um para um. Direcionado para leads sem limite de crédito imediato na modalidade à vista.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="note-block">* Nota Estratégica: A opção de recorrência mensal jamais será veiculada abertamente na Live de Lançamento para evitar a canibalização dos planos à vista de maior margem. Sua aplicação é restrita à atuação oculta do time de vendas no X1 para recuperar leads com restrição de limite bancário.</p>
+
+                <div class="gold-highlight-box">
+                    <h4>Ação Estratégica Imediata: Subida de Preço Pré-Lançamento</h4>
+                    <p>Devemos iniciar a comunicação ostensiva no Instagram do Murilo informando que o valor atual da mentoria sofrerá um reajuste definitivo nos próximos dias. Essa movimentação gera um gatilho imediato de urgência na base morna, provocando um pico de vendas orgânicas imediatas de pessoas que estavam indecisas. Além disso, valoriza os alunos atuais e estabelece o novo valor mais alto como a âncora visual perfeita para a oferta especial com bônus que faremos na Live do Lançamento.</p>
+                </div>
+
+                <div class="block-title">O papel dos Flashcards na Oferta de Lançamento</div>
+                <p style="color: var(--texto-secundario); margin-bottom: 16px;">Os novos flashcards desenvolvidos pelo Rodrigo serão introduzidos na oferta como o principal gerador de valor e bônus exclusivo da janela de lançamento. Um produto de alto valor utilitário percebido, que posteriormente será comercializado separadamente, incluído sem custo extra apenas para quem garantir a vaga na mentoria durante o período de abertura do carrinho.</p>
+                
+                <div class="card" style="border-left: 4px solid var(--dourado-ancora);">
+                    <div class="card-value" style="font-size: 1.5rem; color: var(--dourado-ancora); margin-bottom: 8px;">BÔNUS EXCLUSIVO DE LANÇAMENTO</div>
+                    <p class="card-label" style="color: var(--texto-primario);">Os compradores que ingressarem na janela oficial de lançamento receberão acesso integral aos <strong>Flashcards PMDF (Valor de mercado isolado: R$ 197)</strong> de forma 100% gratuita como incentivo de compra imediata.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 05 -->
+            <section id="comercial" class="section-anchor fade-in-section">
+                <div class="section-header">
+                    <span class="sec-num">DIRETRIZ 05</span>
+                    <h2>Time Comercial</h2>
+                    <p>Estruturação de processos e força de vendas focada em alta conversão. Retirar o expert da operação direta de atendimento nas DMs é o primeiro passo rumo à escala real.</p>
+                </div>
+
+                <div class="block-title">Por que o time comercial é o 80/20 deste projeto?</div>
+                <div class="grid-3col">
+                    <div class="card" style="padding: 24px;">
+                        <div class="card-icon">💬</div>
+                        <p class="card-label" style="color: var(--texto-primario); font-size: 0.9rem;">Produtos de alto ticket (R$ 1.997) não são adquiridos por puro impulso. Exigem interações personalizadas, quebra ativa de objeções e construção de um ambiente de extrema segurança.</p>
+                    </div>
+                    <div class="card" style="padding: 24px;">
+                        <div class="card-icon">📱</div>
+                        <p class="card-label" style="color: var(--texto-primario); font-size: 0.9rem;">O fluxo diário de leads espontâneos que o Murilo recebe nas DMs é massivo. Sem um processo de triagem profissionalizado, dezenas de oportunidades de alta conversão expiram sem atendimento diário.</p>
+                    </div>
+                    <div class="card" style="padding: 24px;">
+                        <div class="card-icon">📈</div>
+                        <p class="card-label" style="color: var(--texto-primario); font-size: 0.9rem;">Eficiência comprovada: 1 SDR capacitado realizando apenas 10 vendas adicionais no mês gera R$ 19.970 em faturamento extra, demandando um custo fixo baixo. ROI positivo imediato.</p>
+                    </div>
+                </div>
+
+                <div class="block-title">Arquitetura Estrutural do Time de Vendas</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pilar Operacional</th>
+                                <th>Especificação Técnica da Scale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Perfil de Contratação Ideal</strong></td>
+                                <td>Ex-aluno aprovado ou candidato avançado focado na PMDF. Domina as dores e a linguagem interna do produto.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recrutamento Estratégico</strong></td>
+                                <td>Seleção por indicação direta dos sócios — focando em candidatos chaves já pré-mapeados pelo Rodrigo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Estrutura de Remuneração</strong></td>
+                                <td>R$ 1.000,00 de salário fixo + 5% de comissão por cada conversão de venda liquidada. Meta base fixada em 4 vendas semanais.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Treinamento de Conversão</strong></td>
+                                <td>Fornecimento de script de vendas validado e adaptado. Execução obrigatória de duas sessões intensivas de roleplay antes da operação.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CRM e Gestão de Contatos</strong></td>
+                                <td>Implementação imediata de esteira de contatos estruturada: Novo lead → Em contato → Proposta → Fechamento → Perdido.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Supervisão Técnica</strong></td>
+                                <td>Acompanhamento rígido e diário de KPIs e taxas de conversão comerciais executado pela gestora dedicada da Scale.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="block-title">Script de Entrada do SDR (Abordagem de Alta Conversão)</div>
+                <p style="color: var(--texto-secundario); margin-bottom: 12px;">Demonstração prática do tom de atendimento inicial adotado pelo profissional de vendas nas abordagens um para um:</p>
+                <div class="code-box">"Oi [Nome do Lead], tudo bem? Notei que você entrou em contato demonstrando interesse em acelerar sua preparação com a mentoria oficial da PMDF. 
+
+Posso te fazer 3 perguntas rápidas e cirúrgicas para entender seu cenário atual e validar se este é o momento ideal para sua aprovação?"</div>
+
+                <div class="block-title">As 3 Etapas Fundamentais do Fluxo Comercial</div>
+                <div class="timeline-vertical" style="margin-top: 20px;">
+                    <div class="vt-step">
+                        <div class="vt-node" style="border-color: var(--dourado-ancora);"></div>
+                        <span class="vt-time">FASE 01</span>
+                        <div class="vt-content">
+                            <div class="vt-title">Qualificação Ativa</div>
+                            <div class="vt-desc">Mapeamento da dor do candidato. Perguntas obrigatórias: "Há quanto tempo você vem estudando para carreiras policiais? Qual tem sido seu principal gargalo ou obstáculo técnico de rendimento hoje?"</div>
+                        </div>
+                    </div>
+                    <div class="vt-step">
+                        <div class="vt-node" style="border-color: var(--dourado-ancora);"></div>
+                        <span class="vt-time">FASE 02</span>
+                        <div class="vt-content">
+                            <div class="vt-title">Apresentação da Solução</div>
+                            <div class="vt-desc">Conexão direta entre a dor relatada pelo lead e as ferramentas internas específicas que a Mentoria entrega (cronograma de estudos, inteligência emocional ou técnicas exclusivas de resolução de questões).</div>
+                        </div>
+                    </div>
+                    <div class="vt-step">
+                        <div class="vt-node" style="border-color: var(--dourado-ancora);"></div>
+                        <span class="vt-time">FASE 03</span>
+                        <div class="vt-content">
+                            <div class="vt-title">Fechamento Direto ou Contigência</div>
+                            <div class="vt-desc">Apresentação dos links de pagamento para os planos à vista de maior valor ou ativação sutil do plano de parcelamento recorrente caso o cliente alegue bloqueio ou falta de limite total no cartão.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 32px; background-color: rgba(46,134,193,0.05); border-left: 4px solid var(--azul-destaque);">
+                    <p class="card-label" style="color: var(--texto-primario);">📋 <strong>Fluxo de Governança e Alinhamento de Linha Editorial:</strong> Toda e qualquer peça de copy produzida (anúncios em vídeo, disparos de e-mail marketing, comunicações oficiais de WhatsApp ou roteiros criativos) passará obrigatoriamente pela validação prévia do Murilo antes de sua publicação oficial. <strong>Processo:</strong> Scale executa a criação → Murilo faz o crivo e aprovação → Scale implementa e distribui.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 06 -->
+            <section id="organico" class="section-anchor fade-in-section">
+                <div class="section-header">
+                    <span class="sec-num">DIRETRIZ 06</span>
+                    <h2>Conteúdo Orgânico</h2>
+                    <p>O ecossistema orgânico atual do Murilo já possui alto poder de conversão. A atuação estratégica da Scale consiste em criar uma rotina de alta previsibilidade, organizando os formatos que mais trazem vendas.</p>
+                </div>
+
+                <div class="block-title">Matriz de Distribuição Semanal (Estratégia Taco de Beisebol)</div>
+                <div class="grid-3col">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--azul-destaque);">🎯 TÉCNICO</div>
+                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">2x por semana</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Vídeos educativos dissecando pontos complexos do edital da PMDF, estratégias avançadas de estudo e análises detalhadas de questões tradicionais da banca examinadora.</p>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--azul-destaque);"><strong>Meta:</strong> Provar autoridade técnica incontestável.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--dourado-ancora);">🏆 AUTORIDADE</div>
+                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">1x por semana</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Publicações de resultados explícitos. Prints de aprovação, depoimentos em vídeo, histórico de conquistas do próprio expert e dados reais de evolução de alunos.</p>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--dourado-ancora);"><strong>Meta:</strong> Gerar máxima credibilidade inabalável.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--sucesso);">🔥 CRESCIMENTO</div>
+                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">1x por semana</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Reels de alto potencial viral. Humor inteligente contextualizado na rotina de concursos públicos, situações cotidianas das forças de segurança e trends adaptadas.</p>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--sucesso);"><strong>Meta:</strong> Atração em massa de novos seguidores e topo de funil.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--texto-secundario);">🤝 CONEXÃO</div>
+                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">Diário (Stories)</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Bastidores reais sem filtros. Rotina profissional na estrutura do Senado Federal, dinâmicas de treino, vida familiar, interações com animais e rotina pessoal do expert.</p>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--texto-secundario);"><strong>Meta:</strong> Construção de identificação e engajamento humano.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--erro-alerta);">💡 OBJEÇÃO</div>
+                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">1x por semana</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Conteúdos focados em desarmar as desculpas mais frequentes da base ("falta de tempo", "idade avançada", "base fraca em matérias exatas").</p>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: var(--erro-alerta);"><strong>Meta:</strong> Facilitar a conversão, aquecendo o público frio.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: #9B59B6;">⚡ HYPE</div>
+                        <div class="card-value" style="font-size: 1.15rem; margin-top: 10px; text-transform: uppercase;">Oportunista</div>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px;">Coberturas rápidas e análises em tempo real de notícias urgentes do mercado, rumores de movimentações de bancas ou vazamentos lícitos de informações de editais.</p>
+                        <p class="card-label" style="font-size: 0.85rem; margin-top: 8px; color: #9B59B6;"><strong>Meta:</strong> Capturar picos de atenção orgânica explosiva.</p>
+                    </div>
+                </div>
+
+                <div class="block-title">Planejamento do TAF Presencial — Cobertura Operacional 6 de Junho</div>
+                <p style="color: var(--texto-secundario); margin-bottom: 20px;">O evento presencial do TAF na Ceilândia representa a primeira grande janela de oportunidade de produção audiovisual estratégica pós-parceria. O material coletado servirá como base de criativos de alta conversão para nutrir as semanas de aquecimento pré-lançamento.</p>
+                
+                <ul class="bullet-list standard-list" style="margin-bottom: 32px;">
+                    <li>
+                        <span class="icon">✓</span>
+                        <div class="text"><strong>Aparência de Tropa Unificada:</strong> Registro cinematográfico da chegada impactante do Murilo acompanhado dos sócios devidamente fardados com a identidade visual unificada da marca.</div>
+                    </li>
+                    <li>
+                        <span class="icon">✓</span>
+                        <div class="text"><strong>Captação de Prova Social Inicial:</strong> Coleta de depoimentos rápidos com 2 a 3 alunos antes da realização dos testes de esforço físico: "Qual foi o motivo chave que te fez buscar a mentoria?".</div>
+                    </li>
+                    <li>
+                        <span class="icon">✓</span>
+                        <div class="text"><strong>Mídia de Ação Imersiva:</strong> Filmagem dinâmica dos testes físicos em andamento — corridas, barras, flexões e esforço máximo real. Imagens de alto impacto emocional e estético.</div>
+                    </li>
+                    <li>
+                        <span class="icon">✓</span>
+                        <div class="text"><strong>Pico Emocional Pós-TAF:</strong> Coleta de depoimentos emocionados imediatamente após a superação das metas físicas dos alunos, chancelando a eficiência prática da preparação recebida.</div>
+                    </li>
+                    <li>
+                        <span class="icon">✓</span>
+                        <div class="text"><strong>Encerramento de Tropa:</strong> Registro da confraternização final, evidenciando o forte senso de camaradagem e conexão humana direta do Murilo com seus alunos.</div>
+                    </li>
+                    <li>
+                        <span class="icon">✓</span>
+                        <div class="text"><strong>Navegação em Tempo Real:</strong> Cobertura densa e ininterrupta nos Stories ao longo de todo o dia, criando uma narrativa imersiva de acompanhamento para os seguidores que estão em casa.</div>
+                    </li>
+                </ul>
+
+                <div class="block-title">Formatos de Reels de Alta Performance Mapeados para o Nicho Policial</div>
+                <ul style="list-style: none; padding-left: 20px; display: flex; flex-direction: column; gap: 12px; color: var(--texto-primario); font-size: 0.95rem; margin-bottom: 40px;">
+                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Comparativos diretos de remuneração e benefícios:</strong> Tabelas dinâmicas detalhando salários iniciais e planos de cargos das forças policiais (formato com métricas históricas altíssimas de salvamentos e compartilhamentos).</li>
+                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Ironia e Quebra de Paradigma:</strong> "Para que serve dominar análise sintática de orações subordinadas para combater a criminalidade na rua?" — Abordagem bem-humorada com forte identificação do público (Referência prática de +19k novos seguidores convertidos com um único vídeo deste formato).</li>
+                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Estética Operacional Real:</strong> Vídeos curtos de bastidores técnicos do TAF, corridas de rua em alta intensidade e detalhes de fardamento institucional — apelo aspiracional puro.</li>
+                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Resolução Técnica de Questões polêmicas:</strong> Desmonte cirúrgico de pegadinhas de bancas examinadoras famosas, blindando a autoridade técnica do expert.</li>
+                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Estudos de Caso de Sucesso:</strong> Vídeos curtos detalhando a história de superação de alunos específicos aprovados da mentoria.</li>
+                    <li style="position: relative; padding-left: 24px;"><span style="color: var(--azul-destaque); position: absolute; left: 0;">•</span> <strong>Provocação Metodológica:</strong> "A engenharia do meu método de aprovação imediata versus as falhas graves do modelo de estudo tradicional que todo cursinho genérico te vende."</li>
+                </ul>
+
+                <div class="block-title">Matriz de Atribuições e Responsabilidades de Conteúdo</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Atividade Operacional</th>
+                                <th>Responsável Principal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Planejamento e Roteirização Estratégica de Reels</strong></td>
+                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gravação e Atuação de Frente para a Câmera</strong></td>
+                                <td>Prof. Murilo Marques</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Edição Audiovisual Profissional e Efeitos de Retenção</strong></td>
+                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Revisão de Linha Editorial e Aprovação das Copys</strong></td>
+                                <td>Prof. Murilo Marques</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agendamento, Postagem e Otimização de Descrições/Tags</strong></td>
+                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Produção Espontânea de Stories do Cotidiano</strong></td>
+                                <td>Prof. Murilo Marques</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cobertura Audiovisual In Loco em Eventos Presenciais (TAF)</strong></td>
+                                <td style="color: var(--azul-destaque); font-weight: 700;">Scale Company</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="app-footer">
+        <div>Scale Company × Prof. Murilo Marques</div>
+        <div style="color: var(--texto-secundario); font-size: 0.75rem; margin-top: 4px;">Plano Estratégico Integrado — Lançamento Mentoria PMDF · 2026</div>
+        <div style="color: var(--dourado-ancora); font-size: 0.7rem; margin-top: 4px; letter-spacing: 0.15em;">Documento estritamente confidencial. Produção executiva Scale Company.</div>
+    </footer>
+
+    <!-- Interactive JavaScript Framework -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Mobile Menu Control Logic
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const navLinks = document.querySelectorAll('.nav-item a');
+
+            menuToggle.addEventListener('click', () => {
+                document.body.classList.toggle('menu-open');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    document.body.classList.remove('menu-open');
+                });
+            });
+
+            // Advanced Intersection Observer for Fade-in Layout Animations
+            const fadeSections = document.querySelectorAll('.fade-in-section');
+            const animationOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Optional: unobserve if animation is one-way only
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, animationOptions);
+
+            fadeSections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // High Precision Scroll Spy Framework for Left Sidebar Active Highlighting
+            const sections = document.querySelectorAll('.section-anchor');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            window.addEventListener('scroll', () => {
+                let currentSectionId = '';
+                const scrollPosition = window.scrollY + 150; // Offset check value
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+
+                    if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + sectionHeight)) {
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+
+                if (currentSectionId) {
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-sec') === currentSectionId) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
